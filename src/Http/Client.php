@@ -6,7 +6,6 @@ namespace NS8\ProtectSDK\Http;
 
 use NS8\ProtectSDK\Http\Exceptions\Http as HttpException;
 use stdClass;
-use Throwable;
 use Zend\Http\Client as ZendClient;
 use Zend\Http\PhpEnvironment\RemoteAddress as ZendRemoteAddress;
 use Zend\Http\PhpEnvironment\Request as ZendRequest;
@@ -238,29 +237,25 @@ class Client implements ClientDefinition
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
     ) : string {
         $response = null;
-        try {
-            //$uri = $this->config->getNS8MiddlewareUrl($route);
-            $uri = $route;
+        //$uri = $this->config->getNS8MiddlewareUrl($route);
+        $uri = $route;
 
-            $this->client->setUri($uri);
-            $this->client->setOptions(['timeout' => $timeout]);
-            $this->client->setMethod($method);
-            $this->client->setParameterGet($parameters);
-            $this->client->setMethod($method);
+        $this->client->setUri($uri);
+        $this->client->setOptions(['timeout' => $timeout]);
+        $this->client->setMethod($method);
+        $this->client->setParameterGet($parameters);
+        $this->client->setMethod($method);
 
-            // TODO: Implement protect version once configuration logic is in place
-            //$headers['extension-version'] = $this->config->getProtectVersion();
-            if (! empty($data)) {
-                $this->client->setParameterPost($data);
-            }
-
-            $response = $this->client->send()->getBody();
-
-            // Reset all attributes of client after the request
-            $this->client->resetParameters(true);
-        } catch (Throwable $t) {
-            throw new HttpException($t->getMessage());
+        // TODO: Implement protect version once configuration logic is in place
+        //$headers['extension-version'] = $this->config->getProtectVersion();
+        if (! empty($data)) {
+            $this->client->setParameterPost($data);
         }
+
+        $response = $this->client->send()->getBody();
+
+        // Reset all attributes of client after the request
+        $this->client->resetParameters(true);
 
         return $response;
     }
