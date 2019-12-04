@@ -1,0 +1,27 @@
+{
+    "autoload": {
+      "classmap": [
+        "src/"
+      ]
+    },
+    "description": "NS8 Protect SDK",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "name": "ns8/protect-sdk",
+    "require": {
+        "php": "^7.2"
+    },
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^8.0",
+        "doctrine/coding-standard": "^6.0",
+        "rregeer/phpunit-coverage-check": "^0.3.1"
+    },
+    "scripts": {
+        "lint": "phpcs --extensions=php src/ tests/",
+        "lint-fix": "phpcbf --extensions=php src/ tests/",
+        "post-install-cmd": "scripts/install-githooks",
+        "test": "phpunit tests/",
+        "test-coverage": "phpunit --coverage-clover /dev/stdout --coverage-text --stderr tests/ | coverage-check /dev/stdin 100"
+    }
+}
