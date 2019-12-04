@@ -125,7 +125,7 @@ interface ClientDefinition
         array $parameters = [],
         array $headers = [],
         int $timeout = 30
-    ) : stdClass;
+    ) : string;
 
     /**
      * Sets session data intended to be passed to NS8 services

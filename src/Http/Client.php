@@ -214,7 +214,7 @@ class Client implements ClientDefinition
         $authHeader       = ['Authorization' => $authHeaderString];
         $allHeaders       = array_merge($headers, $authHeader);
 
-        return $this->executeRequest($url, $data, $method, $parameters, $allHeaders, $timeout);
+        return $this->executeJsonRequest($url, $data, $method, $parameters, $allHeaders, $timeout);
     }
 
     /**
@@ -227,7 +227,7 @@ class Client implements ClientDefinition
      * @param mixed[] $headers    Array of heads to include in request
      * @param int     $timeout    Timeout length for the request
      *
-     * @return stdClass
+     * @return string
      */
     public function executeRequest(
         string $route,
@@ -236,7 +236,7 @@ class Client implements ClientDefinition
         array $parameters = [],
         array $headers = [],
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
-    ) : stdClass {
+    ) : string {
         $response = null;
         try {
             //$uri = $this->config->getNS8MiddlewareUrl($route);
@@ -254,8 +254,7 @@ class Client implements ClientDefinition
                 $this->client->setParameterPost($data);
             }
 
-            $body     = $this->client->send()->getBody();
-            $response = ZendJsonDecoder::decode($body);
+            $response = $this->client->send()->getBody();
 
             // Reset all attributes of client after the request
             $this->client->resetParameters(true);
@@ -264,6 +263,31 @@ class Client implements ClientDefinition
         }
 
         return $response;
+    }
+
+    /**
+     * Return a formatted JSON request response
+     *
+     * @param string  $route      URL that is being accessed
+     * @param mixed[] $data       Data to include in body of the request
+     * @param string  $method     The HTTP method being used to send the request
+     * @param mixed[] $parameters Parameters to include in request
+     * @param mixed[] $headers    Array of heads to include in request
+     * @param int     $timeout    Timeout length for the request
+     *
+     * @return stdClass
+     */
+    public function executeJsonRequest(
+        string $route,
+        array $data = [],
+        string $method = self::POST_REQUEST_TYPE,
+        array $parameters = [],
+        array $headers = [],
+        int $timeout = self::DEFAULT_TIMEOUT_VALUE
+    ) : stdClass {
+        $body = $this->executeRequest($route, $data, $method, $parameters, $headers, $timeout);
+
+        return ZendJsonDecoder::decode($body);
     }
 
     /**

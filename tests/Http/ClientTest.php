@@ -12,7 +12,7 @@ use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
 /**
  * HTTP Test Class
  *
- * @coversDefaultClass NS8\ProtectSDK\Sample\Demo
+ * @coversDefaultClass NS8\ProtectSDK\Http\Client
  */
 class ClientTest extends TestCase
 {
@@ -35,6 +35,7 @@ class ClientTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::setSessionData
      */
     public function testConstructor() : void
     {
@@ -47,7 +48,11 @@ class ClientTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::get
+     * @covers ::getAccessToken
+     * @covers ::setSessionData
      * @covers ::executeWithAuth
+     * @covers ::executeJsonRequest
      * @covers ::executeRequest
      */
     public function testGetRequest() : void
@@ -65,7 +70,13 @@ class ClientTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::getAccessToken
+     * @covers ::getAuthUsername
+     * @covers ::getSessionData
+     * @covers ::post
+     * @covers ::setSessionData
      * @covers ::executeWithAuth
+     * @covers ::executeJsonRequest
      * @covers ::executeRequest
      */
     public function testPostRequest() : void
@@ -83,7 +94,11 @@ class ClientTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::getAccessToken
+     * @covers ::put
+     * @covers ::setSessionData
      * @covers ::executeWithAuth
+     * @covers ::executeJsonRequest
      * @covers ::executeRequest
      */
     public function testPutRequest() : void
@@ -101,7 +116,11 @@ class ClientTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::delete
+     * @covers ::getAccessToken
+     * @covers ::setSessionData
      * @covers ::executeWithAuth
+     * @covers ::executeJsonRequest
      * @covers ::executeRequest
      */
     public function testDeleteRequest() : void
@@ -124,7 +143,7 @@ class ClientTest extends TestCase
      */
     public function testAuthNameFunctionality() : void
     {
-        $client = new Client();
+        $client = new Client(null, null, false);
         $client->setAuthUsername(self::TEST_AUTH_NAME);
         $this->assertEquals($client->getAuthUsername(), self::TEST_AUTH_NAME);
     }
@@ -140,7 +159,7 @@ class ClientTest extends TestCase
      */
     public function testAccessTokenFunctionality() : void
     {
-        $client = new Client();
+        $client = new Client(null, null, false);
         $client->setAccessToken(self::TEST_ACCESS_TOKEN);
         $this->assertEquals($client->getAccessToken(), self::TEST_ACCESS_TOKEN);
     }
@@ -156,7 +175,7 @@ class ClientTest extends TestCase
      */
     public function testSessionDataFunctionality() : void
     {
-        $client = new Client();
+        $client = new Client(null, null, false);
         $client->setSessionData(self::TEST_SESSION_DATA);
         $this->assertEquals($client->getSessionData(), self::TEST_SESSION_DATA);
     }
