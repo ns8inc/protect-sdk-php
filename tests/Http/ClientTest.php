@@ -201,7 +201,7 @@ class ClientTest extends TestCase
         $testHttpClient = $this->buildTestHttpClient(Client::POST_REQUEST_TYPE);
         $client         = new Client(self::TEST_AUTH_NAME, null, true, $testHttpClient);
         $this->expectException(HttpException::class);
-        $response = $client->POST(self::TEST_URI);
+        $response = $client->post(self::TEST_URI);
     }
 
     /**
@@ -224,7 +224,7 @@ class ClientTest extends TestCase
         $testHttpClient = $this->buildTestHttpClient(Client::POST_REQUEST_TYPE);
         $client         = new Client(null, self::TEST_ACCESS_TOKEN, true, $testHttpClient);
         $this->expectException(HttpException::class);
-        $response = $client->POST(self::TEST_URI);
+        $response = $client->post(self::TEST_URI);
     }
 
     /**
