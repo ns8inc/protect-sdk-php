@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NS8\ProtectSDK\Tests\Http;
 
 use NS8\ProtectSDK\Http\Client;
+use NS8\ProtectSDK\Http\Exceptions\Http as HttpException;
 use PHPUnit\Framework\TestCase;
 use Zend\Http\Client as ZendClient;
 use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
@@ -178,6 +179,52 @@ class ClientTest extends TestCase
         $client = new Client(null, null, false);
         $client->setSessionData(self::TEST_SESSION_DATA);
         $this->assertEquals($client->getSessionData(), self::TEST_SESSION_DATA);
+    }
+
+    /**
+     * Test if a POST request will throw an error if no auth name is provided
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers ::getAccessToken
+     * @covers ::getAuthUsername
+     * @covers ::getSessionData
+     * @covers ::post
+     * @covers ::setSessionData
+     * @covers ::executeWithAuth
+     * @covers ::executeJsonRequest
+     * @covers ::executeRequest
+     */
+    public function testNoAccessTokenException() : void
+    {
+        $testHttpClient = $this->buildTestHttpClient(Client::POST_REQUEST_TYPE);
+        $client         = new Client(self::TEST_AUTH_NAME, null, true, $testHttpClient);
+        $this->expectException(HttpException::class);
+        $response = $client->POST(self::TEST_URI);
+    }
+
+    /**
+     * Test if a POST request will throw an error if no auth name is provided
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers ::getAccessToken
+     * @covers ::getAuthUsername
+     * @covers ::getSessionData
+     * @covers ::post
+     * @covers ::setSessionData
+     * @covers ::executeWithAuth
+     * @covers ::executeJsonRequest
+     * @covers ::executeRequest
+     */
+    public function testNoAutException() : void
+    {
+        $testHttpClient = $this->buildTestHttpClient(Client::POST_REQUEST_TYPE);
+        $client         = new Client(null, self::TEST_ACCESS_TOKEN, true, $testHttpClient);
+        $this->expectException(HttpException::class);
+        $response = $client->POST(self::TEST_URI);
     }
 
     /**
