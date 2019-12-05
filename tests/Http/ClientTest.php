@@ -299,7 +299,7 @@ class ClientTest extends TestCase
      * @covers ::executeJsonRequest
      * @covers ::executeRequest
      */
-    public function testNoAutException() : void
+    public function testNoAuthException() : void
     {
         $testHttpClient = $this->buildTestHttpClient(Client::POST_REQUEST_TYPE);
         $client         = new Client(null, self::TEST_ACCESS_TOKEN, true, $testHttpClient);
