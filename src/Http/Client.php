@@ -268,8 +268,6 @@ class Client implements ClientDefinition
         $this->client->setOptions(['timeout' => $timeout]);
         $this->client->setMethod($method);
         $this->client->setParameterGet($parameters);
-        $this->client->setMethod($method);
-
         // TODO: Implement protect version once configuration logic is in place
         //$headers['extension-version'] = $this->config->getProtectVersion();
         if (! empty($headers)) {
