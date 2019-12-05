@@ -37,46 +37,50 @@ class Client implements ClientDefinition
     public const AUTH_STRING_HEADER_FORMAT = 'Bearer %s';
 
     /**
-     * @var Zend\Http\Client $client
      * HTTP Library Client attribute
+     *
+     * @var Zend\Http\Client $client
      */
     protected $client;
 
     /**
-     * @var string $authUsername
      * Attribute to permit auth user
+     *
+     * @var string $authUsername
      */
     protected $authUsername;
 
     /**
-     * @var string $accessToken
      * Attribute to permit access token usage
+     *
+     * @var string $accessToken
      */
     protected $accessToken;
 
     /**
-     * @var mixed[] $sessionData
      * Attribute to track session data to be sent in requests
+     *
+     * @var mixed[] $sessionData
      */
     protected $sessionData;
 
     /**
      * Constructor for HTTP Client
      *
-     * @param ?string $authUsername   Authentication username for NS8 requests
-     * @param ?string $accessToken    Access Token for NS8 requests
-     * @param bool    $setSessionData Determines if the class instance should set session data to pass to NS8
-     * @param ?object $client         HTTP client to use when making requests
+     * @param ?string     $authUsername   Authentication username for NS8 requests
+     * @param ?string     $accessToken    Access Token for NS8 requests
+     * @param bool        $setSessionData Determines if the class instance should set session data to pass to NS8
+     * @param ?ZendClient $client         HTTP client to use when making requests
      */
     public function __construct(
         ?string $authUsername = null,
         ?string $accessToken = null,
         bool $setSessionData = true,
-        ?object $client = null
+        ?ZendClient $client = null
     ) {
         $this->authUsername = $authUsername;
         $this->accessToken  = $accessToken;
-        $this->client       = empty($client) ? new ZendClient() : $client;
+        $this->client       = $client ?? new ZendClient();
 
         if (! $setSessionData) {
             return;
@@ -109,6 +113,25 @@ class Client implements ClientDefinition
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
     ) : stdClass {
         return $this->executeWithAuth($url, [], self::GET_REQUEST_TYPE, $parameters, $headers, $timeout);
+    }
+
+    /**
+     * Sends GET requests to NS8 services for retrieving information
+     *
+     * @param string  $url        URL that is being accessed
+     * @param mixed[] $parameters Parameters to include in request
+     * @param mixed[] $headers    Array of heads to include in request
+     * @param int     $timeout    Timeout length for the request
+     *
+     * @return string
+     */
+    public function getNonJson(
+        string $url,
+        array $parameters = [],
+        array $headers = [],
+        int $timeout = self::DEFAULT_TIMEOUT_VALUE
+    ) : string {
+        return $this->executeRequest($url, [], self::GET_REQUEST_TYPE, $parameters, $headers, $timeout);
     }
 
     /**
@@ -196,7 +219,7 @@ class Client implements ClientDefinition
      *
      * @return stdClass
      */
-    public function executeWithAuth(
+    protected function executeWithAuth(
         string $url,
         array $data,
         string $method = self::POST_REQUEST_TYPE,
@@ -228,7 +251,7 @@ class Client implements ClientDefinition
      *
      * @return string
      */
-    public function executeRequest(
+    protected function executeRequest(
         string $route,
         array $data = [],
         string $method = self::POST_REQUEST_TYPE,
@@ -277,7 +300,7 @@ class Client implements ClientDefinition
      *
      * @return stdClass
      */
-    public function executeJsonRequest(
+    protected function executeJsonRequest(
         string $route,
         array $data = [],
         string $method = self::POST_REQUEST_TYPE,
@@ -295,11 +318,13 @@ class Client implements ClientDefinition
      *
      * @param mixed[] $sessionData Session data being set for request
      *
-     * @return void
+     * @return ClientDefinition
      */
-    public function setSessionData(array $sessionData) : void
+    public function setSessionData(array $sessionData) : ClientDefinition
     {
         $this->sessionData = $sessionData;
+
+        return $this;
     }
 
     /**
@@ -307,7 +332,7 @@ class Client implements ClientDefinition
      *
      * @return mixed[]
      */
-    public function getSessionData() : array
+    public function getSessionData() : ?array
     {
         return $this->sessionData;
     }
@@ -317,11 +342,13 @@ class Client implements ClientDefinition
      *
      * @param srtring $authUsername Authentication username to use when sending requests
      *
-     * @return void
+     * @return ClientDefinition
      */
-    public function setAuthUsername(string $authUsername) : void
+    public function setAuthUsername(string $authUsername) : ClientDefinition
     {
         $this->authUsername = $authUsername;
+
+        return $this;
     }
 
     /**
@@ -339,11 +366,13 @@ class Client implements ClientDefinition
      *
      * @param string $accessToken Authentication username to use when sending requests
      *
-     * @return void
+     * @return ClientDefinition
      */
-    public function setAccessToken(string $accessToken) : void
+    public function setAccessToken(string $accessToken) : ClientDefinition
     {
         $this->accessToken = $accessToken;
+
+        return $this;
     }
 
     /**
