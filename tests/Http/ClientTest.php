@@ -18,6 +18,14 @@ use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
 class ClientTest extends TestCase
 {
     /**
+     * Define request types the HTTP client utilizes
+     */
+    public const GET_REQUEST_TYPE    = 'GET';
+    public const POST_REQUEST_TYPE   = 'POST';
+    public const PUT_REQUEST_TYPE    = 'PUT';
+    public const DELETE_REQUEST_TYPE = 'DELETE';
+
+    /**
      * Test Components to plug in for mock requests
      */
     public const TEST_URI          = 'https://ns8.com';
@@ -62,7 +70,28 @@ class ClientTest extends TestCase
         $client         = new Client(self::TEST_AUTH_NAME, self::TEST_ACCESS_TOKEN, true, $testHttpClient);
         $response       = $client->get(self::TEST_URI);
 
-        $this->assertEquals($response->request_type, Client::GET_REQUEST_TYPE);
+        $this->assertEquals(self::GET_REQUEST_TYPE, $response->request_type);
+    }
+
+    /**
+     * Test GET request
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers ::get
+     * @covers ::getAccessToken
+     * @covers ::setSessionData
+     * @covers ::getNonJson
+     * @covers ::executeRequest
+     */
+    public function testNonJsonGetRequest() : void
+    {
+        $testHttpClient = $this->buildTestNonJsonHttpClient(Client::GET_REQUEST_TYPE);
+        $client         = new Client(self::TEST_AUTH_NAME, self::TEST_ACCESS_TOKEN, true, $testHttpClient);
+        $response       = $client->getNonJson(self::TEST_URI);
+
+        $this->assertEquals('Test Response', $response);
     }
 
     /**
@@ -86,7 +115,7 @@ class ClientTest extends TestCase
         $client         = new Client(self::TEST_AUTH_NAME, self::TEST_ACCESS_TOKEN, true, $testHttpClient);
         $response       = $client->post(self::TEST_URI);
 
-        $this->assertEquals($response->request_type, Client::POST_REQUEST_TYPE);
+        $this->assertEquals(self::POST_REQUEST_TYPE, $response->request_type);
     }
 
     /**
@@ -108,7 +137,7 @@ class ClientTest extends TestCase
         $client         = new Client(self::TEST_AUTH_NAME, self::TEST_ACCESS_TOKEN, true, $testHttpClient);
         $response       = $client->put(self::TEST_URI);
 
-        $this->assertEquals($response->request_type, Client::PUT_REQUEST_TYPE);
+        $this->assertEquals(self::PUT_REQUEST_TYPE, $response->request_type);
     }
 
     /**
@@ -130,11 +159,11 @@ class ClientTest extends TestCase
         $client         = new Client(self::TEST_AUTH_NAME, self::TEST_ACCESS_TOKEN, true, $testHttpClient);
         $response       = $client->delete(self::TEST_URI);
 
-        $this->assertEquals($response->request_type, Client::DELETE_REQUEST_TYPE);
+        $this->assertEquals(self::DELETE_REQUEST_TYPE, $response->request_type);
     }
 
     /**
-     * Test Auth Name functionality
+     * Test get Auth Name functionality
      *
      * @return void
      *
@@ -142,15 +171,32 @@ class ClientTest extends TestCase
      * @covers ::setAuthUsername
      * @covers ::getAuthUsername
      */
-    public function testAuthNameFunctionality() : void
+    public function testgetAuthNameFunctionality() : void
     {
         $client = new Client(null, null, false);
+        $this->assertEquals(null, $client->getAuthUsername());
         $client->setAuthUsername(self::TEST_AUTH_NAME);
-        $this->assertEquals($client->getAuthUsername(), self::TEST_AUTH_NAME);
+        $this->assertEquals(self::TEST_AUTH_NAME, $client->getAuthUsername());
     }
 
     /**
-     * Test Auth Name functionality
+     * Test set Auth Name functionality
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers ::setAuthUsername
+     * @covers ::getAuthUsername
+     */
+    public function testsetAuthNameFunctionality() : void
+    {
+        $client = new Client(null, null, false);
+        $client->setAuthUsername(self::TEST_AUTH_NAME);
+        $this->assertEquals(self::TEST_AUTH_NAME, $client->getAuthUsername());
+    }
+
+    /**
+     * Test get Access Token functionality
      *
      * @return void
      *
@@ -158,15 +204,32 @@ class ClientTest extends TestCase
      * @covers ::setAccessToken
      * @covers ::getAccessToken
      */
-    public function testAccessTokenFunctionality() : void
+    public function testGetAccessTokenFunctionality() : void
     {
         $client = new Client(null, null, false);
+        $this->assertEquals(null, $client->getAccessToken());
         $client->setAccessToken(self::TEST_ACCESS_TOKEN);
-        $this->assertEquals($client->getAccessToken(), self::TEST_ACCESS_TOKEN);
+        $this->assertEquals(self::TEST_ACCESS_TOKEN, $client->getAccessToken());
     }
 
     /**
-     * Test Auth Name functionality
+     * Test set Access Token functionality
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers ::setAccessToken
+     * @covers ::getAccessToken
+     */
+    public function testSetAccessTokenFunctionality() : void
+    {
+        $client = new Client(null, null, false);
+        $client->setAccessToken(self::TEST_ACCESS_TOKEN);
+        $this->assertEquals(self::TEST_ACCESS_TOKEN, $client->getAccessToken());
+    }
+
+    /**
+     * Test get Session Data functionality
      *
      * @return void
      *
@@ -174,11 +237,28 @@ class ClientTest extends TestCase
      * @covers ::setSessionData
      * @covers ::getSessionData
      */
-    public function testSessionDataFunctionality() : void
+    public function testGetSessionDataFunctionality() : void
+    {
+        $client = new Client(null, null, false);
+        $this->assertEquals(null, $client->getSessionData());
+        $client->setSessionData(self::TEST_SESSION_DATA);
+        $this->assertEquals(self::TEST_SESSION_DATA, $client->getSessionData());
+    }
+
+    /**
+     * Test set Session Data functionality
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers ::setSessionData
+     * @covers ::getSessionData
+     */
+    public function testSetSessionDataFunctionality() : void
     {
         $client = new Client(null, null, false);
         $client->setSessionData(self::TEST_SESSION_DATA);
-        $this->assertEquals($client->getSessionData(), self::TEST_SESSION_DATA);
+        $this->assertEquals(self::TEST_SESSION_DATA, $client->getSessionData());
     }
 
     /**
@@ -245,6 +325,26 @@ class ClientTest extends TestCase
         '   "request_type": "' . $requestType . '",' .
         '   "success": true' .
         "}\r\n";
+
+        $adapter->setResponse($response);
+
+        return $testHttpClient;
+    }
+
+    /**
+     * Returns a test Zend HTTP client to utilize when invoking the NS8 Core HTTP Client
+     * for Non-JSON requests
+     *
+     * @return ZendClient
+     */
+    protected function buildTestNonJsonHttpClient() : ZendClient
+    {
+        $adapter        = new ZendTestAdapter();
+        $testHttpClient = new ZendClient(self::TEST_URI, ['adapter' => $adapter]);
+
+        $response =  'HTTP/1.1 200 OK' . "\r\n" .
+        'Content-type: text/html' . "\r\n\r\n" .
+        'Test Response';
 
         $adapter->setResponse($response);
 

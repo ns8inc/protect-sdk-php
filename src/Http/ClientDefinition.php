@@ -86,71 +86,29 @@ interface ClientDefinition
     ) : stdClass;
 
     /**
-     * Sends requests to NS8 services with authorization credentials in place
-     *
-     * @param string  $url        URL that is being accessed
-     * @param mixed[] $data       Data to include in body of the request
-     * @param string  $method     The HTTP method being used to send the request
-     * @param mixed[] $parameters Parameters to include in request
-     * @param mixed[] $headers    Array of heads to include in request
-     * @param int     $timeout    Timeout length for the request
-     *
-     * @return stdClass
-     */
-    public function executeWithAuth(
-        string $url,
-        array $data,
-        string $method = 'POST',
-        array $parameters = [],
-        array $headers = [],
-        int $timeout = 30
-    ) : stdClass;
-
-    /**
-     * Sends requests to NS8 services
-     *
-     * @param string  $route      URL that is being accessed
-     * @param mixed[] $data       Data to include in body of the request
-     * @param string  $method     The HTTP method being used to send the request
-     * @param mixed[] $parameters Parameters to include in request
-     * @param mixed[] $headers    Array of heads to include in request
-     * @param int     $timeout    Timeout length for the request
-     *
-     * @return stdClass
-     */
-    public function executeRequest(
-        string $route,
-        array $data = [],
-        string $method = 'POST',
-        array $parameters = [],
-        array $headers = [],
-        int $timeout = 30
-    ) : string;
-
-    /**
      * Sets session data intended to be passed to NS8 services
      *
      * @param mixed[] $sessionData Session data being set for request
      *
-     * @return void
+     * @return ClientDefinition
      */
-    public function setSessionData(array $sessionData) : void;
+    public function setSessionData(array $sessionData) : ClientDefinition;
 
     /**
      * Returns session data used in HTTP requests to NS8 services
      *
      * @return mixed[]
      */
-    public function getSessionData() : array;
+    public function getSessionData() : ?array;
 
     /**
      * Set authusername used in post requests
      *
      * @param srtring $authUsername Authentication username to use when sending requests
      *
-     * @return void
+     * @return ClientDefinition
      */
-    public function setAuthUsername(string $authUsername) : void;
+    public function setAuthUsername(string $authUsername) : ClientDefinition;
 
     /**
      * Return authusername for post requests
@@ -164,9 +122,9 @@ interface ClientDefinition
      *
      * @param string $accessToken Access token to be used when sending requests
      *
-     * @return void
+     * @return ClientDefinition
      */
-    public function setAccessToken(string $accessToken) : void;
+    public function setAccessToken(string $accessToken) : ClientDefinition;
 
     /**
      * Return access token used in requests with authentication
