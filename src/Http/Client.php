@@ -248,6 +248,10 @@ class Client implements ClientDefinition
 
         // TODO: Implement protect version once configuration logic is in place
         //$headers['extension-version'] = $this->config->getProtectVersion();
+        if (! empty($headers)) {
+            $this->client->setHeaders($headers);
+        }
+
         if (! empty($data)) {
             $this->client->setParameterPost($data);
         }
