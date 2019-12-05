@@ -97,7 +97,7 @@ interface ClientDefinition
     /**
      * Returns session data used in HTTP requests to NS8 services
      *
-     * @return mixed[]
+     * @return mixed[]|null
      */
     public function getSessionData() : ?array;
 
