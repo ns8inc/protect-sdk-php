@@ -237,6 +237,7 @@ class Client implements ClientDefinition
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
     ) : string {
         $response = null;
+        // TODO: Update once config is in place for NS8 URL fetching
         //$uri = $this->config->getNS8MiddlewareUrl($route);
         $uri = $route;
 
