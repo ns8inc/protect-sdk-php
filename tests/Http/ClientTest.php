@@ -342,8 +342,8 @@ class ClientTest extends TestCase
         $adapter        = new ZendTestAdapter();
         $testHttpClient = new ZendClient(self::TEST_URI, ['adapter' => $adapter]);
 
-        $response =  'HTTP/1.1 200 OK' . "\r\n" .
-        'Content-type: text/html' . "\r\n\r\n" .
+        $response =  'HTTP/1.1 200 OK' . "\n" .
+        'Content-type: text/html' . "\n\n" .
         'Test Response';
 
         $adapter->setResponse($response);
