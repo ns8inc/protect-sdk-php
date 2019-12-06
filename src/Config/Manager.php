@@ -84,6 +84,6 @@ abstract class Manager
     {
         $fileData = file_get_contents($fileName);
 
-        return ZendJsonDecoder($fileData, ZendJsonDecoder::TYPE_ARRAY);
+        return ZendJsonDecoder::decode($fileData, ZendJsonDecoder::TYPE_ARRAY);
     }
 }
