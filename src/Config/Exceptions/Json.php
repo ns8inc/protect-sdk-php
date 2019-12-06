@@ -7,7 +7,7 @@ namespace NS8\ProtectSDK\Config\Exceptions;
 use Exception;
 
 /**
- * HTTP Exception used for NS8 HTTP Exceptions being triggered
+ * JSON Configuration Exception used for NS8 JSON Configurations Exceptions being triggered
  **/
 class Json extends Exception
 {
