@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Config;
 
-use Zend\Json\Decoder as ZendJsonDecoder;
+use NS8\ProtectSDK\Config\Exceptions\Json as JsonConfigException;
+use const JSON_ERROR_NONE;
 use function array_merge;
 use function file_exists;
 use function file_get_contents;
+use function json_decode;
+use function json_last_error;
+use function sprintf;
 
 /**
  * Abstract class describing how Config Manager classes should be structured
@@ -30,15 +34,8 @@ abstract class Manager
     public function __construct(?string $customConfigJsonFile = null, ?string $baseConfigJsonFile = null)
     {
         $this->configData = [];
-        $baseData         = [];
-        if (isset($baseConfigJsonFile) && file_exists($baseConfigJsonFile)) {
-            $baseData = $this->readJsonFromFile($baseConfigJsonFile);
-        }
-
-        $customData = [];
-        if (isset($customConfigJsonFile) && file_exists($customConfigJsonFile)) {
-            $customData = $this->readJsonFromFile($customConfigJsonFile);
-        }
+        $baseData         = isset($baseConfigJsonFile) ? $this->getConfigByFile($baseConfigJsonFile) : [];
+        $customData       = isset($customConfigJsonFile) ? $this->getConfigByFile($customConfigJsonFile) : [];
 
         $this->configData = array_merge($baseData, $customData);
     }
@@ -76,6 +73,24 @@ abstract class Manager
     abstract public function doesValueExist(string $key) : bool;
 
     /**
+     * Returns a configuration array from a file based on the file parth
+     *
+     * @param string $fileName File path for where the coinfiguration is stored
+     *
+     * @return mixed[] JSON data decoded
+     */
+    protected function getConfigByFile(string $fileName) : array
+    {
+        if (! file_exists($fileName)) {
+            throw new JsonConfigException(sprintf('Configuration file %s does not exist.', $fileName));
+        }
+
+        return $this->readJsonFromFile($filename);
+    }
+
+    /**
+     * Parses a JSON array from configuration file
+     *
      * @param string $fileName JSON file to be decoded
      *
      * @return mixed[] JSON data decoded
@@ -83,7 +98,11 @@ abstract class Manager
     protected function readJsonFromFile(string $fileName) : array
     {
         $fileData = file_get_contents($fileName);
+        $jsonData = json_decode($fileData, true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            throw new JsonConfigException(sprintf('%s does not contain valid JSON.', $fileName));
+        }
 
-        return ZendJsonDecoder::decode($fileData, ZendJsonDecoder::TYPE_ARRAY);
+        return $jsonData;
     }
 }
