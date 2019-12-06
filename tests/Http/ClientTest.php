@@ -319,12 +319,12 @@ class ClientTest extends TestCase
         $adapter        = new ZendTestAdapter();
         $testHttpClient = new ZendClient(self::TEST_URI, ['adapter' => $adapter]);
 
-        $response =  'HTTP/1.1 200 OK' . "\r\n" .
-        'Content-type: application/json' . "\r\n\r\n" .
+        $response =  'HTTP/1.1 200 OK' . "\n" .
+        'Content-type: application/json' . "\n\n" .
         '{' .
         '   "request_type": "' . $requestType . '",' .
         '   "success": true' .
-        "}\r\n";
+        "}\n";
 
         $adapter->setResponse($response);
 
