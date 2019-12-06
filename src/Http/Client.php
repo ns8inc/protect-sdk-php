@@ -16,7 +16,7 @@ use function sprintf;
 /**
  * HTTP/Rest client that allows the NS8 SDK to communicate with NS8 services
  */
-class Client implements ClientDefinition
+class Client implements IProtectClient
 {
     /**
      * Define request types the HTTP client utilizes
@@ -316,9 +316,9 @@ class Client implements ClientDefinition
      *
      * @param mixed[] $sessionData Session data being set for request
      *
-     * @return ClientDefinition
+     * @return IProtectClient
      */
-    public function setSessionData(array $sessionData) : ClientDefinition
+    public function setSessionData(array $sessionData) : IProtectClient
     {
         $this->sessionData = $sessionData;
 
@@ -340,9 +340,9 @@ class Client implements ClientDefinition
      *
      * @param srtring $authUsername Authentication username to use when sending requests
      *
-     * @return ClientDefinition
+     * @return IProtectClient
      */
-    public function setAuthUsername(string $authUsername) : ClientDefinition
+    public function setAuthUsername(string $authUsername) : IProtectClient
     {
         $this->authUsername = $authUsername;
 
@@ -364,9 +364,9 @@ class Client implements ClientDefinition
      *
      * @param string $accessToken Authentication username to use when sending requests
      *
-     * @return ClientDefinition
+     * @return IProtectClient
      */
-    public function setAccessToken(string $accessToken) : ClientDefinition
+    public function setAccessToken(string $accessToken) : IProtectClient
     {
         $this->accessToken = $accessToken;
 
