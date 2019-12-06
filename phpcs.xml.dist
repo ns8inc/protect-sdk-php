@@ -18,4 +18,9 @@
     </rule>
 
     <rule ref="PEAR.Commenting.FunctionComment"/>
+
+    <!-- Check for deprecated/removed PHP functions. -->
+    <rule ref="PHPCompatibility">
+        <config name="testVersion" value="7.1-"/>
+    </rule>
 </ruleset>
