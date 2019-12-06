@@ -15,8 +15,9 @@ use function file_get_contents;
 abstract class Manager
 {
     /**
+     * Attribute to configuration information set during application flow
+     *
      * @var mixed[] $configData
-     * Attribute to track session data to be sent in requests
      */
     protected $configData;
 
