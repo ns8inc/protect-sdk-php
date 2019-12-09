@@ -21,7 +21,6 @@ abstract class ClientBase
      */
     abstract public function error(string $message, ?Throwable $event = null, ?array $data = null) : void;
 
-
     /**
      * Logs a message classified as a debugging line
      *
