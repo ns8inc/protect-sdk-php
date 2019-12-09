@@ -94,12 +94,14 @@ abstract class Manager
      * @param string $fileName JSON file to be decoded
      *
      * @return mixed[] JSON data decoded
+     *
+     * @throws JsonConfigException if the JSON was not decoded without an error.
      */
     protected function readJsonFromFile(string $fileName) : array
     {
         $fileData = file_get_contents($fileName);
         $jsonData = json_decode($fileData, true);
-        if (json_last_error() === JSON_ERROR_NONE) {
+        if (json_last_error() !== JSON_ERROR_NONE) {
             throw new JsonConfigException(sprintf('%s does not contain valid JSON.', $fileName));
         }
 
