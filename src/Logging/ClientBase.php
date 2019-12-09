@@ -10,13 +10,13 @@ namespace NS8\ProtectSDK\Logging;
 abstract class ClientBase
 {
     /**
-     * @param string    $message   The message we intend to log
-     * @param Exception $exception Exception object associated with the error.
-     * @param mixed[]   $data      Data associated with the error if any is present
+     * @param string    $message The message we intend to log
+     * @param Throwable $event   Throwable event associated with the error
+     * @param mixed[]   $data    Data associated with the error if any is present
      *
      * @return void
      */
-    abstract public function error(string $message, ?Exception $exception = null, ?array $data = null) : void;
+    abstract public function error(string $message, ?Throwable $event = null, ?array $data = null) : void;
 
     /**
      * Logs a message classified as a debugging line
