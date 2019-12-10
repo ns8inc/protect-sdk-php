@@ -11,6 +11,7 @@ use function file_exists;
 use function file_get_contents;
 use function json_decode;
 use function json_last_error;
+use function phpversion;
 use function sprintf;
 
 /**
@@ -30,21 +31,29 @@ abstract class Manager
      *
      * @param string $customConfigJsonFile Custom JSON file to be passed into the constructor for configuration set-up
      * @param string $baseConfigJsonFile   Base JSON file to be passed into the construction for configuration set-up
+     * @param string $platformVersion      Current version of the platform being utilized
+     * @param string $phpVersion           Version of PHP being utilized
      */
-    public function __construct(?string $customConfigJsonFile = null, ?string $baseConfigJsonFile = null)
-    {
+    public function __construct(
+        ?string $customConfigJsonFile = null,
+        ?string $baseConfigJsonFile = null,
+        ?string $platformVersion = null,
+        ?string $phpVersion = null
+    ) {
         $this->configData = [];
         $baseData         = isset($baseConfigJsonFile) ? $this->getConfigByFile($baseConfigJsonFile) : [];
         $customData       = isset($customConfigJsonFile) ? $this->getConfigByFile($customConfigJsonFile) : [];
 
-        $this->configData = array_merge($baseData, $customData);
+        $this->configData                     = array_merge($baseData, $customData);
+        $this->configData['platform_version'] = $platformVersion;
+        $this->configData['php_version']      = $phpVersion ?? phpversion();
     }
 
     /**
      * Sets a configuration value for a specific key
      *
      * @param string $key   Key for value in configuration array
-     * @param $value Value for the associated key
+     * @param mixed  $value Value for the associated key
      *
      * @return Manager
      */
@@ -56,6 +65,8 @@ abstract class Manager
      * to permit granular configuration
      *
      * @param string $key Key for configuration data we want to retrieve
+     *
+     * @return mixed Return value stored in config for the given key
      */
     abstract public function getValue(string $key);
 
