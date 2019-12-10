@@ -2,6 +2,7 @@
 
 ### Purpose of the Logging Client
 The logging client is intended to provide a simple class that can be instantiated and utilized to log information to multiple sources. The logging client relies on [Monolog](https://github.com/Seldaek/monolog) in addition to [Monolog Cascade](https://github.com/theorchard/monolog-cascade) to provide a configurable, flexible interface in which NS8 can supply logging components in addition to custom logging components supplied by NS8 SDK users. The Logging Client provides methods for:
+
   * Errors: Logs errors including a Throwable object for context
   * Debugging: Logs debugging info
   * Warnings: Logs warning generated during runtime
