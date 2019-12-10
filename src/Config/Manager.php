@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Config;
 
+use NS8\ProtectSDK\Config\Exceptions\Environment as EnvironmentConfigException;
 use NS8\ProtectSDK\Config\Exceptions\Json as JsonConfigException;
 use const JSON_ERROR_NONE;
 use function array_merge;
@@ -62,7 +63,7 @@ abstract class Manager
         ?string $phpVersion = null
     ) {
         if (! in_array($environment, self::ACCEPTED_CONFIG_ENVIRONMENTS)) {
-            EnvironmentConfigException(sprintf('%s is not a valid environment type.', $environment));
+            throw new EnvironmentConfigException(sprintf('%s is not a valid environment type.', $environment));
         }
 
         $baseData   = isset($baseConfigJsonFile) ? $this->getConfigByFile($baseConfigJsonFile) : [];
