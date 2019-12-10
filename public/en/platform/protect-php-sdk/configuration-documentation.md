@@ -67,3 +67,15 @@ ConfigManager::setValue('store.currency', 'USD');
 // Later on return the curreny value
 ConfigManager::getValue('store.currency');
 ```
+
+Checking if a config value exists
+```
+<?php
+
+declare(strict_types=1);
+
+use NS8\ProtectSDK\Config\Manager as ConfigManager;
+
+// Does Foo config value exist?
+$doesFooExist = ConfigManager::doesValueExist('foo');
+```
