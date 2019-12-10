@@ -6,7 +6,6 @@ namespace NS8\ProtectSDK\Logging;
 
 /**
  * Abstract class defining core logging functionality and expected behavior
-
  */
 abstract class ClientBase
 {
