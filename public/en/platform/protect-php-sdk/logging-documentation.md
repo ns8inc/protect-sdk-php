@@ -1,8 +1,7 @@
 ## Logging Client
 
 ### Purpose of the Logging Client
-The logging client is intended to provide a simple class that can be instantiated and utilized to log information to multiple sources. The logging client relies on [Monolog](https://github.com/Seldaek/monolog) in addition to [Monolog Cascade](https://github.com/theorchard/monolog-cascade) to provide a configurable, flexible interface in which NS8 can supply logging components
-in addition to custom logging components supplied by NS8 SDK users. The Logging Client provides methods for:
+The logging client is intended to provide a simple class that can be instantiated and utilized to log information to multiple sources. The logging client relies on [Monolog](https://github.com/Seldaek/monolog) in addition to [Monolog Cascade](https://github.com/theorchard/monolog-cascade) to provide a configurable, flexible interface in which NS8 can supply logging components in addition to custom logging components supplied by NS8 SDK users. The Logging Client provides methods for:
   * Errors: Logs errors including a Throwable object for context
   * Debugging: Logs debugging info
   * Warnings: Logs warning generated during runtime
@@ -23,8 +22,7 @@ Logging handlers detail the "functionality" of an intended logging operation and
   * The formatter to be used when logging information
   * The processors to be included when invoking a logging event
 
-Multiple handlers are made available by Monolog and custom handlers can be created by implementing the `Monolog\Handler\HandlerInterface` interface or one of the `HandlerInterface` abstract implementation classes such as `Monolog\Handler\AbstractProcessingHandler`.  The handler's primary methods will be `handle` which determines if the entry should
-be logged and what conditionals must be met before writing and `write` which performs the actual sending of log information to the destination. [Monolog's Handler directory](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/) contain multiple developed handlers that can be reviewed for a deeper undestanding as well.
+Multiple handlers are made available by Monolog and custom handlers can be created by implementing the `Monolog\Handler\HandlerInterface` interface or one of the `HandlerInterface` abstract implementation classes such as `Monolog\Handler\AbstractProcessingHandler`.  The handler's primary methods will be `handle` which determines if the entry should be logged and what conditionals must be met before writing and `write` which performs the actual sending of log information to the destination. [Monolog's Handler directory](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/) contain multiple developed handlers that can be reviewed for a deeper undestanding as well.
 
 ### Example Logger Implementations
 The following JSON is an example Cascade configuration based off of [Cascade's usage guidelines](https://github.com/theorchard/monolog-cascade).
