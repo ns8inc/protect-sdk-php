@@ -44,11 +44,11 @@ abstract class Manager
      * Sets a configuration value for a specific key
      *
      * @param string $key   Key for value in configuration array
-     * @param mixed  $value Value for the associated key
+     * @param $value Value for the associated key
      *
      * @return Manager
      */
-    abstract public function setValue(string $key, mixed $value) : Manager;
+    abstract public function setValue(string $key, $value) : Manager;
 
     /**
      * Returns a value from the configuration array given the key.
