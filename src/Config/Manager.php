@@ -65,11 +65,10 @@ abstract class Manager
             EnvironmentConfigException(sprintf('%s is not a valid environment type.', $environment));
         }
 
-        self::$environment = $environment;
-        self::$configData  = [];
-        $baseData          = isset($baseConfigJsonFile) ? $this->getConfigByFile($baseConfigJsonFile) : [];
-        $customData        = isset($customConfigJsonFile) ? $this->getConfigByFile($customConfigJsonFile) : [];
+        $baseData   = isset($baseConfigJsonFile) ? $this->getConfigByFile($baseConfigJsonFile) : [];
+        $customData = isset($customConfigJsonFile) ? $this->getConfigByFile($customConfigJsonFile) : [];
 
+        self::$environment                    = $environment;
         self::$configData                     = array_merge($baseData, $customData);
         self::$configData['platform_version'] = $platformVersion;
         self::$configData['php_version']      = $phpVersion ?? phpversion();
