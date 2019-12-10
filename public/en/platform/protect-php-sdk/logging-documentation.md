@@ -17,7 +17,7 @@ Logging formatters provide the structure of how logged information should be nor
 Logging processors provide additional information for logging events in a similar fashion to Traits in PHP. Processors can add context for branch info, memory usage, network information, etc. and can be filtered to specific log levels in custom processor implementations. Custom processors can be created by implementing the `Monolog\Processor\ProcessorInterface` interface.
 
 ### Logging Handlers
-Logging handlers detail the "functionality" of an intended logging operation and specify such attributes of the Log process as:
+Logging handlers detail the main "functionality" of an intended logging operation and specify such attributes of the Log process as:
   * The handler class being used (e.g. `Monolog\Handler\StreamHandler`)
   * The minimum error level needed to be logged with the given handler
   * The formatter to be used when logging information
