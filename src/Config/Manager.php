@@ -24,7 +24,7 @@ abstract class Manager
      *
      * @var mixed[] $configData
      */
-    protected $configData;
+    protected static $configData;
 
     /**
      * Constructor for Configuration manager
@@ -40,13 +40,13 @@ abstract class Manager
         ?string $platformVersion = null,
         ?string $phpVersion = null
     ) {
-        $this->configData = [];
+        self::$configData = [];
         $baseData         = isset($baseConfigJsonFile) ? $this->getConfigByFile($baseConfigJsonFile) : [];
         $customData       = isset($customConfigJsonFile) ? $this->getConfigByFile($customConfigJsonFile) : [];
 
-        $this->configData                     = array_merge($baseData, $customData);
-        $this->configData['platform_version'] = $platformVersion;
-        $this->configData['php_version']      = $phpVersion ?? phpversion();
+        self::$configData                     = array_merge($baseData, $customData);
+        self::$configData['platform_version'] = $platformVersion;
+        self::$configData['php_version']      = $phpVersion ?? phpversion();
     }
 
     /**
@@ -57,7 +57,7 @@ abstract class Manager
      *
      * @return Manager
      */
-    abstract public function setValue(string $key, $value) : Manager;
+    abstract public static function setValue(string $key, $value) : Manager;
 
     /**
      * Returns a value from the configuration array given the key.
@@ -68,7 +68,7 @@ abstract class Manager
      *
      * @return mixed Return value stored in config for the given key
      */
-    abstract public function getValue(string $key);
+    abstract public static function getValue(string $key);
 
     /**
      * Returns if a value exists in the configuration.
@@ -79,7 +79,7 @@ abstract class Manager
      *
      * @return mixed
      */
-    abstract public function doesValueExist(string $key) : bool;
+    abstract public static function doesValueExist(string $key) : bool;
 
     /**
      * Returns a configuration array from a file based on the file parth
