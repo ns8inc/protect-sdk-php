@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace NS8\ProtectSDK\Logging;
 
 /**
- * HTTP/Rest client that allows the NS8 SDK to communicate with NS8 services
+ * Abstract class defining core logging functionality and expected behavior
  */
 abstract class ClientBase
 {
     /**
+     * Logs a message classified as an error
+     *
      * @param string    $message The message we intend to log
      * @param Throwable $event   Throwable event associated with the error
      * @param mixed[]   $data    Data associated with the error if any is present
