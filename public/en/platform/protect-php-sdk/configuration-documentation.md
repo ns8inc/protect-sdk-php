@@ -53,7 +53,7 @@ $shouldLogHttpCalls = (boolean) $configManager::getValue('log_http_calls');
 $apiUrl = $configManager::getEnvValue('api_url');
 ```
 
-Initalizing the Configuration Manager and setting then retrieving a sample value
+Setting then retrieving a sample value
 ```
 <?php
 
@@ -61,12 +61,9 @@ declare(strict_types=1);
 
 use NS8\ProtectSDK\Config\Manager as ConfigManager;
 
-// Initialize configuration manager to set environment and JSON files
-$configManager = new ConfigManager('testing', null, 'base_config.json');
-
 // Set the currency value
-$configManager::setValue('store.currency', 'USD');
+ConfigManager::setValue('store.currency', 'USD');
 
 // Later on return the curreny value
-$currencyFormat = $configManager::getValue('store.currency');
+ConfigManager::getValue('store.currency');
 ```
