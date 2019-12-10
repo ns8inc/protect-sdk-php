@@ -56,10 +56,8 @@ abstract class Manager
      * to permit granular configuration
      *
      * @param string $key Key for configuration data we want to retrieve
-     *
-     * @return mixed
      */
-    abstract public function getValue(string $key) : mixed;
+    abstract public function getValue(string $key);
 
     /**
      * Returns if a value exists in the configuration.
