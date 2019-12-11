@@ -39,10 +39,10 @@ use Zend\Http\Client as ZendClient;
 use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
 
 $adapter = new ZendTestAdapter();
-$testHttpClient = new ZendClient(self::TEST_URI, ['adapter' => $adapter]);
+$testHttpClient = new ZendClient('ns8.com', ['adapter' => $adapter]);
 
 // The third argument "true" lets the NS8 HTTP client know to automatically set session data for HTTP requests
-$httpClient = new Client(self::TEST_AUTH_NAME, self::TEST_ACCESS_TOKEN, true, $testHttpClient);
+$httpClient = new Client('test', 'test', true, $testHttpClient);
 ```
 
 The HTTP client permits setting/getting auth username, access token, and session data dynamically following object instantation as well.
