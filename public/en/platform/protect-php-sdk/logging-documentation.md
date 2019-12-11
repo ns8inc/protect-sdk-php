@@ -26,7 +26,7 @@ Multiple handlers are made available by Monolog and custom handlers can be creat
 
 ### Example Logger Implementations
 The following JSON is an example Cascade configuration based off of [Cascade's usage guidelines](https://github.com/theorchard/monolog-cascade).
-```
+```yml
 formatters:
     dashed:
         class: Monolog\Formatter\LineFormatter
@@ -54,7 +54,7 @@ loggers:
         processors: [web_processor, memory_processor]
 ```
 The following demonstrates examples utilizing the Logger class:
-```
+```php
 <?php
 declare(strict_types=1);
 use NS8\ProtectSDK\Logging\Client as LoggingClient;
