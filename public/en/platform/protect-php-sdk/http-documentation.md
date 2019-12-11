@@ -8,29 +8,29 @@ The purpose of the HTTP client is to provide a clean, functional class that deve
 
 
 ### Example HTTP Client Implementations
-The following serves as example of implentations of the HTTP Client
+The following serves as example of implentations of the HTTP Client. Please note that the HTTP client will handle the domain component of the URI so only the endpoint path needs to be specified.
 
-```
+```php
 <?php
 declare(strict_types=1);
 
 use NS8\ProtectSDK\Http\Client as HttpClient;
 
 $httpClient = new HttpClient('Auth Username', 'Access Token');
-$httpClient->get('https://test-protect.ns8.com/endpoint', ['param_1' => 'value_2', 'param_2' => 'value_2']);
+$httpClient->get('endpoint/get', ['param_1' => 'value_2', 'param_2' => 'value_2']);
 
 // Send a GET request specifically intended for Non-JSON responses such as an analytics script.
-$httpClient->getNonJson('https://test-protect.ns8.com/nonjson_endpoint', ['param_1' => 'value_2', 'param_2' => 'value_2']);
+$httpClient->getNonJson('endpoint/nonjson', ['param_1' => 'value_2', 'param_2' => 'value_2']);
 
-$httpClient->post('https://test-protect.ns8.com/endpoint', ['new_record_key_1' => 'data_key_1', 'new_record_key_2' => 'data_key_2']);
+$httpClient->post('endpoint/post', ['new_record_key_1' => 'data_key_1', 'new_record_key_2' => 'data_key_2']);
 
-$httpClient->put('https://test-protect.ns8.com/endpoint', ['existing_record_key_1' => 'data_key_1', 'existing_record_key_2' => 'data_key_2']);
+$httpClient->put('endpoint/put', ['existing_record_key_1' => 'data_key_1', 'existing_record_key_2' => 'data_key_2']);
 
-$httpClient->delete('https://test-protect.ns8.com/endpoint', ['record_id' => 'sample_id_value']);
+$httpClient->delete('endpoint/delete', ['record_id' => 'sample_id_value']);
 ```
 
 The HTTP client also supports custom HTTP clients based off of the Zend Client when initializing the client object such as this:
-```
+```php
 <?php
 declare(strict_types=1);
 
@@ -46,7 +46,7 @@ $httpClient = new Client(self::TEST_AUTH_NAME, self::TEST_ACCESS_TOKEN, true, $t
 ```
 
 The HTTP client permits setting/getting auth username, access token, and session data dynamically following object instantation as well.
-```
+```php
 <?php
 declare(strict_types=1);
 
@@ -56,7 +56,7 @@ $httpClient = new HttpClient();
 
 // Auth Username
 $authUsername = 'test'
-$client->setAuthUsername(authUsername);
+$client->setAuthUsername($authUsername);
 
 // Later fetching auth username from client object
 $authUsername = $client->getAuthUsername();
