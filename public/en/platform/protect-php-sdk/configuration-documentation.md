@@ -14,7 +14,7 @@ The Config Manager class is intended to be a flexible, functional class that can
 The Config Manager is explicitly designed for abstract usage. The following implementations are example usages of the Config Manager:
 
 JSON Sample For Examples
-```
+```json
 {
   "version": 2,
   "platform": "Magento",
@@ -36,7 +36,7 @@ JSON Sample For Examples
 ```
 
 Initalizing the Configuration Manager and fetching if we should log HTTP calls and the API URL for the enviornment
-```
+```php
 <?php
 
 declare(strict_types=1);
@@ -54,7 +54,7 @@ $apiUrl = $configManager::getEnvValue('api_url');
 ```
 
 Setting then retrieving a sample value
-```
+```php
 <?php
 
 declare(strict_types=1);
@@ -69,7 +69,7 @@ ConfigManager::getValue('store.currency');
 ```
 
 Checking if a config value exists
-```
+```php
 <?php
 
 declare(strict_types=1);
