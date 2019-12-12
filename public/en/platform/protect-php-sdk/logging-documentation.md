@@ -64,9 +64,8 @@ The following JSON is an example Cascade configuration based off of [Cascade's u
     }
   }
 }
-```
 
-The following demonstrates examples utilizing the Logger class:
+The following demonstrates usages utilizing the Logger class:
 ```php
 <?php
 declare(strict_types=1);
