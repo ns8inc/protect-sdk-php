@@ -26,33 +26,43 @@ Multiple handlers are made available by Monolog and custom handlers can be creat
 
 ### Example Logger Implementations
 The following JSON is an example Cascade configuration based off of [Cascade's usage guidelines](https://github.com/theorchard/monolog-cascade).
-```yml
-formatters:
-    dashed:
-        class: Monolog\Formatter\LineFormatter
-        format: "%datetime%-%channel%.%level_name% - %message%\n"
-handlers:
-    ns8_web:
-        class: NS8\ProtectSDK\Logging\Handler\WebHandler
-        level: DEBUG
-        formatter: dashed
-        processors: [memory_processor]
-        stream: php://stdout
-    file_stream_handler:
-        class: Monolog\Handler\StreamHandler
-        level: INFO
-        formatter: dashed
-        stream: ./example_info.log
-processors:
-    web_processor:
-        class: Monolog\Processor\WebProcessor
-    memory_processor:
-        class: Monolog\Processor\MemoryUsageProcessor
-loggers:
-    myLogger:
-        handlers: [ns8_web, file_stream_handler]
-        processors: [web_processor, memory_processor]
-```
+```json
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "spaced": {
+      "class": "Monolog\\Formatter\\LineFormatter",
+      "format": "%datetime% %channel%.%level_name%  %message%\n",
+      "include_stacktraces": true
+    },
+    "dashed": {
+      "format": "%datetime%-%channel%.%level_name% - %message%\n"
+    }
+  },
+  "handlers": {
+    "console": {
+      "class": "Monolog\\Handler\\StreamHandler",
+      "level": "DEBUG",
+      "formatter": "spaced",
+      "stream": "php://stdout"
+    },
+    "api_handler": {
+      "class": "NS8\\Handler\\ApiHandler",
+      "level": "INFO",
+      "formatter": "dashed",
+      "stream": "./example_info.log"
+    },
+  },
+  "loggers": {
+    "loggerA": {
+      "handlers": [
+        "console",
+        "api_handler"
+      ]
+    }
+  }
+}
 The following demonstrates examples utilizing the Logger class:
 ```php
 <?php
