@@ -4,86 +4,19 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Config;
 
-use NS8\ProtectSDK\Config\Exceptions\Environment as EnvironmentConfigException;
-use NS8\ProtectSDK\Config\Exceptions\Json as JsonConfigException;
-use const JSON_ERROR_NONE;
-use function array_merge;
-use function file_exists;
-use function file_get_contents;
-use function in_array;
-use function json_decode;
-use function json_last_error;
-use function phpversion;
+use NS8\ProtectSDK\Config\Exceptions\ValueNotFound as ValueNotFoundException;
+use function array_key_exists;
+use function count;
+use function explode;
+use function is_array;
 use function sprintf;
 
 /**
- * Abstract class describing how Config Manager classes should be structured
+ * Configuration manager to keep track of NS8-items
  */
-abstract class Manager
+class Manager extends ManagerStructure
 {
-    /**
-     * Constants related to what defines an environment value as valid
-     */
-    public const ENV_PRODUCTION               = 'production';
-    public const ENV_TESTING                  = 'testing';
-    public const ENV_DEVELOPMENT              = 'development';
-    public const ACCEPTED_CONFIG_ENVIRONMENTS = [
-        self::ENV_PRODUCTION,
-        self::ENV_TESTING,
-        self::ENV_DEVELOPMENT,
-    ];
-
-    /**
-     * The environment the configuration should utilize during runtime
-     *
-     * @var string $environment
-     */
-    protected static $environment;
-    /**
-     * Attribute to configuration information set during application flow
-     *
-     * @var mixed[] $configData
-     */
-    protected static $configData;
-
-    /**
-     * Constructor for Configuration manager
-     *
-     * @param string $environment          The environment the configuration should utilize during runtime
-     * @param string $customConfigJsonFile Custom JSON file to be passed into the constructor for configuration set-up
-     * @param string $baseConfigJsonFile   Base JSON file to be passed into the construction for configuration set-up
-     * @param string $platformVersion      Current version of the platform being utilized
-     * @param string $phpVersion           Version of PHP being utilized
-     */
-    public function __construct(
-        string $environment = self::ENV_PRODUCTION,
-        ?string $customConfigJsonFile = null,
-        ?string $baseConfigJsonFile = null,
-        ?string $platformVersion = null,
-        ?string $phpVersion = null
-    ) {
-        if (! in_array($environment, self::ACCEPTED_CONFIG_ENVIRONMENTS)) {
-            throw new EnvironmentConfigException(sprintf('%s is not a valid environment type.', $environment));
-        }
-
-        $baseData   = isset($baseConfigJsonFile) ? $this->getConfigByFile($baseConfigJsonFile) : [];
-        $customData = isset($customConfigJsonFile) ? $this->getConfigByFile($customConfigJsonFile) : [];
-
-        self::$environment                    = $environment;
-        self::$configData                     = array_merge($baseData, $customData);
-        self::$configData['platform_version'] = $platformVersion;
-        self::$configData['php_version']      = $phpVersion ?? phpversion();
-    }
-
-    /**
-     * Sets a configuration value for a specific key
-     *
-     * @param string $key   Key for value in configuration array
-     * @param mixed  $value Value for the associated key
-     *
-     * @return Manager
-     */
-    abstract public static function setValue(string $key, $value) : Manager;
+    public const KEY_DELIMITER = '.';
 
     /**
      * Returns a value from the configuration array given the key.
@@ -94,63 +27,103 @@ abstract class Manager
      *
      * @return mixed Return value stored in config for the given key
      */
-    abstract public static function getValue(string $key);
+    public static function getValue(string $key)
+    {
+        $keyParts    = explode(self::KEY_DELIMITER, $key);
+        $keyLength   = count($keyParts);
+        $index       = 1;
+        $configPath  = self::$configData;
+        $returnValue = null;
+        foreach ($keyParts as $arrayKey) {
+            if (array_key_exists($arrayKey, $configPath)) {
+                if ($index === $keyLength) {
+                    $returnValue = $configPath[$arrayKey];
+                    break;
+                }
+
+                $configPath = $configPath[$arrayKey];
+                $index++;
+                continue;
+            }
+
+            throw new ValueNotFoundException(sprintf('%s does not exist as a valid configuration path', $key));
+        }
+
+        return $returnValue;
+    }
 
     /**
-     * Returns a value from the configuration array given the key for the environment.
-     * The key can map to a multi-dimensional array via dot parsing (e.g. database.connection.host)
-     * to permit granular configuration
+     * Sets a configuration value for a specific key
      *
-     * @param string $key Key for environmental configuration data we want to retrieve
+     * @param string $key   Key for value in configuration array
+     * @param mixed  $value Value for the associated key
      *
-     * @return mixed Return value stored in config for the given key
+     * @return bool if the value setting was successful
      */
-    abstract public static function getEnvValue(string $key);
+    public static function setValue(string $key, $value) : bool
+    {
+        $keyParts   = explode(self::KEY_DELIMITER, $key);
+        $keyLength  = count($keyParts);
+        $index      = 1;
+        $configPath = &self::$configData;
+        foreach ($keyParts as $arrayKey) {
+            if ($index === $keyLength) {
+                $configPath[$arrayKey] = $value;
+                break;
+            }
+
+            if (! isset($configPath[$arrayKey]) || ! is_array($configPath[$arrayKey])) {
+                $configPath[$arrayKey] = [];
+            }
+
+            $configPath = &$configPath[$arrayKey];
+            $index++;
+        }
+
+        return true;
+    }
 
     /**
-     * Returns if a value exists in the configuration.
-     * * The key can map to a multi-dimensional array via dot parsing (e.g. database.connection.host)
+     * The key can map to a multi-dimensional array via dot parsing (e.g. database.connection.host)
      * to permit granular configuration
      *
      * @param string $key Key for configuration data we want to check
      *
-     * @return mixed
+     * @return bool if the value exists in configuration data
      */
-    abstract public static function doesValueExist(string $key) : bool;
-
-    /**
-     * Returns a configuration array from a file based on the file parth
-     *
-     * @param string $fileName File path for where the coinfiguration is stored
-     *
-     * @return mixed[] JSON data decoded
-     */
-    protected function getConfigByFile(string $fileName) : array
+    public static function doesValueExist(string $key) : bool
     {
-        if (! file_exists($fileName)) {
-            throw new JsonConfigException(sprintf('Configuration file %s does not exist.', $fileName));
+        try {
+            $returnValue = true;
+            self::getValue($key);
+        } catch (ValueNotFoundException $e) {
+            $returnValue = false;
         }
 
-        return $this->readJsonFromFile($filename);
+        return $returnValue;
     }
 
     /**
-     * Parses a JSON array from configuration file
+     * Returns a value from the configuration array given the key for the environment
      *
-     * @param string $fileName JSON file to be decoded
+     * @param string $key Key for environmental configuration data we want to retrieve
      *
-     * @return mixed[] JSON data decoded
-     *
-     * @throws JsonConfigException if the JSON was not decoded without an error.
+     * @return mixed Return value stored in config for the given env key
      */
-    protected function readJsonFromFile(string $fileName) : array
+    public static function getEnvValue(string $key)
     {
-        $fileData = file_get_contents($fileName);
-        $jsonData = json_decode($fileData, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new JsonConfigException(sprintf('%s does not contain valid JSON.', $fileName));
-        }
+        $key = self::$environment . self::KEY_DELIMITER . $key;
 
-        return $jsonData;
+        return self::getValue($key);
+    }
+
+    /**
+     * Returns the full configuration array being used to track config values
+     *
+     * @return mixed[] The current configuration array being used
+     */
+    public static function getFullConfigArray() : array
+    {
+        return self::$configData;
     }
 }
