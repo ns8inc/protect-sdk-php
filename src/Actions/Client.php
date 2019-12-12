@@ -40,8 +40,10 @@ abstract class Client
 
     /**
      * A list of predefined NS8 events to serve enumeration/validation purposes
+     *
+     * @var mixed[] $predefinedEvents
      */
-    public const PREDEFINED_EVENTS = [
+    protected $predefinedEvents = [
         self::ON_INSTALL_PLATFORM_EVENT,
         self::UPDATE_CUSTOMER_VERIFICATION_STATUS_EVENT,
         self::UPDATE_EQ8_SCORE_EVENT,
@@ -60,8 +62,10 @@ abstract class Client
 
     /**
      * A list of predefined NS8 actions to serve enumeration/validation purposes
+     *
+     * @var mixed[] $predefinedActions
      */
-    public const PREDEFINED_ACTIONS = [
+    protected $predefinedActions = [
         self::CREATE_ORDER_ACTION,
         self::UNINSTALL_ACTION,
         self::UPDATE_ORDER_STATUS_ACTION,
@@ -75,7 +79,7 @@ abstract class Client
      * @param string  $requestType The type of info we are intending to fetch
      * @param mixed[] $data        The data needed for retrieving the requestion information
      *
-     * @return mixed
+     * @return mixed Returns the result of the NS8 API call
      */
     abstract public static function get(string $requestType, array $data = []);
 
@@ -86,7 +90,7 @@ abstract class Client
      * @param string  $eventName The event that has occurred to send data to the NS8 API
      * @param mixed[] $data      Data related to the event that has occurred
      *
-     * @return bool
+     * @return bool if the NS8 API set call was completed successfully (true if successful, false otherwise)
      */
     abstract public static function set(string $eventName, array $data = []) : bool;
 }
