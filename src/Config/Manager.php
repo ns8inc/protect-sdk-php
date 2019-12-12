@@ -16,6 +16,9 @@ use function sprintf;
  */
 class Manager extends ManagerStructure
 {
+    /**
+     * Delimiter used in key parsing (e.g. "production.urls.api_url")
+     */
     public const KEY_DELIMITER = '.';
 
     /**
