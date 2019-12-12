@@ -17,7 +17,7 @@ class Client extends BaseClient
     public const SWITCH_EXECUTOR_PATH = '/switch/executor';
 
     /**
-     * Action key used for switch actions
+     * Action key used for switch action requests
      */
     public const ACTION_KEY = 'action';
 
