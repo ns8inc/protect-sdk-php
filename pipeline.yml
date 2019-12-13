@@ -4,6 +4,10 @@ resource_types:
     type: docker-image
     source:
       repository: teliaoss/github-pr-resource
+  - name: concourse-git-semver-tag
+    type: docker-image
+    source:
+      repository: laurentverbruggen/concourse-git-semver-tag-resource
 
 resources:
   - name: pull-request
@@ -12,7 +16,74 @@ resources:
     source:
       repository: ns8inc/protect-php-sdk
       base_branch: master
-      access_token: f8496a988693830a6f4cef58f470c8c85ced4893
+      access_token: 235e5e7d924c8edb2d572fe5c1ae44d3653825cd
+  - name: protect-php-sdk
+    type: git
+    source:
+      uri: git@github.com:ns8inc/protect-php-sdk.git
+      branch: master
+      private_key: |
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
+        NhAAAAAwEAAQAAAQEAt9hLhE8qXkDZujRdLXkHanmlg96FhefGKPr7QLgaO82TKDJM5Pa+
+        uCPyH8naw3Db60z583x0+rGgNiGE1s2lY99BGowwCgCWE9rMsQfM7OjjrZFycEvo1pj6ki
+        jawcQLBH8pDPhH/bDy0+uYtjNpD+naZUijjTuZHt72s1B8GZBbe4KHMvjR5EoLEVXLLy7Y
+        yTYtv2emRWjgLLKxV5/SYOcYYRDA3UZ57ijbWbINu6uL5eZkoe4jRrh1NpvdM2/j6rn/w3
+        WlqmuS2MG/ELpaQIQsAp15FIUe8JmViNDmwI22XJ4L/8je6JVEqZwDrpy83GdR/18Z0gwI
+        lqPy12dy2QAAA9BkarjuZGq47gAAAAdzc2gtcnNhAAABAQC32EuETypeQNm6NF0teQdqea
+        WD3oWF58Yo+vtAuBo7zZMoMkzk9r64I/IfydrDcNvrTPnzfHT6saA2IYTWzaVj30EajDAK
+        AJYT2syxB8zs6OOtkXJwS+jWmPqSKNrBxAsEfykM+Ef9sPLT65i2M2kP6dplSKONO5ke3v
+        azUHwZkFt7gocy+NHkSgsRVcsvLtjJNi2/Z6ZFaOAssrFXn9Jg5xhhEMDdRnnuKNtZsg27
+        q4vl5mSh7iNGuHU2m90zb+Pquf/DdaWqa5LYwb8QulpAhCwCnXkUhR7wmZWI0ObAjbZcng
+        v/yN7olUSpnAOunLzcZ1H/XxnSDAiWo/LXZ3LZAAAAAwEAAQAAAQEAg+R34PcOlUn/Kdgx
+        VNM0X83f0ahNsJBkGLheksLBh0/nl/nmMolWsDKRnP6qpHYOQFQcKfOK1OOj5dHMRHKKig
+        j74vjZ6gMbqCjbmtHW0cwOs1HagPfkljhv43XN4x8rLFGx+K0SsM1GmIS4LVbas+D4npsr
+        QsKUCpK4+FHwhkFR5Iolb4YhHhplfUf2VJY9GqAiG2y3RL2xGItoqM5LTDsfUdipPGZCWH
+        C0AIRNEkjwtY7fh70WZawI7+2aN+8CSRDxTbHxpg27v6rRVG2EKJLhsbAZNSqvJGn0lyo/
+        T+7OB5XTTSYXL5LAknFQ+VfYnJxpoNe7ROo7kizSVSfKAQAAAIEArcmVPq8DC3xvi/185+
+        mqnhU9CPL4XBndcMqhcPiDCLFF8qJu0UqsjcZFjOh/siyk3xWijp02iL4cOmvSbmV6XjLW
+        Td8sl+6W4VVDK8cAzFkyTKxYAxF98RxDh4UtApFdD/YBTjWIyt86GKGSVGGfGuwu1+P6ON
+        0sqA5yYW6LCH4AAACBAPTAADUMzW9fW09KpKoeIMRGC3T6lsORMe+75laSymLpzdlWWvIH
+        szHu7Tu0NSDKj111TsQmG/ZTbFnO2c/WXULUxlIvDJpviLhNtoKkqdyaDs5g9vFNjcDnOO
+        uP87nNBLp9s/kZXPbTxarS40sqq0O3kjFA2V6PfvcBmO5fDp/BAAAAgQDAS54OmisvcgZ4
+        QwtMPb+jVMwef0UeQzfT3sllm79KampRITghNXvEMKI3421EuGhPqVibm3JbSCW2UQ44IT
+        5fM+ngFSQs+MGpu8F68aHyTi+/H6aRrg/qmwKatadclO+R/mWu5RXcJeWt0JdebUyU+xkD
+        Sq0QfAjxCqeleWAZGQAAABlwaHAtcHJvdGVjdC1zZGtfY29uY291cnNl
+        -----END OPENSSH PRIVATE KEY-----
+  - name: version
+    type: concourse-git-semver-tag
+    check_every: 1m
+    source:
+      uri: git@github.com:ns8inc/protect-php-sdk.git
+      branch: master
+      private_key: |
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
+        NhAAAAAwEAAQAAAQEAt9hLhE8qXkDZujRdLXkHanmlg96FhefGKPr7QLgaO82TKDJM5Pa+
+        uCPyH8naw3Db60z583x0+rGgNiGE1s2lY99BGowwCgCWE9rMsQfM7OjjrZFycEvo1pj6ki
+        jawcQLBH8pDPhH/bDy0+uYtjNpD+naZUijjTuZHt72s1B8GZBbe4KHMvjR5EoLEVXLLy7Y
+        yTYtv2emRWjgLLKxV5/SYOcYYRDA3UZ57ijbWbINu6uL5eZkoe4jRrh1NpvdM2/j6rn/w3
+        WlqmuS2MG/ELpaQIQsAp15FIUe8JmViNDmwI22XJ4L/8je6JVEqZwDrpy83GdR/18Z0gwI
+        lqPy12dy2QAAA9BkarjuZGq47gAAAAdzc2gtcnNhAAABAQC32EuETypeQNm6NF0teQdqea
+        WD3oWF58Yo+vtAuBo7zZMoMkzk9r64I/IfydrDcNvrTPnzfHT6saA2IYTWzaVj30EajDAK
+        AJYT2syxB8zs6OOtkXJwS+jWmPqSKNrBxAsEfykM+Ef9sPLT65i2M2kP6dplSKONO5ke3v
+        azUHwZkFt7gocy+NHkSgsRVcsvLtjJNi2/Z6ZFaOAssrFXn9Jg5xhhEMDdRnnuKNtZsg27
+        q4vl5mSh7iNGuHU2m90zb+Pquf/DdaWqa5LYwb8QulpAhCwCnXkUhR7wmZWI0ObAjbZcng
+        v/yN7olUSpnAOunLzcZ1H/XxnSDAiWo/LXZ3LZAAAAAwEAAQAAAQEAg+R34PcOlUn/Kdgx
+        VNM0X83f0ahNsJBkGLheksLBh0/nl/nmMolWsDKRnP6qpHYOQFQcKfOK1OOj5dHMRHKKig
+        j74vjZ6gMbqCjbmtHW0cwOs1HagPfkljhv43XN4x8rLFGx+K0SsM1GmIS4LVbas+D4npsr
+        QsKUCpK4+FHwhkFR5Iolb4YhHhplfUf2VJY9GqAiG2y3RL2xGItoqM5LTDsfUdipPGZCWH
+        C0AIRNEkjwtY7fh70WZawI7+2aN+8CSRDxTbHxpg27v6rRVG2EKJLhsbAZNSqvJGn0lyo/
+        T+7OB5XTTSYXL5LAknFQ+VfYnJxpoNe7ROo7kizSVSfKAQAAAIEArcmVPq8DC3xvi/185+
+        mqnhU9CPL4XBndcMqhcPiDCLFF8qJu0UqsjcZFjOh/siyk3xWijp02iL4cOmvSbmV6XjLW
+        Td8sl+6W4VVDK8cAzFkyTKxYAxF98RxDh4UtApFdD/YBTjWIyt86GKGSVGGfGuwu1+P6ON
+        0sqA5yYW6LCH4AAACBAPTAADUMzW9fW09KpKoeIMRGC3T6lsORMe+75laSymLpzdlWWvIH
+        szHu7Tu0NSDKj111TsQmG/ZTbFnO2c/WXULUxlIvDJpviLhNtoKkqdyaDs5g9vFNjcDnOO
+        uP87nNBLp9s/kZXPbTxarS40sqq0O3kjFA2V6PfvcBmO5fDp/BAAAAgQDAS54OmisvcgZ4
+        QwtMPb+jVMwef0UeQzfT3sllm79KampRITghNXvEMKI3421EuGhPqVibm3JbSCW2UQ44IT
+        5fM+ngFSQs+MGpu8F68aHyTi+/H6aRrg/qmwKatadclO+R/mWu5RXcJeWt0JdebUyU+xkD
+        Sq0QfAjxCqeleWAZGQAAABlwaHAtcHJvdGVjdC1zZGtfY29uY291cnNl
+        -----END OPENSSH PRIVATE KEY-----
 
 jobs:
   - name: test
@@ -90,3 +161,9 @@ jobs:
         params:
           path: pull-request
           status: success
+  - name: bump-version
+    plan:
+      - get: protect-php-sdk
+        trigger: true
+      - put: version
+        params: {bump: patch}
