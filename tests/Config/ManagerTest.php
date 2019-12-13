@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NS8\ProtectSDK\Tests\Config;
 
 use NS8\ProtectSDK\Config\Exceptions\Environment as EnvironmentConfigException;
+use NS8\ProtectSDK\Config\Exceptions\InvalidValue as InvalidValueException;
 use NS8\ProtectSDK\Config\Exceptions\Json as JsonException;
 use NS8\ProtectSDK\Config\Exceptions\ValueNotFound as ValueNotFoundException;
 use NS8\ProtectSDK\Config\Manager as ConfigManager;
@@ -25,6 +26,9 @@ use function unlink;
  */
 class ManagerTest extends TestCase
 {
+    /**
+     * Test JSON to use as for a valid JSON config file
+     */
     public const TEST_JSON = [
         'logging'   => ['enabled' => true],
         'production'    => [
@@ -42,11 +46,37 @@ class ManagerTest extends TestCase
     ];
 
     /**
+     * Test JSON to use for a valid JSON config file with invalid values
+     */
+    public const INVALID_URLS_TEST_JSON = [
+        'logging'   => ['enabled' => true],
+        'production'    => [
+            'urls' => [
+                'client_url' => 'https://test.ns8.com/',
+                'api_url'   => 'https://test.ns8.com/',
+            ],
+        ],
+        'testing'   => [
+            'urls' => [
+                'client_url' => 'https://protect-client.ns8.com/',
+                'api_url'   => 'https://protect.ns8.com/',
+            ],
+        ],
+    ];
+
+    /**
      * The test file path with valid JSON for test methods
      *
      * @var string $testFilePath
      */
     protected static $testFilePath = null;
+
+    /**
+     * The test file path with valid JSON and invalid values for test methods
+     *
+     * @var string $testFilePath
+     */
+    protected static $invalidValuesTestFilePath = null;
 
     /**
      * The test file path with invalid JSON for test methods
@@ -61,6 +91,9 @@ class ManagerTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::getValue
+     * @covers ::validateInitialConfigData
      */
     public function testConstructor() : void
     {
@@ -90,6 +123,9 @@ class ManagerTest extends TestCase
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
      * @covers ::getFullConfigArray
+     * @covers ::doesValueExist
+     * @covers ::getValue
+     * @covers ::validateInitialConfigData
      */
     public function testConfigLoad() : void
     {
@@ -108,6 +144,8 @@ class ManagerTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
      * @covers ::getValue
@@ -125,6 +163,8 @@ class ManagerTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
      * @covers ::getValue
@@ -143,6 +183,8 @@ class ManagerTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
      * @covers ::getValue
@@ -164,6 +206,9 @@ class ManagerTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::validateInitialConfigData
+     * @covers ::validateKeyCanChange
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
      * @covers ::getValue
@@ -185,6 +230,8 @@ class ManagerTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
      * @covers ::getValue
@@ -238,6 +285,8 @@ class ManagerTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::validateInitialConfigData
      * @covers ::getValue
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
@@ -255,6 +304,8 @@ class ManagerTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::validateInitialConfigData
      * @covers ::getValue
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
@@ -273,6 +324,8 @@ class ManagerTest extends TestCase
       * @return void
       *
       * @covers ::__construct
+      * @covers ::doesValueExist
+      * @covers ::validateInitialConfigData
       * @covers ::getValue
       * @covers ::getConfigByFile
       * @covers ::readJsonFromFile
@@ -290,6 +343,8 @@ class ManagerTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::validateInitialConfigData
+     * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
@@ -308,6 +363,9 @@ class ManagerTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::getValue
+     * @covers ::validateInitialConfigData
      * @covers ::getEnvonment
      * @covers ::setEnvonment
      */
@@ -326,6 +384,9 @@ class ManagerTest extends TestCase
      * @return void
      *
      * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::getValue
+     * @covers ::validateInitialConfigData
      * @covers ::getEnvonment
      * @covers ::setEnvonment
      */
@@ -338,6 +399,45 @@ class ManagerTest extends TestCase
         $currentEnv = $configManager::getEnvonment();
 
         $this->assertEquals('testing', $currentEnv);
+    }
+
+    /**
+     * Test if we are able to override a core URL which we should not be able to
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::getValue
+     * @covers ::setValue
+     * @covers ::validateKeyCanChange
+     * @covers ::getConfigByFile
+     * @covers ::readJsonFromFile
+     * @covers ::validateInitialConfigData
+     */
+    public function testOverrideEnvUrl() : void
+    {
+        $configManager = new ConfigManager('testing', null, self::$testFilePath);
+        $this->expectException(InvalidValueException::class);
+        $configManager->setValue('testing.urls.client_url', 'https://test.com');
+    }
+
+    /**
+     * Test if we can instantiate a Configuration Manager with invalid env urls
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers ::doesValueExist
+     * @covers ::getValue
+     * @covers ::getConfigByFile
+     * @covers ::readJsonFromFile
+     * @covers ::validateInitialConfigData
+     */
+    public function testInvalidEnvUrls() : void
+    {
+        $this->expectException(InvalidValueException::class);
+        $configManager = new ConfigManager('testing', null, self::$invalidValuesTestFilePath);
     }
 
     /**
@@ -377,6 +477,9 @@ class ManagerTest extends TestCase
 
         self::$invalidDataTestFilePath = tempnam(self::getJsonConfigDirectoryPath(), 'php_unit_test_data_');
         self::writeTestData(self::$invalidDataTestFilePath, 'Invalid Json');
+
+        self::$invalidValuesTestFilePath = tempnam(self::getJsonConfigDirectoryPath(), 'php_unit_test_data_');
+        self::writeTestData(self::$invalidValuesTestFilePath, json_encode(self::INVALID_URLS_TEST_JSON));
     }
 
     /**
@@ -388,5 +491,6 @@ class ManagerTest extends TestCase
     {
         unlink(self::$testFilePath);
         unlink(self::$invalidDataTestFilePath);
+        unlink(self::$invalidValuesTestFilePath);
     }
 }

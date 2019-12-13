@@ -21,12 +21,16 @@ JSON Sample For Examples
   "foo": "bar",
   "log_http_calls": true,
   "production": {
-    "api_url": "https://ns8.com",
-    "logging_path": "logs/production_log.log"
+    "urls": {
+      "client_url": "https://protect-client.ns8.com/",
+      "api_url": "https://protect.ns8.com/"
+    }
   },
   "testing": {
-    "api_url": "https://testing.ns8.com",
-    "logging_path": "logs/testing_log.log"
+    "urls": {
+      "client_url": "https://test-protect-client.ns8.com/",
+      "api_url": "https://test-protect.ns8.com/"
+    }
   },
   "development": {
     "api_url": "https://development.ns8.com",

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Config;
 
+use NS8\ProtectSDK\Config\Exceptions\InvalidValue as InvalidValueException;
 use NS8\ProtectSDK\Config\Exceptions\ValueNotFound as ValueNotFoundException;
 use function array_key_exists;
 use function count;
 use function explode;
 use function is_array;
+use function preg_match;
 use function sprintf;
 
 /**
@@ -17,9 +19,10 @@ use function sprintf;
 class Manager extends ManagerStructure
 {
     /**
-     * Delimiter used in key parsing (e.g. "production.urls.api_url")
+     * Rules based on key pattern to prevent overriding specific environment values
      */
-    public const KEY_DELIMITER = '.';
+    public const SET_VALUE_PREVENTION_RULES =
+        ['/^(production|testing)\\' . self::KEY_DELIMITER . 'urls\\' . self::KEY_DELIMITER . '.*/'];
 
     /**
      * Returns a value from the configuration array given the key.
@@ -65,6 +68,10 @@ class Manager extends ManagerStructure
      */
     public static function setValue(string $key, $value) : bool
     {
+        if (! self::validateKeyCanChange($key)) {
+            throw new InvalidValueException(sprintf('%s is not allowed to be changed', $key));
+        }
+
         $keyParts   = explode(self::KEY_DELIMITER, $key);
         $keyLength  = count($keyParts);
         $index      = 1;
@@ -81,6 +88,24 @@ class Manager extends ManagerStructure
 
             $configPath = &$configPath[$arrayKey];
             $index++;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validates that a configuration key can be safely changed
+     *
+     * @param string $key The key that we are valdating if it can be set/modified
+     *
+     * @return bool True if the key can be changed and false otherwise
+     */
+    protected static function validateKeyCanChange(string $key) : bool
+    {
+        foreach (self::SET_VALUE_PREVENTION_RULES as $rule) {
+            if (preg_match($rule, $key)) {
+                return false;
+            }
         }
 
         return true;
