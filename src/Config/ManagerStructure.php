@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NS8\ProtectSDK\Config;
 
 use NS8\ProtectSDK\Config\Exceptions\Environment as EnvironmentConfigException;
+use NS8\ProtectSDK\Config\Exceptions\InvalidValue as InvalidValueException;
 use NS8\ProtectSDK\Config\Exceptions\Json as JsonConfigException;
 use const JSON_ERROR_NONE;
 use function array_merge;
@@ -22,6 +23,11 @@ use function sprintf;
 abstract class ManagerStructure
 {
     /**
+     * Delimiter used in key parsing (e.g. "production.urls.api_url")
+     */
+    public const KEY_DELIMITER = '.';
+
+    /**
      * Constants related to what defines an environment value as valid
      */
     public const ENV_PRODUCTION               = 'production';
@@ -31,6 +37,36 @@ abstract class ManagerStructure
         self::ENV_PRODUCTION,
         self::ENV_TESTING,
         self::ENV_DEVELOPMENT,
+    ];
+
+    /**
+     * Production URLs that should remain static in configuration
+     */
+    public const PRODUCTION_CLIENT_URL_KEY   = self::ENV_PRODUCTION . self::KEY_DELIMITER
+        . 'urls' . self::KEY_DELIMITER . 'client_url';
+    public const PRODUCTION_API_URL_KEY      = self::ENV_PRODUCTION . self::KEY_DELIMITER
+        . 'urls' . self::KEY_DELIMITER . 'api_url';
+    public const PRODUCTION_CLEINT_URL_VALUE = 'https://protect-client.ns8.com/';
+    public const PRODUCTION_API_URL_VALUE    = 'https://protect.ns8.com/';
+
+    /**
+     * Testing URLs that should remain static in configuration
+     */
+    public const TESTING_CLIENT_URL_KEY   = self::ENV_TESTING . self::KEY_DELIMITER
+        . 'urls' . self::KEY_DELIMITER . 'client_url';
+    public const TESTING_API_URL_KEY      = self::ENV_TESTING . self::KEY_DELIMITER
+        . 'urls' . self::KEY_DELIMITER . 'api_url';
+    public const TESTING_CLIENT_URL_VALUE = 'https://test-protect-client.ns8.com/';
+    public const TESTING_API_URL_VALUE    = 'https://test-protect.ns8.com/';
+
+    /**
+     * Mapping of keys/values that should remain static in configuration
+     */
+    public const STATIC_CONFIG_MAPPINGS = [
+        self::PRODUCTION_CLIENT_URL_KEY => self::PRODUCTION_CLEINT_URL_VALUE,
+        self::PRODUCTION_API_URL_KEY => self::PRODUCTION_API_URL_VALUE,
+        self::TESTING_CLIENT_URL_KEY => self::TESTING_CLIENT_URL_VALUE,
+        self::TESTING_API_URL_KEY => self::TESTING_API_URL_VALUE,
     ];
 
     /**
@@ -73,6 +109,8 @@ abstract class ManagerStructure
         self::$configData                     = array_merge($baseData, $customData);
         self::$configData['platform_version'] = $platformVersion;
         self::$configData['php_version']      = $phpVersion ?? phpversion();
+
+        $this->validateInitialConfigData();
     }
 
     /**
@@ -170,5 +208,19 @@ abstract class ManagerStructure
         }
 
         return $jsonData;
+    }
+
+    /**
+     * Validates initial configuration values are sane
+     *
+     * @return void
+     */
+    protected function validateInitialConfigData() : void
+    {
+        foreach (self::STATIC_CONFIG_MAPPINGS as $key => $value) {
+            if ($this->doesValueExist($key) && $this->getValue($key) !== $value) {
+                throw new InvalidValueException(sprintf('%s must have a value of %s', $key, $value));
+            }
+        }
     }
 }
