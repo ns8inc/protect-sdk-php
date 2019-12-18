@@ -1,0 +1,57 @@
+{
+  "default_environment": "testing",
+  "logging": {
+    "additional_info": {
+      "category": "sdk",
+      "integration_type": "php"
+    },
+    "file": {
+      "enabled": true,
+      "relative_path": "logs/ns8.log",
+      "log_level": 100
+    },
+    "api": {
+      "enabled": true,
+      "log_level": 100
+    }
+  },
+  "production": {
+    "authorization": {
+      "access_token": "",
+      "auth_user": ""
+    },
+    "urls": {
+      "client_url": "https://protect-client.ns8.com",
+      "api_url": "https://protect.ns8.com"
+    },
+    "http_logic": {
+      "client_class": "Zend\\Http\\Client"
+    }
+  },
+  "testing": {
+    "authorization": {
+      "access_token": "7dd33b91-1556-4dca-a3e9-808e565a461a",
+      "auth_user": "test"
+    },
+    "urls": {
+      "client_url": "https://test-protect-client.ns8.com",
+      "api_url": "https://test-protect.ns8.com"
+    },
+    "http_logic": {
+      "client_class": "Zend\\Http\\Client"
+    }
+  },
+  "development": {
+    "authorization": {
+      "access_token": null,
+      "auth_user": "development"
+    },
+    "urls": {
+      "client_url": "https://test-protect-client.ns8.com",
+      "api_url": "https://test-protect.ns8.com"
+    },
+    "http_logic": {
+      "client_class": "Zend\\Http\\Client"
+    }
+  }
+}

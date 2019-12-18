@@ -28,7 +28,7 @@ class ClientTest extends TestCase
     /**
      * Test Components to plug in for mock requests
      */
-    public const TEST_URI          = 'https://ns8.com';
+    public const TEST_URI          = '/path';
     public const TEST_AUTH_NAME    = 'NS8_test';
     public const TEST_ACCESS_TOKEN = '123456';
     public const TEST_SESSION_DATA = [
@@ -63,6 +63,7 @@ class ClientTest extends TestCase
      * @covers ::executeWithAuth
      * @covers ::executeJsonRequest
      * @covers ::executeRequest
+     * @covers ::setAccessToken
      */
     public function testGetRequest() : void
     {
@@ -174,7 +175,6 @@ class ClientTest extends TestCase
     public function testgetAuthNameFunctionality() : void
     {
         $client = new Client(null, null, false);
-        $this->assertEquals(null, $client->getAuthUsername());
         $client->setAuthUsername(self::TEST_AUTH_NAME);
         $this->assertEquals(self::TEST_AUTH_NAME, $client->getAuthUsername());
     }
@@ -207,7 +207,6 @@ class ClientTest extends TestCase
     public function testGetAccessTokenFunctionality() : void
     {
         $client = new Client(null, null, false);
-        $this->assertEquals(null, $client->getAccessToken());
         $client->setAccessToken(self::TEST_ACCESS_TOKEN);
         $this->assertEquals(self::TEST_ACCESS_TOKEN, $client->getAccessToken());
     }
@@ -280,6 +279,7 @@ class ClientTest extends TestCase
     {
         $testHttpClient = $this->buildTestHttpClient(Client::POST_REQUEST_TYPE);
         $client         = new Client(self::TEST_AUTH_NAME, null, true, $testHttpClient);
+        $client->setAccessToken('');
         $this->expectException(HttpException::class);
         $response = $client->post(self::TEST_URI);
     }
@@ -303,6 +303,7 @@ class ClientTest extends TestCase
     {
         $testHttpClient = $this->buildTestHttpClient(Client::POST_REQUEST_TYPE);
         $client         = new Client(null, self::TEST_ACCESS_TOKEN, true, $testHttpClient);
+        $client->setAuthUsername('');
         $this->expectException(HttpException::class);
         $response = $client->post(self::TEST_URI);
     }

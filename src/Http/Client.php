@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Http;
 
+use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Http\Exceptions\Http as HttpException;
+use NS8\ProtectSDK\Logging\Client as LoggingClient;
 use stdClass;
+use Throwable;
 use Zend\Http\Client as ZendClient;
 use Zend\Http\PhpEnvironment\RemoteAddress as ZendRemoteAddress;
 use Zend\Http\PhpEnvironment\Request as ZendRequest;
@@ -25,6 +28,11 @@ class Client implements IProtectClient
     public const POST_REQUEST_TYPE   = 'POST';
     public const PUT_REQUEST_TYPE    = 'PUT';
     public const DELETE_REQUEST_TYPE = 'DELETE';
+
+    /**
+     * API prefix for NS8 Client routes
+     */
+    public const ROUTE_PREFIX = '/api';
 
     /**
      * Default HTTP Request Timeout Value
@@ -65,6 +73,11 @@ class Client implements IProtectClient
     protected $sessionData;
 
     /**
+     * Config manager to fetch HTTP config info
+     */
+    protected $configManager;
+
+    /**
      * Constructor for HTTP Client
      *
      * @param ?string     $authUsername   Authentication username for NS8 requests
@@ -78,9 +91,20 @@ class Client implements IProtectClient
         bool $setSessionData = true,
         ?ZendClient $client = null
     ) {
-        $this->authUsername = $authUsername;
-        $this->accessToken  = $accessToken;
-        $this->client       = $client ?? new ZendClient();
+        $this->authUsername  = $authUsername;
+        $this->accessToken   = $accessToken;
+        $this->client        = $client ?? new ZendClient();
+        $this->configManager = new ConfigManager(null, null, null, null, null, true);
+
+        $accessToken = $accessToken ?? $this->configManager->getEnvValue('authorization.access_token');
+        if (! empty($accessToken)) {
+            $this->setAccessToken($accessToken);
+        }
+
+        $authUsername = $authUsername ?? $this->configManager->getEnvValue('authorization.auth_user');
+        if (! empty($authUsername)) {
+            $this->setAuthUsername($authUsername);
+        }
 
         if (! $setSessionData) {
             return;
@@ -131,7 +155,12 @@ class Client implements IProtectClient
         array $headers = [],
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
     ) : string {
-        return $this->executeRequest($url, [], self::GET_REQUEST_TYPE, $parameters, $headers, $timeout);
+        try {
+            return $this->executeRequest($url, [], self::GET_REQUEST_TYPE, $parameters, $headers, $timeout);
+        } catch (Throwable $t) {
+            $logger = new LoggingClient();
+            $logger->error('Non-JSONHTTP call failed', $t, ['url' => $url, 'data' => $data, 'parameters' => $parameters, 'headers' => $headers, 'timeout' => $timeout]);
+        }
     }
 
     /**
@@ -227,16 +256,22 @@ class Client implements IProtectClient
         array $headers = [],
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
     ) : stdClass {
-        $accessToken = $this->getAccessToken();
-        if (empty($accessToken)) {
-            throw new HttpException('An authorization token is required for NS8 requests');
+        try {
+            $accessToken = $this->getAccessToken();
+            if (empty($accessToken)) {
+                throw new HttpException('An authorization token is required for NS8 requests');
+            }
+
+            $authHeaderString = sprintf(self::AUTH_STRING_HEADER_FORMAT, $accessToken);
+            $authHeader       = ['Authorization' => $authHeaderString];
+            $allHeaders       = array_merge($headers, $authHeader);
+
+            return $this->executeJsonRequest($url, $data, $method, $parameters, $allHeaders, $timeout);
+        } catch (Throwable $t) {
+            $logger = new LoggingClient();
+            $logger->error('HTTP call failed', $t, ['url' => $url, 'data' => $data, 'parameters' => $parameters, 'headers' => $headers, 'timeout' => $timeout]);
+            throw $t;
         }
-
-        $authHeaderString = sprintf(self::AUTH_STRING_HEADER_FORMAT, $accessToken);
-        $authHeader       = ['Authorization' => $authHeaderString];
-        $allHeaders       = array_merge($headers, $authHeader);
-
-        return $this->executeJsonRequest($url, $data, $method, $parameters, $allHeaders, $timeout);
     }
 
     /**
@@ -260,9 +295,8 @@ class Client implements IProtectClient
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
     ) : string {
         $response = null;
-        // TODO: Update once config is in place for NS8 URL fetching
-        //$uri = $this->config->getNS8MiddlewareUrl($route);
-        $uri = $route;
+        $baseUri  = $this->configManager->getEnvValue('urls.client_url');
+        $uri      = $baseUri . self::ROUTE_PREFIX . $route;
 
         $this->client->setUri($uri);
         $this->client->setOptions(['timeout' => $timeout]);
