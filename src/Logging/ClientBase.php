@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Logging;
 
+use Throwable;
+
 /**
  * Abstract class defining core logging functionality and expected behavior
  */

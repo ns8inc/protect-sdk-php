@@ -9,9 +9,11 @@ use NS8\ProtectSDK\Config\Exceptions\InvalidValue as InvalidValueException;
 use NS8\ProtectSDK\Config\Exceptions\Json as JsonConfigException;
 use const JSON_ERROR_NONE;
 use function array_merge;
+use function dirname;
 use function file_exists;
 use function file_get_contents;
 use function in_array;
+use function is_null;
 use function json_decode;
 use function json_last_error;
 use function phpversion;
@@ -26,6 +28,11 @@ abstract class ManagerStructure
      * Delimiter used in key parsing (e.g. "production.urls.api_url")
      */
     public const KEY_DELIMITER = '.';
+
+    /**
+     * Core configuration file name
+     */
+    public const DEFAULT_CONFIG_FILE = 'core_configuration.json';
 
     /**
      * Constants related to what defines an environment value as valid
@@ -46,8 +53,8 @@ abstract class ManagerStructure
         . 'urls' . self::KEY_DELIMITER . 'client_url';
     public const PRODUCTION_API_URL_KEY      = self::ENV_PRODUCTION . self::KEY_DELIMITER
         . 'urls' . self::KEY_DELIMITER . 'api_url';
-    public const PRODUCTION_CLEINT_URL_VALUE = 'https://protect-client.ns8.com/';
-    public const PRODUCTION_API_URL_VALUE    = 'https://protect.ns8.com/';
+    public const PRODUCTION_CLEINT_URL_VALUE = 'https://protect-client.ns8.com';
+    public const PRODUCTION_API_URL_VALUE    = 'https://protect.ns8.com';
 
     /**
      * Testing URLs that should remain static in configuration
@@ -56,8 +63,8 @@ abstract class ManagerStructure
         . 'urls' . self::KEY_DELIMITER . 'client_url';
     public const TESTING_API_URL_KEY      = self::ENV_TESTING . self::KEY_DELIMITER
         . 'urls' . self::KEY_DELIMITER . 'api_url';
-    public const TESTING_CLIENT_URL_VALUE = 'https://test-protect-client.ns8.com/';
-    public const TESTING_API_URL_VALUE    = 'https://test-protect.ns8.com/';
+    public const TESTING_CLIENT_URL_VALUE = 'https://test-protect-client.ns8.com';
+    public const TESTING_API_URL_VALUE    = 'https://test-protect.ns8.com';
 
     /**
      * Mapping of keys/values that should remain static in configuration
@@ -74,7 +81,7 @@ abstract class ManagerStructure
      *
      * @var string $environment
      */
-    protected static $environment = self::ENV_PRODUCTION;
+    protected static $environment;
     /**
      * Attribute to configuration information set during application flow
      *
@@ -90,25 +97,34 @@ abstract class ManagerStructure
      * @param string $baseConfigJsonFile   Base JSON file to be passed into the construction for configuration set-up
      * @param string $platformVersion      Current version of the platform being utilized
      * @param string $phpVersion           Version of PHP being utilized
+     * @param bool   $forceConfigReload    Determines if we should force configuration reloading with the constructor
      */
     public function __construct(
-        string $environment = self::ENV_PRODUCTION,
+        ?string $environment = null,
         ?string $customConfigJsonFile = null,
         ?string $baseConfigJsonFile = null,
         ?string $platformVersion = null,
-        ?string $phpVersion = null
+        ?string $phpVersion = null,
+        bool $forceConfigReload = false
     ) {
-        if (! in_array($environment, self::ACCEPTED_CONFIG_ENVIRONMENTS)) {
+        // Ensure the environment passed in is valid
+        if (! is_null($environment) && ! in_array($environment, self::ACCEPTED_CONFIG_ENVIRONMENTS)) {
             throw new EnvironmentConfigException(sprintf('%s is not a valid environment type.', $environment));
         }
 
-        $baseData   = isset($baseConfigJsonFile) ? $this->getConfigByFile($baseConfigJsonFile) : [];
-        $customData = isset($customConfigJsonFile) ? $this->getConfigByFile($customConfigJsonFile) : [];
+        // Force env and config data reload if explicitly told to do so
+        if (! $forceConfigReload) {
+            return;
+        }
 
-        self::$environment                    = $environment;
+        $baseConfigJsonFile = $baseConfigJsonFile ?? dirname(__FILE__) . sprintf('/../../assets/configuration/%s', self::DEFAULT_CONFIG_FILE);
+        $baseData           = $this->getConfigByFile($baseConfigJsonFile);
+        $customData         = isset($customConfigJsonFile) ? $this->getConfigByFile($customConfigJsonFile) : [];
+
         self::$configData                     = array_merge($baseData, $customData);
         self::$configData['platform_version'] = $platformVersion;
         self::$configData['php_version']      = $phpVersion ?? phpversion();
+        self::$environment                    = $environment ?? self::$configData['default_environment'];
 
         $this->validateInitialConfigData();
     }
