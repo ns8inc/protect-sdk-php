@@ -89,6 +89,8 @@ class ApiTest extends TestCase
     {
         $recursionHit  = false;
         $configManager = new ConfigManager(null, null, null, null, null, true);
+        $configManager->setValue('testing.authorization.auth_user', 'test');
+        $configManager->setValue('testing.authorization.access_token', 'test');
         $configManager->setValue('logging.api.enabled', false);
         $testHttpClient = $this->getFailureClient();
         $ns8HttpClient  = new HttpClient(null, null, false, $testHttpClient);
