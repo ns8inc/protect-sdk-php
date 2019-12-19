@@ -74,27 +74,41 @@ class Client implements IProtectClient
 
     /**
      * Config manager to fetch HTTP config info
+     *
+     * @var ConfigManager $authHeaderStringconfigManager
      */
     protected $configManager;
 
     /**
+     * Logging client to log data
+     *
+     * @var LoggingClient $loggingClient
+     */
+    protected $loggingClient;
+
+    /**
      * Constructor for HTTP Client
      *
-     * @param ?string     $authUsername   Authentication username for NS8 requests
-     * @param ?string     $accessToken    Access Token for NS8 requests
-     * @param bool        $setSessionData Determines if the class instance should set session data to pass to NS8
-     * @param ?ZendClient $client         HTTP client to use when making requests
+     * @param ?string        $authUsername   Authentication username for NS8 requests
+     * @param ?string        $accessToken    Access Token for NS8 requests
+     * @param bool           $setSessionData Determines if the class instance should set session data to pass to NS8
+     * @param ?ZendClient    $client         HTTP client to use when making requests
+     * @param ?ConfigManager $configManager  Configuration Manager used by the client for fetching request info
+     * @param ?LoggingClient $loggingClient  Logging client used for recording request data
      */
     public function __construct(
         ?string $authUsername = null,
         ?string $accessToken = null,
         bool $setSessionData = true,
-        ?ZendClient $client = null
+        ?ZendClient $client = null,
+        ?ConfigManager $configManager = null,
+        ?LoggingClient $loggingClient = null
     ) {
         $this->authUsername  = $authUsername;
         $this->accessToken   = $accessToken;
         $this->client        = $client ?? new ZendClient();
-        $this->configManager = new ConfigManager(null, null, null, null, null, true);
+        $this->configManager = $configManager ?? new ConfigManager();
+        $this->loggingClient = $loggingClient ?? new LoggingClient();
 
         $accessToken = $accessToken ?? $this->configManager->getEnvValue('authorization.access_token');
         if (! empty($accessToken)) {
@@ -156,10 +170,18 @@ class Client implements IProtectClient
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
     ) : string {
         try {
-            return $this->executeRequest($url, [], self::GET_REQUEST_TYPE, $parameters, $headers, $timeout);
+            return $this->executeRequest(
+                $url,
+                [],
+                self::GET_REQUEST_TYPE,
+                $parameters,
+                $headers,
+                $timeout
+            );
         } catch (Throwable $t) {
-            $logger = new LoggingClient();
-            $logger->error('Non-JSONHTTP call failed', $t, ['url' => $url, 'data' => $data, 'parameters' => $parameters, 'headers' => $headers, 'timeout' => $timeout]);
+            $errorData = ['url' => $url,'parameters' => $parameters, 'headers' => $headers, 'timeout' => $timeout];
+            $this->loggingClient->error('Non-JSONHTTP call failed', $t, $errorData);
+            throw $t;
         }
     }
 
@@ -268,10 +290,18 @@ class Client implements IProtectClient
 
             return $this->executeJsonRequest($url, $data, $method, $parameters, $allHeaders, $timeout);
         } catch (Throwable $t) {
-            $logger = new LoggingClient();
-            $logger->error('HTTP call failed', $t, ['url' => $url, 'data' => $data, 'parameters' => $parameters, 'headers' => $headers, 'timeout' => $timeout]);
+            $errorData = [
+                'url' => $url,
+                'data' => $data,
+                'parameters' => $parameters,
+                'headers' => $headers,
+                'timeout' => $timeout,
+            ];
+            $this->loggingClient->error('HTTP call failed', $t, $errorData);
             throw $t;
         }
+
+        return new stdClass();
     }
 
     /**
@@ -303,7 +333,7 @@ class Client implements IProtectClient
         $this->client->setMethod($method);
         $this->client->setParameterGet($parameters);
         // TODO: Implement protect version once configuration logic is in place
-        //$headers['extension-version'] = $this->config->getProtectVersion();
+        $headers['extension-version'] = $this->configManager->getValue('version');
         if (! empty($headers)) {
             $this->client->setHeaders($headers);
         }
@@ -313,6 +343,18 @@ class Client implements IProtectClient
         }
 
         $response = $this->client->send()->getBody();
+        if ($this->configManager->getValue('logging.record_all_http_calls')) {
+            $data = [
+                'url' => $uri,
+                'data' => $data,
+                'method' => $method,
+                'parameters' => $parameters,
+                'headers' => $headers,
+                'timeout' => $timeout,
+                'response' => $response,
+            ];
+            $this->loggingClient->info('HTTP Request sent', $data);
+        }
 
         // Reset all attributes of client after the request
         $this->client->resetParameters(true);

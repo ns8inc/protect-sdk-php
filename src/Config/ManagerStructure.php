@@ -13,7 +13,6 @@ use function dirname;
 use function file_exists;
 use function file_get_contents;
 use function in_array;
-use function is_null;
 use function json_decode;
 use function json_last_error;
 use function phpversion;
@@ -108,7 +107,7 @@ abstract class ManagerStructure
         bool $forceConfigReload = false
     ) {
         // Ensure the environment passed in is valid
-        if (! is_null($environment) && ! in_array($environment, self::ACCEPTED_CONFIG_ENVIRONMENTS)) {
+        if (! empty($environment) && ! in_array($environment, self::ACCEPTED_CONFIG_ENVIRONMENTS)) {
             throw new EnvironmentConfigException(sprintf('%s is not a valid environment type.', $environment));
         }
 
@@ -117,7 +116,8 @@ abstract class ManagerStructure
             return;
         }
 
-        $baseConfigJsonFile = $baseConfigJsonFile ?? dirname(__FILE__) . sprintf('/../../assets/configuration/%s', self::DEFAULT_CONFIG_FILE);
+        $baseConfigJsonFile = $baseConfigJsonFile ??
+        dirname(__FILE__) . sprintf('/../../assets/configuration/%s', self::DEFAULT_CONFIG_FILE);
         $baseData           = $this->getConfigByFile($baseConfigJsonFile);
         $customData         = isset($customConfigJsonFile) ? $this->getConfigByFile($customConfigJsonFile) : [];
 

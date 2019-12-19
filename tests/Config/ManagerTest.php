@@ -352,7 +352,14 @@ class ManagerTest extends TestCase
     public function testPlatformVersionIfSpecified() : void
     {
         $testPlatformVersion   = 'Magento 2.3.3';
-        $configManager         = new ConfigManager('testing', null, self::$testFilePath, $testPlatformVersion, null, true);
+        $configManager         = new ConfigManager(
+            'testing',
+            null,
+            self::$testFilePath,
+            $testPlatformVersion,
+            null,
+            true
+        );
         $configPlatformVersion = $configManager->getValue('platform_version');
         $this->assertEquals($testPlatformVersion, $configPlatformVersion);
     }
