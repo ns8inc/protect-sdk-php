@@ -25,35 +25,16 @@
     "urls": {
       "client_url": "https://protect-client.ns8.com",
       "api_url": "https://protect.ns8.com"
-    },
-    "http_logic": {
-      "client_class": "Zend\\Http\\Client"
     }
   },
   "testing": {
     "authorization": {
       "access_token": "",
-      "auth_user": "test"
+      "auth_user": ""
     },
     "urls": {
       "client_url": "https://test-protect-client.ns8.com",
       "api_url": "https://test-protect.ns8.com"
-    },
-    "http_logic": {
-      "client_class": "Zend\\Http\\Client"
-    }
-  },
-  "development": {
-    "authorization": {
-      "access_token": null,
-      "auth_user": "development"
-    },
-    "urls": {
-      "client_url": "https://test-protect-client.ns8.com",
-      "api_url": "https://test-protect.ns8.com"
-    },
-    "http_logic": {
-      "client_class": "Zend\\Http\\Client"
     }
   }
 }
