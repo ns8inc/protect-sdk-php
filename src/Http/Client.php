@@ -332,7 +332,6 @@ class Client implements IProtectClient
         $this->client->setOptions(['timeout' => $timeout]);
         $this->client->setMethod($method);
         $this->client->setParameterGet($parameters);
-        // TODO: Implement protect version once configuration logic is in place
         $headers['extension-version'] = $this->configManager->getValue('version');
         if (! empty($headers)) {
             $this->client->setHeaders($headers);
