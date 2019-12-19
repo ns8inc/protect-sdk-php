@@ -18,6 +18,10 @@ use const PHP_OS;
 class Api extends AbstractProcessingHandler
 {
     /**
+     * API route we are sending log data to
+     */
+    public const LOGGING_PATH = '/util/log-client-error';
+    /**
      * Sets if the handler instance has been initialized
      *
      * @var bool $initialized
@@ -124,7 +128,7 @@ class Api extends AbstractProcessingHandler
             ];
 
             self::$selfCall = true;
-            $this->client->post('/util/log-client-error', $data);
+            $this->client->post(self::LOGGING_PATH, $data);
         } catch (Throwable $t) {
             // Silently fail so we avoid further exceptions due to logging
         }
