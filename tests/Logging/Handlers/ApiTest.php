@@ -1,0 +1,141 @@
+<?php
+
+declare(strict_types=1);
+
+namespace NS8\ProtectSDK\Tests\Logging;
+
+use Exception;
+use NS8\ProtectSDK\Config\Manager as ConfigManager;
+use NS8\ProtectSDK\Http\Client as HttpClient;
+use NS8\ProtectSDK\Logging\Client as LoggingClient;
+use NS8\ProtectSDK\Logging\Handlers\Api as ApiHandler;
+use PHPUnit\Framework\TestCase;
+use Throwable;
+use Zend\Http\Client as ZendClient;
+use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
+
+/**
+ * Logging CLient Test Class
+ *
+ * @coversDefaultClass NS8\ProtectSDK\Logging\Handlers\Api
+ */
+class ApiTest extends TestCase
+{
+    /**
+     * Test Logging Client constructor
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     **/
+    public function testConstructor() : void
+    {
+        $this->assertInstanceOf(ApiHandler::class, new ApiHandler());
+    }
+
+    /**
+     * Test API write logic
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers ::getHttpClient
+     * @covers ::setHttpClient
+     * @covers ::write
+     * @covers ::initialize
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getSessionData
+     * @covers NS8\ProtectSDK\Http\Client::post
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::error
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     */
+    public function testApiWrite() : void
+    {
+        $recursionHit  = false;
+        $configManager = new ConfigManager(null, null, null, null, null, true);
+        $configManager->setValue('logging.api.enabled', false);
+        $testHttpClient = $this->getFailureClient();
+        $ns8HttpClient  = new HttpClient(null, null, false, $testHttpClient);
+
+        $logger         = new LoggingClient(null, $configManager);
+        $testHttpClient = $this->getFailureClient();
+        $ns8HttpClient  = new HttpClient(null, null, false, $testHttpClient, $configManager, $logger);
+
+        $apiHandler = new ApiHandler();
+        $apiHandler->setHttpClient($ns8HttpClient);
+        $logger->addHandler($apiHandler);
+
+        $this->expectException(Throwable::class);
+        $ns8HttpClient->post('/test');
+    }
+
+    /**
+     * Return HTTP client that will fail all requests
+     *
+     * @return ZendClient HTTP client to be used in NS8 HTTP client set-up
+     */
+    protected function getFailureClient() : ZendClient
+    {
+        $adapter = new ZendTestAdapter();
+        $adapter = new class extends ZendTestAdapter {
+            /**
+             * Overrides connect function to gurantee connection will always fail
+             *
+             * @param mixed $host   Host to connect to
+             * @param mixed $port   Port to connect to
+             * @param mixed $secure Determines if secure transport should be set
+             *
+             * @return mixed
+             */
+            public function connect($host, $port = 80, $secure = false)
+            {
+                throw new Exception('Request failed');
+            }
+        };
+
+        $response =  'HTTP/1.1 200 OK' . "\n" .
+        'Content-type: application/json' . "\n\n" .
+        '{' .
+        '   "logged": true' .
+        "}\n";
+        $adapter->setResponse('HTTP/1.1 200 OK\n{"loggeddddd": true}');
+
+        return new ZendClient('/path', ['adapter' => $adapter]);
+    }
+}
