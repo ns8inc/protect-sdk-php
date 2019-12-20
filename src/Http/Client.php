@@ -14,7 +14,6 @@ use Zend\Http\Client as ZendClient;
 use Zend\Http\PhpEnvironment\RemoteAddress as ZendRemoteAddress;
 use Zend\Http\PhpEnvironment\Request as ZendRequest;
 use Zend\Json\Decoder as ZendJsonDecoder;
-use const PHP_EOL;
 use function array_merge;
 use function in_array;
 use function sprintf;
@@ -303,7 +302,7 @@ class Client implements IProtectClient
                 'headers' => $headers,
                 'timeout' => $timeout,
             ];
-            $this->loggingClient->error('HTTP call failed: ' . $url . ':' . $t->getMessage(), $t, $errorData);
+            $this->loggingClient->error('HTTP call failed', $t, $errorData);
             throw $t;
         }
 
@@ -359,7 +358,7 @@ class Client implements IProtectClient
                 'timeout' => $timeout,
                 'response' => $response,
             ];
-            $this->loggingClient->info('HTTP Request sent to ' . $uri . PHP_EOL, $data);
+            $this->loggingClient->info('HTTP Request sent', $data);
         }
 
         // Reset all attributes of client after the request
