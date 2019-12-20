@@ -42,8 +42,8 @@ class Client extends ClientBase
     {
         $this->logger        = $logger ?? new Logger(self::LOGGER_CHANNEL_NAME);
         $this->configManager = $configManager ?? new ConfigManager();
-        $this->setStreamHandler();
         $this->setApiHandler();
+        $this->setStreamHandler();
     }
 
     /**
@@ -121,7 +121,7 @@ class Client extends ClientBase
      *
      * @return Client returns self so it can be used in series
      */
-    protected function setStreamHandler() : Client
+    public function setStreamHandler() : Client
     {
         $streamConfiguration = $this->configManager->getValue('logging.file');
         if (! $streamConfiguration['enabled']) {
