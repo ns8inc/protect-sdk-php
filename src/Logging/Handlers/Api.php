@@ -20,7 +20,7 @@ class Api extends AbstractProcessingHandler
     /**
      * API route we are sending log data to
      */
-    public const LOGGING_PATH = '/util/log-client-error';
+    public const LOGGING_PATH = '/util/log-platform-error';
     /**
      * Sets if the handler instance has been initialized
      *
