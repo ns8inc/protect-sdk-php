@@ -51,7 +51,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * Test API write logic
+     * Test API write logic during HTTP failure
      *
      * @return void
      *
@@ -85,9 +85,8 @@ class ApiTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      */
-    public function testApiWrite() : void
+    public function testApiWriteFailure() : void
     {
-        $recursionHit  = false;
         $configManager = new ConfigManager(null, null, null, null, null, true);
         $configManager->setValue('testing.authorization.auth_user', 'test');
         $configManager->setValue('testing.authorization.access_token', 'test');
@@ -136,7 +135,7 @@ class ApiTest extends TestCase
         '{' .
         '   "logged": true' .
         "}\n";
-        $adapter->setResponse('HTTP/1.1 200 OK\n{"loggeddddd": true}');
+        $adapter->setResponse($response);
 
         return new ZendClient('/path', ['adapter' => $adapter]);
     }

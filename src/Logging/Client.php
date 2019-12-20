@@ -47,7 +47,7 @@ class Client extends ClientBase
     }
 
     /**
-     * Add a jandler to our logging stack
+     * Add a handler to our logging stack
      *
      * @param AbstractMonologHandler $handler The handler we are adding to our logger
      *

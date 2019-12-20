@@ -104,8 +104,6 @@ class Client implements IProtectClient
         ?ConfigManager $configManager = null,
         ?LoggingClient $loggingClient = null
     ) {
-        $this->authUsername  = $authUsername;
-        $this->accessToken   = $accessToken;
         $this->client        = $client ?? new ZendClient();
         $this->configManager = $configManager ?? new ConfigManager();
         $this->loggingClient = $loggingClient ?? new LoggingClient();
