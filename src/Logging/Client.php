@@ -121,7 +121,7 @@ class Client extends ClientBase
      *
      * @return Client returns self so it can be used in series
      */
-    public function setStreamHandler() : Client
+    protected function setStreamHandler() : Client
     {
         $streamConfiguration = $this->configManager->getValue('logging.file');
         if (! $streamConfiguration['enabled']) {
