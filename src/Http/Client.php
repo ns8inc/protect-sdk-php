@@ -7,13 +7,16 @@ namespace NS8\ProtectSDK\Http;
 use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Http\Exceptions\Http as HttpException;
 use NS8\ProtectSDK\Logging\Client as LoggingClient;
+use NS8\ProtectSDK\Logging\Handlers\Api as ApiHandler;
 use stdClass;
 use Throwable;
 use Zend\Http\Client as ZendClient;
 use Zend\Http\PhpEnvironment\RemoteAddress as ZendRemoteAddress;
 use Zend\Http\PhpEnvironment\Request as ZendRequest;
 use Zend\Json\Decoder as ZendJsonDecoder;
+use const PHP_EOL;
 use function array_merge;
+use function in_array;
 use function sprintf;
 
 /**
@@ -43,6 +46,11 @@ class Client implements IProtectClient
      * Format for Authorization header value
      */
     public const AUTH_STRING_HEADER_FORMAT = 'Bearer %s';
+
+    /**
+     * A list of paths we should not log HTTP requests for
+     */
+    public const EXCLUDED_LOG_PATHS = [ApiHandler::LOGGING_PATH];
 
     /**
      * HTTP Library Client attribute
@@ -295,7 +303,7 @@ class Client implements IProtectClient
                 'headers' => $headers,
                 'timeout' => $timeout,
             ];
-            $this->loggingClient->error('HTTP call failed', $t, $errorData);
+            $this->loggingClient->error('HTTP call failed: ' . $url . ':' . $t->getMessage(), $t, $errorData);
             throw $t;
         }
 
@@ -340,7 +348,8 @@ class Client implements IProtectClient
         }
 
         $response = $this->client->send()->getBody();
-        if ($this->configManager->getValue('logging.record_all_http_calls')) {
+        if ($this->configManager->getValue('logging.record_all_http_calls') &&
+        ! in_array($route, self::EXCLUDED_LOG_PATHS)) {
             $data = [
                 'url' => $uri,
                 'data' => $data,
@@ -350,7 +359,7 @@ class Client implements IProtectClient
                 'timeout' => $timeout,
                 'response' => $response,
             ];
-            $this->loggingClient->info('HTTP Request sent', $data);
+            $this->loggingClient->info('HTTP Request sent to ' . $uri . PHP_EOL, $data);
         }
 
         // Reset all attributes of client after the request
