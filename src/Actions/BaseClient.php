@@ -81,7 +81,7 @@ abstract class BaseClient
      *
      * @return mixed Returns the result of the NS8 API call
      */
-    abstract public static function get(string $requestType, array $data = []);
+    abstract public static function getEntity(string $requestType, array $data = []);
 
     /**
      * Set function that serves as a wrapper method for HTTP POST calls to NS8 when Actrions
@@ -92,5 +92,5 @@ abstract class BaseClient
      *
      * @return bool if the NS8 API set call was completed successfully (true if successful, false otherwise)
      */
-    abstract public static function set(string $eventName, array $data = []) : bool;
+    abstract public static function setAction(string $eventName, array $data = []) : bool;
 }
