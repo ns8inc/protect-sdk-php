@@ -12,6 +12,11 @@ use NS8\ProtectSDK\Http\Client as HttpClient;
 class Client extends BaseClient
 {
     /**
+     * Response code for successful action setting
+     */
+    public const ACTION_SUCCESS_CODE = 200;
+
+    /**
      * API path for Switch Executor
      */
     public const SWITCH_EXECUTOR_PATH = '/switch/executor';
@@ -35,7 +40,9 @@ class Client extends BaseClient
      */
     public static function getHttpClient() : HttpClient
     {
-        return self::$httpClient ?? new HttpClient();
+        self::$httpClient = self::$httpClient ?? new HttpClient();
+
+        return self::$httpClient;
     }
 
      /**
@@ -76,6 +83,6 @@ class Client extends BaseClient
     {
         $result = self::getHttpClient()->post(self::SWITCH_EXECUTOR_PATH, $data, [self::ACTION_KEY => $eventName]);
 
-        return $result->httpCode === 200;
+        return $result->httpCode === self::ACTION_SUCCESS_CODE;
     }
 }
