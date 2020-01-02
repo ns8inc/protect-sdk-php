@@ -40,6 +40,12 @@ class ClientTest extends TestCase
      * @covers ::setAction
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Http\Client::__construct
      * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
@@ -78,6 +84,12 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      * @covers NS8\ProtectSDK\Http\Client::__construct
      * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
      * @covers NS8\ProtectSDK\Http\Client::executeRequest
@@ -103,11 +115,11 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Sets up Config Manager before tests are ran
+     * Sets up Config Manager before a test is ran
      *
      * @return void
      */
-    public static function setUpBeforeClass() : void
+    public function setUp() : void
     {
         self::$configManager = new ConfigManager(null, null, null, null, null, true);
         self::$configManager->setValue('logging.api.enabled', false);
