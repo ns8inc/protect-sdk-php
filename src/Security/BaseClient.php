@@ -28,6 +28,8 @@ abstract class BaseClient
     /**
      * Sets the NS8 Access Token for NS8 requests. This is a wrapper method for the supported config
      * manager call
+     *
+     * @param string $accessToken The access token to be set in configuration
      */
-    abstract public static function setNs8AccessToken() : void;
+    abstract public static function setNs8AccessToken(string $accessToken) : void;
 }
