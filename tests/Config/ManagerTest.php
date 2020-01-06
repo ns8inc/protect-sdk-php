@@ -473,11 +473,11 @@ class ManagerTest extends TestCase
     }
 
     /**
-     * Sets up required JSON files for testing before tests are ran
+     * Sets up required JSON files for each test ran
      *
      * @return void
      */
-    public static function setUpBeforeClass() : void
+    public function setUp() : void
     {
         self::$testFilePath = tempnam(self::getJsonConfigDirectoryPath(), 'php_unit_test_data_');
         self::writeTestData(self::$testFilePath, json_encode(self::TEST_JSON));
