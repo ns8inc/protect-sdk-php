@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace NS8\ProtectSDK\Security;
 
 /**
- * Get Wrapper for handling general getActions that are requested
+ * Base class for dictating general Security class structure for managing authentication and access to NS8
  */
 abstract class BaseClient
 {
