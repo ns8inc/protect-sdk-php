@@ -9,23 +9,30 @@ The purpose of the Security class is to manage credentials and processes related
 
 ### Example Security Client Usages
 
-Fetching the access token for requests
+Fetching the access token for requests within the HTTP Client. By default, the HTTP Client will automatically pull the access token and does not need to be set individually for requests unless specifically told to do so.
+
 ```php
 <?php
 
 declare(strict_types=1);
 
-use NS8\ProtectSDK\Http\Client as HttpClient;
 use NS8\ProtectSDK\Security\Client as SecurityClient;
 
-$accessToken = SecurityClient::getNs8AccessToken();
-$httpClient = new HttpClient();
-$httpClient->setAccessToken($accessToken);
 
-$httpClient->post('/switch/executor', [], 'action' => 'CREATE_ORDER_ACTION');
+// HTTP Client method for fetching the access token prior to making requests
+public function getAccessToken() : ?string
+{
+    if (empty($this->accessToken)) {
+      $this->accessToken = SecurityClient::getNs8AccessToken();
+    }
+
+    return $this->accessToken;
+}
+
+$this->post('/switch/executor', [], 'action' => 'CREATE_ORDER_ACTION');
 ```
 
-Setting the access token for requests
+Setting the access token for requests. In this example, we are specifically forcing the HTTP Client to use a new access token to demonstrate the flexibility to do so. In general development, this is not needed unless the access token were to be explicitly removed or change dynamically during runtime.
 ```php
 <?php
 
