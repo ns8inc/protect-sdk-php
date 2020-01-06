@@ -494,7 +494,7 @@ class ManagerTest extends TestCase
      *
      * @return void
      */
-    public static function tearDownAfterClass() : void
+    public function tearDown() : void
     {
         unlink(self::$testFilePath);
         unlink(self::$invalidDataTestFilePath);

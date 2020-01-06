@@ -51,3 +51,45 @@ $httpClient->setAccessToken($accessToken);
 
 $httpClient->post('/switch/executor', [], 'action' => 'CREATE_ORDER_ACTION');
 ```
+
+Fetching the auth user for requests within the HTTP Client. As with the access token, this will be pulled automatically for requests and does not need to be explicitly set.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use NS8\ProtectSDK\Security\Client as SecurityClient;
+
+
+// HTTP Client method for fetching the auth user prior to making requests
+public function getAuthUser() : ?string
+{
+    if (empty($this->auth_user)) {
+      $this->auth_user = SecurityClient::getAuthUser();
+    }
+
+    return $this->auth_user;
+}
+
+$this->post('/switch/executor', [], 'action' => 'CREATE_ORDER_ACTION');
+```
+Setting the auth user for requests. This is not required unless a specific seperate user value should be set and used for upcoming NS8 API requests.
+```php
+<?php
+
+declare(strict_types=1);
+
+use NS8\ProtectSDK\Http\Client as HttpClient;
+use NS8\ProtectSDK\Security\Client as SecurityClient;
+
+// Override the access token set in JSON or set it at run-time
+$authUser = SecurityClient::setAuthUser('AUTH_USER_VALUE');
+
+// Later in request logic
+$httpClient = new HttpClient();
+$authUser = SecurityClient::getAuthUser();
+$httpClient->setAuthUser($authUser);
+
+$httpClient->post('/switch/executor', [], 'action' => 'CREATE_ORDER_ACTION');
+```

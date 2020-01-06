@@ -12,7 +12,7 @@ abstract class BaseClient
     /**
      * Validate NS8 Access Token
      *
-     * @param string $accessToken
+     * @param string $accessToken The access token to be validated
      *
      * @return bool Returns true if NS8 Access Token is valid, false otherwise
      */
@@ -30,6 +30,34 @@ abstract class BaseClient
      * manager call
      *
      * @param string $accessToken The access token to be set in configuration
+     *
+     * @return void
      */
     abstract public static function setNs8AccessToken(string $accessToken) : void;
+
+    /**
+     * Validate NS8 Auth User
+     *
+     * @param string $authUser The auth user value we are validating
+     *
+     * @return bool Returns true if NS8 Auth User is valid, false otherwise
+     */
+    abstract public static function validateAuthUser(string $authUser) : bool;
+
+    /**
+     * Returns the NS8 Auth User to be used when sending requests to NS8.
+     *
+     * @return string The Auth User to be used when sending NS8 requests
+     */
+    abstract public static function getAuthUser() : string;
+
+    /**
+     * Sets the Auth User for NS8 requests. This is a wrapper method for the supported config
+     * manager call
+     *
+     * @param string $authUser Auth User to be set in configuration
+     *
+     * @return void
+     */
+    abstract public static function setAuthUser(string $authUser) : void;
 }
