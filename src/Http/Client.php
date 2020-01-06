@@ -8,6 +8,7 @@ use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Http\Exceptions\Http as HttpException;
 use NS8\ProtectSDK\Logging\Client as LoggingClient;
 use NS8\ProtectSDK\Logging\Handlers\Api as ApiHandler;
+use NS8\ProtectSDK\Security\Client as SecurityClient;
 use stdClass;
 use Throwable;
 use Zend\Http\Client as ZendClient;
@@ -115,12 +116,12 @@ class Client implements IProtectClient
         $this->configManager = $configManager ?? new ConfigManager();
         $this->loggingClient = $loggingClient ?? new LoggingClient();
 
-        $accessToken = $accessToken ?? $this->configManager->getEnvValue('authorization.access_token');
+        $accessToken = $accessToken ?? SecurityClient::getNs8AccessToken();
         if (! empty($accessToken)) {
             $this->setAccessToken($accessToken);
         }
 
-        $authUsername = $authUsername ?? $this->configManager->getEnvValue('authorization.auth_user');
+        $authUsername = $authUsername ?? SecurityClient::getAuthUser();
         if (! empty($authUsername)) {
             $this->setAuthUsername($authUsername);
         }
@@ -209,7 +210,7 @@ class Client implements IProtectClient
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
     ) : stdClass {
         $authUsername = $this->getAuthUsername();
-        if (empty($authUsername)) {
+        if (! SecurityClient::validateAuthUser($authUsername)) {
             throw new HttpException(
                 sprintf('An auth username is required for NS8 %s requests.', self::POST_REQUEST_TYPE)
             );
@@ -285,7 +286,7 @@ class Client implements IProtectClient
     ) : stdClass {
         try {
             $accessToken = $this->getAccessToken();
-            if (empty($accessToken)) {
+            if (! SecurityClient::validateNs8AccessToken($accessToken)) {
                 throw new HttpException('An authorization token is required for NS8 requests');
             }
 

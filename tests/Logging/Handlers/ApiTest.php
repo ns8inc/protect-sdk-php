@@ -69,6 +69,11 @@ class ApiTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      * @covers NS8\ProtectSDK\Http\Client::__construct
      * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
      * @covers NS8\ProtectSDK\Http\Client::executeRequest
