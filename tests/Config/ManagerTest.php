@@ -373,14 +373,14 @@ class ManagerTest extends TestCase
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::validateInitialConfigData
-     * @covers ::getEnvonment
-     * @covers ::setEnvonment
+     * @covers ::getEnvironment
+     * @covers ::setEnvironment
      */
     public function testSetEnvironmentMethod() : void
     {
         $configManager = new ConfigManager();
-        $configManager->setEnvonment('testing');
-        $currentEnv = $configManager::getEnvonment();
+        $configManager->setEnvironment('testing');
+        $currentEnv = $configManager::getEnvironment();
 
         $this->assertEquals('testing', $currentEnv);
     }
@@ -394,16 +394,16 @@ class ManagerTest extends TestCase
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::validateInitialConfigData
-     * @covers ::getEnvonment
-     * @covers ::setEnvonment
+     * @covers ::getEnvironment
+     * @covers ::setEnvironment
      */
     public function testGetEnvironmentMethod() : void
     {
         $configManager = new ConfigManager();
-        $currentEnv    = $configManager::getEnvonment();
+        $currentEnv    = $configManager::getEnvironment();
         $this->assertEquals('testing', $currentEnv);
-        $configManager::setEnvonment('production');
-        $currentEnv = $configManager::getEnvonment();
+        $configManager::setEnvironment('production');
+        $currentEnv = $configManager::getEnvironment();
 
         $this->assertEquals('production', $currentEnv);
     }

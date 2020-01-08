@@ -82,7 +82,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvonment
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      */
@@ -109,7 +109,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvonment
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      */
@@ -140,7 +140,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvonment
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      */
@@ -168,7 +168,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvonment
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      */
@@ -195,7 +195,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvonment
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      */
@@ -226,7 +226,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvonment
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      */
