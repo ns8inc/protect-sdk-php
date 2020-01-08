@@ -75,7 +75,7 @@ class Client extends BaseClient
      */
     public static function setNs8AccessToken(string $accessToken) : void
     {
-        $configKey = sprintf('%s.authorization.access_token', ConfigManager::getEnvonment());
+        $configKey = sprintf('%s.authorization.access_token', ConfigManager::getEnvironment());
         self::getConfigManager()->setValue($configKey, $accessToken);
     }
 
@@ -111,7 +111,7 @@ class Client extends BaseClient
      */
     public static function setAuthUser(string $authUser) : void
     {
-        $configKey = sprintf('%s.authorization.auth_user', ConfigManager::getEnvonment());
+        $configKey = sprintf('%s.authorization.auth_user', ConfigManager::getEnvironment());
         self::getConfigManager()->setValue($configKey, $authUser);
     }
 }

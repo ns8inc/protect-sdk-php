@@ -175,7 +175,7 @@ abstract class ManagerStructure
      *
      * @return void
      */
-    public static function setEnvonment(string $environment) : void
+    public static function setEnvironment(string $environment) : void
     {
         self::$environment = $environment;
     }
@@ -185,7 +185,7 @@ abstract class ManagerStructure
      *
      * @return string
      */
-    public static function getEnvonment() : string
+    public static function getEnvironment() : string
     {
         return self::$environment;
     }
