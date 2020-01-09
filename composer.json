@@ -10,7 +10,7 @@
     "name": "ns8/protect-sdk",
     "require": {
         "php": "^7.1.3",
-        "zendframework/zend-http": ">=2.8.4",
+        "zendframework/zend-http": ">=2.6.1",
         "zendframework/zend-json": "^3.1",
         "phpcompatibility/php-compatibility": "^9.3",
         "monolog/monolog": "^1.0"
