@@ -8,7 +8,7 @@ use NS8\ProtectSDK\Config\Exceptions\Environment as EnvironmentConfigException;
 use NS8\ProtectSDK\Config\Exceptions\InvalidValue as InvalidValueException;
 use NS8\ProtectSDK\Config\Exceptions\Json as JsonConfigException;
 use const JSON_ERROR_NONE;
-use function array_merge;
+use function array_replace_recursive;
 use function dirname;
 use function file_exists;
 use function file_get_contents;
@@ -86,7 +86,7 @@ abstract class ManagerStructure
      *
      * @var mixed[] $configData
      */
-    protected static $configData;
+    protected static $configData = [];
 
     /**
      * Constructor for Configuration manager
@@ -121,11 +121,13 @@ abstract class ManagerStructure
         $baseData           = $this->getConfigByFile($baseConfigJsonFile);
         $customData         = isset($customConfigJsonFile) ? $this->getConfigByFile($customConfigJsonFile) : [];
 
-        self::$configData                     = array_merge($baseData, $customData);
+        // Initialize runtime config values before adding base or custom values
+        self::$configData = [];
+        static::setRuntimeConfigValues();
+        self::$configData                     = array_replace_recursive(self::$configData, $baseData, $customData);
         self::$configData['platform_version'] = $platformVersion;
         self::$configData['php_version']      = $phpVersion ?? phpversion();
         self::$environment                    = $environment ?? self::$configData['default_environment'];
-
         $this->validateInitialConfigData();
     }
 
@@ -167,6 +169,13 @@ abstract class ManagerStructure
      * @return bool if the value exists in configuration data
      */
     abstract public static function doesValueExist(string $key) : bool;
+
+    /**
+     * Sets run-time configuration values for functionality
+     *
+     * @return void
+     */
+    abstract protected static function setRuntimeConfigValues() : void;
 
     /**
      * Set the environment without object instantiatin for simpler static usage
@@ -234,7 +243,7 @@ abstract class ManagerStructure
     protected function validateInitialConfigData() : void
     {
         foreach (self::STATIC_CONFIG_MAPPINGS as $key => $value) {
-            if ($this->doesValueExist($key) && $this->getValue($key) !== $value) {
+            if (static::doesValueExist($key) && static::getValue($key) !== $value) {
                 throw new InvalidValueException(sprintf('%s must have a value of %s', $key, $value));
             }
         }

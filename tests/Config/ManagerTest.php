@@ -126,6 +126,8 @@ class ManagerTest extends TestCase
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::validateInitialConfigData
+     * @covers ::setRuntimeConfigValues
+     * @covers ::setValueWithoutValidation
      */
     public function testConfigLoad() : void
     {
@@ -149,6 +151,8 @@ class ManagerTest extends TestCase
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
      * @covers ::getValue
+     * @covers ::setRuntimeConfigValues
+     * @covers ::setValueWithoutValidation
      */
     public function testGetConfigFileValue() : void
     {
@@ -169,6 +173,8 @@ class ManagerTest extends TestCase
      * @covers ::readJsonFromFile
      * @covers ::getValue
      * @covers ::getEnvValue
+     * @covers ::setRuntimeConfigValues
+     * @covers ::setValueWithoutValidation
      */
     public function testGetEnvConfigValue() : void
     {
@@ -189,6 +195,8 @@ class ManagerTest extends TestCase
      * @covers ::readJsonFromFile
      * @covers ::getValue
      * @covers ::doesValueExist
+     * @covers ::setRuntimeConfigValues
+     * @covers ::setValueWithoutValidation
      */
     public function testValueExistsValidation() : void
     {
@@ -213,6 +221,8 @@ class ManagerTest extends TestCase
      * @covers ::readJsonFromFile
      * @covers ::getValue
      * @covers ::setValue
+     * @covers ::setRuntimeConfigValues
+     * @covers ::setValueWithoutValidation
      */
     public function testSetValue() : void
     {
@@ -236,6 +246,8 @@ class ManagerTest extends TestCase
      * @covers ::readJsonFromFile
      * @covers ::getValue
      * @covers ::setValue
+     * @covers ::setRuntimeConfigValues
+     * @covers ::setValueWithoutValidation
      */
     public function testGetDynamicallySetValue() : void
     {
@@ -290,6 +302,8 @@ class ManagerTest extends TestCase
      * @covers ::getValue
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
+     * @covers ::setRuntimeConfigValues
+     * @covers ::setValueWithoutValidation
      */
     public function testDefaultPhpVersionCheck() : void
     {
@@ -309,6 +323,8 @@ class ManagerTest extends TestCase
      * @covers ::getValue
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
+     * @covers ::setRuntimeConfigValues
+     * @covers ::setValueWithoutValidation
      */
     public function testPhpVersionIfSpecified() : void
     {
@@ -329,6 +345,8 @@ class ManagerTest extends TestCase
       * @covers ::getValue
       * @covers ::getConfigByFile
       * @covers ::readJsonFromFile
+      * @covers ::setRuntimeConfigValues
+      * @covers ::setValueWithoutValidation
       */
     public function testDefaultPlatformVersionCheck() : void
     {
@@ -348,6 +366,8 @@ class ManagerTest extends TestCase
      * @covers ::getValue
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
+     * @covers ::setRuntimeConfigValues
+     * @covers ::setValueWithoutValidation
      */
     public function testPlatformVersionIfSpecified() : void
     {
@@ -440,6 +460,8 @@ class ManagerTest extends TestCase
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
      * @covers ::validateInitialConfigData
+     * @covers ::setRuntimeConfigValues
+     * @covers ::setValueWithoutValidation
      */
     public function testInvalidEnvUrls() : void
     {

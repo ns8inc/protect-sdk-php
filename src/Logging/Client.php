@@ -10,14 +10,81 @@ use Monolog\Logger;
 use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Logging\Handlers\Api as ApiHandler;
 use Throwable;
+use function array_key_exists;
 use function dirname;
+use function strtoupper;
 
 /**
  * Dlass defining core logging functionality and expected behavior
  */
 class Client extends ClientBase
 {
+    /**
+     * Logging Channel for Monolog Usage
+     */
     public const LOGGER_CHANNEL_NAME = 'ns8';
+
+    /**
+     * Debug Level Info For Logging
+     */
+    public const LOG_LEVEL_DEBUG_NAME          = 'DEBUG';
+    public const LOG_LEVEL_DEBUG_INTEGER_VALUE = 100;
+
+    /**
+     * Info Level Info For Logging
+     */
+    public const LOG_LEVEL_INFO_NAME          = 'INFO';
+    public const LOG_LEVEL_INFO_INTEGER_VALUE = 200;
+
+    /**
+     * Notice Level Info For Logging
+     */
+    public const LOG_LEVEL_NOTICE_NAME          = 'NOTICE';
+    public const LOG_LEVEL_NOTICE_INTEGER_VALUE = 250;
+
+    /**
+     * Warning Level Info For Logging
+     */
+    public const LOG_LEVEL_WARNING_NAME          = 'WARNING';
+    public const LOG_LEVEL_WARNING_INTEGER_VALUE = 300;
+
+    /**
+     * Error Level Info For Logging
+     */
+    public const LOG_LEVEL_ERROR_NAME          = 'ERROR';
+    public const LOG_LEVEL_ERROR_INTEGER_VALUE = 400;
+
+    /**
+     * Critical Level Info For Logging
+     */
+    public const LOG_LEVEL_CRITICAL_NAME    = 'CRITICAL';
+    public const LOG_LEVEL_CRITICAL_INTEGER = 500;
+
+    /**
+     * Alert Level Info For Logging
+     */
+    public const LOG_LEVEL_ALERT_NAME    = 'ALERT';
+    public const LOG_LEVEL_ALERT_INTEGER = 550;
+
+    /**
+     * Emergency Level Info For Logging
+     */
+    public const LOG_LEVEL_EMERGENCY_NAME    = 'EMERGENCY';
+    public const LOG_LEVEL_EMERGENCY_INTEGER = 600;
+
+    /**
+     * Map log levels to their integer values
+     */
+    public const LOG_LEVEL_MAPPING = [
+        self::LOG_LEVEL_DEBUG_NAME => self::LOG_LEVEL_DEBUG_INTEGER_VALUE,
+        self::LOG_LEVEL_INFO_NAME => self::LOG_LEVEL_INFO_INTEGER_VALUE,
+        self::LOG_LEVEL_NOTICE_NAME => self::LOG_LEVEL_NOTICE_INTEGER_VALUE,
+        self::LOG_LEVEL_WARNING_NAME => self::LOG_LEVEL_ERROR_INTEGER_VALUE,
+        self::LOG_LEVEL_ERROR_NAME => self::LOG_LEVEL_ERROR_INTEGER_VALUE,
+        self::LOG_LEVEL_ALERT_NAME => self::LOG_LEVEL_ALERT_INTEGER,
+        self::LOG_LEVEL_EMERGENCY_NAME => self::LOG_LEVEL_EMERGENCY_INTEGER,
+    ];
+
     /**
      * Logging client used to write to logs
      *
@@ -130,7 +197,11 @@ class Client extends ClientBase
 
         $currentDirectory = dirname(__FILE__);
         $logPath          = $currentDirectory . '/../../' . $streamConfiguration['relative_path'];
-        $streamHandler    = new StreamHandler($logPath, $streamConfiguration['log_level']);
+
+        $streamHandler = new StreamHandler(
+            $logPath,
+            $this->getLogLevelIntegerValue((string) $streamConfiguration['log_level'])
+        );
         $this->addHandler($streamHandler);
 
         return $this;
@@ -148,8 +219,28 @@ class Client extends ClientBase
             return $this;
         }
 
-        $this->addHandler(new ApiHandler(null, $apiConfiguration['log_level']));
+        $apiHandler = new ApiHandler(
+            null,
+            $this->getLogLevelIntegerValue((string) $apiConfiguration['log_level'])
+        );
+        $this->addHandler($apiHandler);
 
         return $this;
+    }
+
+    /**
+     * Fetch log level value based on log level name
+     *
+     * @param string $logLevel The log level such as "Warning", "Error", etc. we want to fetch a value for
+     *
+     * @return int The integer value of the log level
+     */
+    protected function getLogLevelIntegerValue(string $logLevel) : int
+    {
+        $logLevel = strtoupper($logLevel);
+
+        // If the level exists in our mapping, use that otherwise default to ERRORs only
+        return array_key_exists($logLevel, self::LOG_LEVEL_MAPPING) ?
+        self::LOG_LEVEL_MAPPING[$logLevel] : self::LOG_LEVEL_ERROR_INTEGER_VALUE;
     }
 }

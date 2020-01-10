@@ -31,6 +31,7 @@ class ClientTest extends TestCase
      * @covers ::addHandler
      * @covers ::setApiHandler
      * @covers ::setStreamHandler
+     * @covers ::getLogLevelIntegerValue
      * @covers NS8\ProtectSDK\Logging\Handlers\Api::__construct
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
@@ -41,6 +42,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Http\Client::__construct
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
      * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
@@ -66,6 +68,7 @@ class ClientTest extends TestCase
      * @covers ::addHandler
      * @covers ::setApiHandler
      * @covers ::setStreamHandler
+     * @covers ::getLogLevelIntegerValue
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
@@ -74,6 +77,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testDebugWriting() : void
     {
@@ -95,6 +100,7 @@ class ClientTest extends TestCase
      * @covers ::addHandler
      * @covers ::setApiHandler
      * @covers ::setStreamHandler
+     * @covers ::getLogLevelIntegerValue
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
@@ -103,6 +109,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testWarnWriting() : void
     {
@@ -124,6 +132,7 @@ class ClientTest extends TestCase
      * @covers ::addHandler
      * @covers ::setApiHandler
      * @covers ::setStreamHandler
+     * @covers ::getLogLevelIntegerValue
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
@@ -132,6 +141,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testInfoWriting() : void
     {
@@ -153,6 +164,7 @@ class ClientTest extends TestCase
      * @covers ::addHandler
      * @covers ::setApiHandler
      * @covers ::setStreamHandler
+     * @covers ::getLogLevelIntegerValue
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
@@ -161,6 +173,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testErrorWriting() : void
     {
@@ -190,6 +204,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testFileLogWithConfigDisabled() : void
     {
@@ -212,6 +228,7 @@ class ClientTest extends TestCase
     public static function getConfigManager() : ConfigManager
     {
         $configManager = new ConfigManager(null, null, null, null, null, true);
+        $configManager->setValue('logging.file.log_level', 'debug');
         $configManager->setValue('logging.file.relative_path', 'logs/unit_tests_log.log');
         $configManager->setValue('logging.api.enabled', false);
 
