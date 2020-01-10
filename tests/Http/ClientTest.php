@@ -65,6 +65,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -72,6 +74,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testConstructor() : void
     {
@@ -101,12 +104,15 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testGetRequest() : void
     {
@@ -144,11 +150,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testNonJsonGetRequest() : void
     {
@@ -191,11 +200,16 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::error
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testNonJsonGetRequestException() : void
     {
@@ -236,6 +250,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
      * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      * @covers NS8\ProtectSDK\Logging\Client::__construct
@@ -243,6 +259,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testPostRequest() : void
     {
@@ -282,12 +299,15 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testPutRequest() : void
     {
@@ -327,12 +347,15 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testDeleteRequest() : void
     {
@@ -367,6 +390,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -374,6 +399,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testgetAuthNameFunctionality() : void
     {
@@ -400,6 +426,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -407,6 +435,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testsetAuthNameFunctionality() : void
     {
@@ -433,6 +462,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -440,6 +471,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testGetAccessTokenFunctionality() : void
     {
@@ -466,6 +498,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -473,6 +507,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testSetAccessTokenFunctionality() : void
     {
@@ -500,6 +535,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -507,6 +544,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testGetSessionDataFunctionality() : void
     {
@@ -535,6 +573,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -542,6 +582,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testSetSessionDataFunctionality() : void
     {
@@ -575,6 +616,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
      * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
@@ -588,6 +631,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testNoAccessTokenException() : void
     {
@@ -623,6 +667,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -631,6 +677,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testNoAuthException() : void
     {

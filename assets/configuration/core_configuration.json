@@ -9,11 +9,11 @@
     "file": {
       "enabled": true,
       "relative_path": "logs/ns8.log",
-      "log_level": 100
+      "log_level": "Error"
     },
     "api": {
       "enabled": true,
-      "log_level": 100
+      "log_level": "Info"
     },
     "record_all_http_calls": true
   },
@@ -21,13 +21,15 @@
     "authorization": {
       "access_token": "",
       "auth_user": ""
-    },
-    "urls": {
-      "client_url": "https://protect-client.ns8.com",
-      "api_url": "https://protect.ns8.com"
     }
   },
   "testing": {
+    "authorization": {
+      "access_token": "",
+      "auth_user": ""
+    }
+  },
+  "development": {
     "authorization": {
       "access_token": "",
       "auth_user": ""

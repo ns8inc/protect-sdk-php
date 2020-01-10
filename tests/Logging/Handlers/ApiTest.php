@@ -69,6 +69,8 @@ class ApiTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -89,6 +91,7 @@ class ApiTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::error
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
     public function testApiWriteFailure() : void
     {

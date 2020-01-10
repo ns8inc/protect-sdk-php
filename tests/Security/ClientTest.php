@@ -39,6 +39,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testSetConfigManager() : void
     {
@@ -60,6 +62,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testGetConfigManager() : void
     {
@@ -85,6 +89,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testGetNs8AccessToken() : void
     {
@@ -112,6 +118,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testSetNs8AccessToken() : void
     {
@@ -143,6 +151,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testValidateNs8AccessToken() : void
     {
@@ -171,6 +181,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testGetAuthUser() : void
     {
@@ -198,6 +210,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testSetAuthUser() : void
     {
@@ -229,6 +243,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testValidateAuthUser() : void
     {

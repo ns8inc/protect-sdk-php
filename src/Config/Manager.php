@@ -59,19 +59,15 @@ class Manager extends ManagerStructure
     }
 
     /**
-     * Sets a configuration value for a specific key
+     * Sets a configuration value for a specific key without validation
      *
      * @param string $key   Key for value in configuration array
      * @param mixed  $value Value for the associated key
      *
      * @return bool if the value setting was successful
      */
-    public static function setValue(string $key, $value) : bool
+    protected static function setValueWithoutValidation(string $key, $value) : bool
     {
-        if (! self::validateKeyCanChange($key)) {
-            throw new InvalidValueException(sprintf('%s is not allowed to be changed', $key));
-        }
-
         $keyParts   = explode(self::KEY_DELIMITER, $key);
         $keyLength  = count($keyParts);
         $index      = 1;
@@ -91,6 +87,23 @@ class Manager extends ManagerStructure
         }
 
         return true;
+    }
+
+    /**
+     * Sets a configuration value for a specific key with validation
+     *
+     * @param string $key   Key for value in configuration array
+     * @param mixed  $value Value for the associated key
+     *
+     * @return bool if the value setting was successful
+     */
+    public static function setValue(string $key, $value) : bool
+    {
+        if (! self::validateKeyCanChange($key)) {
+            throw new InvalidValueException(sprintf('%s is not allowed to be changed', $key));
+        }
+
+        return self::setValueWithoutValidation($key, $value);
     }
 
     /**
@@ -153,5 +166,17 @@ class Manager extends ManagerStructure
     public static function getFullConfigArray() : array
     {
         return self::$configData;
+    }
+
+    /**
+     * Sets run-time configuration values for functionality
+     *
+     * @return void
+     */
+    protected static function setRuntimeConfigValues() : void
+    {
+        foreach (self::STATIC_CONFIG_MAPPINGS as $key => $value) {
+            self::setValueWithoutValidation($key, $value);
+        }
     }
 }
