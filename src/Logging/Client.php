@@ -109,6 +109,7 @@ class Client extends ClientBase
     {
         $this->logger        = $logger ?? new Logger(self::LOGGER_CHANNEL_NAME);
         $this->configManager = $configManager ?? new ConfigManager();
+        $this->configManager::initConfiguration();
         $this->setApiHandler();
         $this->setStreamHandler();
     }

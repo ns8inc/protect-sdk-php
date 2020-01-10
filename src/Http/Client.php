@@ -116,6 +116,7 @@ class Client implements IProtectClient
         $this->configManager = $configManager ?? new ConfigManager();
         $this->loggingClient = $loggingClient ?? new LoggingClient();
 
+        $this->configManager::initConfiguration();
         $accessToken = $accessToken ?? SecurityClient::getNs8AccessToken();
         if (! empty($accessToken)) {
             $this->setAccessToken($accessToken);

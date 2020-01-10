@@ -61,12 +61,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -100,12 +102,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
@@ -146,12 +150,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
@@ -196,14 +202,15 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::error
@@ -246,12 +253,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
      * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      * @covers NS8\ProtectSDK\Logging\Client::__construct
@@ -295,12 +304,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
@@ -343,11 +354,13 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      * @covers NS8\ProtectSDK\Logging\Client::__construct
@@ -386,12 +399,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -401,7 +416,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
-    public function testgetAuthNameFunctionality() : void
+    public function testGetAuthNameFunctionality() : void
     {
         $client = new Client(null, null, false, null, self::$configManager);
         $client->setAuthUsername(self::TEST_AUTH_NAME);
@@ -422,12 +437,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -437,7 +454,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
      */
-    public function testsetAuthNameFunctionality() : void
+    public function testSetAuthNameFunctionality() : void
     {
         $client = new Client(null, null, false, null, self::$configManager);
         $client->setAuthUsername(self::TEST_AUTH_NAME);
@@ -458,12 +475,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -494,12 +513,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -531,12 +552,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -569,12 +592,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -612,12 +637,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
      * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
@@ -663,12 +690,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -695,8 +724,11 @@ class ClientTest extends TestCase
      */
     public function setUp() : void
     {
-        self::$configManager = new ConfigManager(null, null, null, null, null, true);
+        self::$configManager = new ConfigManager();
+        self::$configManager::resetConfig();
+        self::$configManager::initConfiguration();
         self::$configManager->setValue('logging.api.enabled', false);
+        self::$configManager->setValue('logging.file.enabled', true);
     }
 
     /**

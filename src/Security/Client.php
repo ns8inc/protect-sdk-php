@@ -26,7 +26,10 @@ class Client extends BaseClient
      */
     public static function getConfigManager() : ConfigManager
     {
-        self::$configManager = self::$configManager ?? new ConfigManager();
+        if (! isset(self::$configManager)) {
+            self::$configManager = new ConfigManager();
+            self::$configManager::initConfiguration();
+        }
 
         return self::$configManager;
     }
