@@ -89,6 +89,13 @@ abstract class ManagerStructure
     protected static $configData = [];
 
     /**
+     * Set flag so we know if the Configuration Class has been initialized
+     *
+     * @var bool $configInitialized
+     */
+    protected static $configInitialized = false;
+
+    /**
      * Constructor for Configuration manager
      *
      * @param string $environment          The environment the configuration should utilize during runtime
@@ -106,20 +113,52 @@ abstract class ManagerStructure
         ?string $phpVersion = null,
         bool $forceConfigReload = false
     ) {
+        if (! $forceConfigReload) {
+            return;
+        }
+
+        self::resetConfig();
+        self::initConfiguration(
+            $environment,
+            $customConfigJsonFile,
+            $baseConfigJsonFile,
+            $platformVersion,
+            $phpVersion,
+            $forceConfigReload
+        );
+    }
+
+    /**
+     * Init configuration manager as needed
+     *
+     * @param string $environment          The environment the configuration should utilize during runtime
+     * @param string $customConfigJsonFile Custom JSON file to be passed into the constructor for configuration set-up
+     * @param string $baseConfigJsonFile   Base JSON file to be passed into the construction for configuration set-up
+     * @param string $platformVersion      Current version of the platform being utilized
+     * @param string $phpVersion           Version of PHP being utilized
+     *
+     * @return void
+     */
+    public static function initConfiguration(
+        ?string $environment = null,
+        ?string $customConfigJsonFile = null,
+        ?string $baseConfigJsonFile = null,
+        ?string $platformVersion = null,
+        ?string $phpVersion = null
+    ) : void {
+        if (self::$configInitialized) {
+            return;
+        }
+
         // Ensure the environment passed in is valid
         if (! empty($environment) && ! in_array($environment, self::ACCEPTED_CONFIG_ENVIRONMENTS)) {
             throw new EnvironmentConfigException(sprintf('%s is not a valid environment type.', $environment));
         }
 
-        // Force env and config data reload if explicitly told to do so
-        if (! $forceConfigReload) {
-            return;
-        }
-
         $baseConfigJsonFile = $baseConfigJsonFile ??
         dirname(__FILE__) . sprintf('/../../assets/configuration/%s', self::DEFAULT_CONFIG_FILE);
-        $baseData           = $this->getConfigByFile($baseConfigJsonFile);
-        $customData         = isset($customConfigJsonFile) ? $this->getConfigByFile($customConfigJsonFile) : [];
+        $baseData           = self::getConfigByFile($baseConfigJsonFile);
+        $customData         = isset($customConfigJsonFile) ? self::getConfigByFile($customConfigJsonFile) : [];
 
         // Initialize runtime config values before adding base or custom values
         self::$configData = [];
@@ -128,7 +167,29 @@ abstract class ManagerStructure
         self::$configData['platform_version'] = $platformVersion;
         self::$configData['php_version']      = $phpVersion ?? phpversion();
         self::$environment                    = $environment ?? self::$configData['default_environment'];
-        $this->validateInitialConfigData();
+        self::validateInitialConfigData();
+        self::$configInitialized = true;
+    }
+
+    /**
+     * Returns if the configuration is initialized
+     *
+     * @return bool Returns true if the config is initialized, false otherwise
+     */
+    public static function isConfigInitialized() : bool
+    {
+        return self::$configInitialized;
+    }
+
+    /**
+     * Reset config properties
+     *
+     * @return void
+     */
+    public static function resetConfig() : void
+    {
+        self::$configInitialized = false;
+        self::$configData        = [];
     }
 
     /**
@@ -206,13 +267,13 @@ abstract class ManagerStructure
      *
      * @return mixed[] JSON data decoded
      */
-    protected function getConfigByFile(string $fileName) : array
+    protected static function getConfigByFile(string $fileName) : array
     {
         if (! file_exists($fileName)) {
             throw new JsonConfigException(sprintf('Configuration file %s does not exist.', $fileName));
         }
 
-        return $this->readJsonFromFile($fileName);
+        return self::readJsonFromFile($fileName);
     }
 
     /**
@@ -224,7 +285,7 @@ abstract class ManagerStructure
      *
      * @throws JsonConfigException if the JSON was not decoded without an error.
      */
-    protected function readJsonFromFile(string $fileName) : array
+    protected static function readJsonFromFile(string $fileName) : array
     {
         $fileData = file_get_contents($fileName);
         $jsonData = json_decode($fileData, true);
@@ -240,7 +301,7 @@ abstract class ManagerStructure
      *
      * @return void
      */
-    protected function validateInitialConfigData() : void
+    protected static function validateInitialConfigData() : void
     {
         foreach (self::STATIC_CONFIG_MAPPINGS as $key => $value) {
             if (static::doesValueExist($key) && static::getValue($key) !== $value) {

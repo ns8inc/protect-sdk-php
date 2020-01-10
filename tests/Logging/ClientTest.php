@@ -43,6 +43,9 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Http\Client::__construct
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
      * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
@@ -52,6 +55,8 @@ class ClientTest extends TestCase
     {
         // Ensure all handlers are enabled in Constructor call
         $configManager = new ConfigManager();
+        $configManager::resetConfig();
+        $configManager::initConfiguration();
         $configManager->setValue('logging.file.enabled', true);
         $configManager->setValue('logging.api.enabled', true);
 
@@ -73,12 +78,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      */
     public function testDebugWriting() : void
     {
@@ -105,12 +112,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      */
     public function testWarnWriting() : void
     {
@@ -137,12 +146,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      */
     public function testInfoWriting() : void
     {
@@ -169,12 +180,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      */
     public function testErrorWriting() : void
     {
@@ -204,6 +217,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
@@ -227,10 +242,13 @@ class ClientTest extends TestCase
      */
     public static function getConfigManager() : ConfigManager
     {
-        $configManager = new ConfigManager(null, null, null, null, null, true);
+        $configManager = new ConfigManager();
+        $configManager::resetConfig();
+        $configManager::initConfiguration();
         $configManager->setValue('logging.file.log_level', 'debug');
         $configManager->setValue('logging.file.relative_path', 'logs/unit_tests_log.log');
         $configManager->setValue('logging.api.enabled', false);
+        $configManager->setValue('logging.file.enabled', true);
 
         return $configManager;
     }

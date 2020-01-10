@@ -62,7 +62,7 @@ class Api extends AbstractProcessingHandler
         bool $bubble = true
     ) {
         $this->configManager = $configManager ?? new ConfigManager();
-
+        $this->configManager::initConfiguration();
         parent::__construct($level, $bubble);
     }
 

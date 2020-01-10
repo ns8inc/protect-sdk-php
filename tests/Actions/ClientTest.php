@@ -43,12 +43,13 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -100,6 +101,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
@@ -136,8 +138,10 @@ class ClientTest extends TestCase
      */
     public function setUp() : void
     {
-        self::$configManager = new ConfigManager(null, null, null, null, null, true);
+        self::$configManager = new ConfigManager();
+        self::$configManager::initConfiguration();
         self::$configManager->setValue('logging.api.enabled', false);
+        self::$configManager->setValue('logging.file.enabled', true);
         self::$configManager->setValue('testing.authorization.auth_user', 'test');
         self::$configManager->setValue('testing.authorization.access_token', 'test');
     }

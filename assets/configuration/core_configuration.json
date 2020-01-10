@@ -7,7 +7,7 @@
       "integration_type": "php"
     },
     "file": {
-      "enabled": true,
+      "enabled": false,
       "relative_path": "logs/ns8.log",
       "log_level": "Error"
     },
