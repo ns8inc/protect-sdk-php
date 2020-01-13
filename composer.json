@@ -21,7 +21,9 @@
         "doctrine/coding-standard": "^6.0",
         "rregeer/phpunit-coverage-check": "^0.3.1",
         "ccinn/composer-husky-plugin": "^0.1.0",
-        "ccinn/husky-php": "^0.1.0"
+        "ccinn/husky-php": "^0.1.0",
+        "symfony/finder": "^4.4.2",
+        "codeception/aspect-mock": "^3.0.2"
     },
     "scripts": {
         "lint": "phpcs --extensions=php src/ tests/",
