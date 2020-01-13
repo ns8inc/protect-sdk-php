@@ -100,8 +100,8 @@ class ApiTest extends TestCase
     public function testApiWriteFailure() : void
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration();
+        $configManager->resetConfig();
+        $configManager->initConfiguration();
         $configManager->setValue('testing.authorization.auth_user', 'test');
         $configManager->setValue('testing.authorization.access_token', 'test');
         $configManager->setValue('logging.api.enabled', false);

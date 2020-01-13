@@ -24,28 +24,28 @@ class Api extends AbstractProcessingHandler
     /**
      * Sets if the handler instance has been initialized
      *
-     * @var bool $initialized
+     * @var bool
      */
     protected $initialized = false;
 
     /**
      * Client used for posting data to the API
      *
-     * @var HttpClient $client
+     * @var HttpClient
      */
     protected $client;
 
     /**
      * Config manager user to track settings
      *
-     * @var ConfigManager $configManager
+     * @var ConfigManager
      */
     protected $configManager;
 
     /**
      * Static attribute to ensure we do not call error handler recursively
      *
-     * @var bool $selfCall
+     * @var bool
      */
     protected static $selfCall;
 

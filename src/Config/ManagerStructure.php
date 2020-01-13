@@ -78,20 +78,20 @@ abstract class ManagerStructure
     /**
      * The environment the configuration should utilize during runtime
      *
-     * @var string $environment
+     * @var string
      */
     protected static $environment;
     /**
      * Attribute to configuration information set during application flow
      *
-     * @var mixed[] $configData
+     * @var mixed[]
      */
     protected static $configData = [];
 
     /**
      * Set flag so we know if the Configuration Class has been initialized
      *
-     * @var bool $configInitialized
+     * @var bool
      */
     protected static $configInitialized = false;
 
@@ -138,6 +138,8 @@ abstract class ManagerStructure
      * @param string $phpVersion           Version of PHP being utilized
      *
      * @return void
+     *
+     * @throws EnvironmentConfigException if the environment type initialized is not valid.
      */
     public static function initConfiguration(
         ?string $environment = null,
@@ -266,6 +268,8 @@ abstract class ManagerStructure
      * @param string $fileName File path for where the coinfiguration is stored
      *
      * @return mixed[] JSON data decoded
+     *
+     * @throws JsonConfigException if the configuration file does not exist.
      */
     protected static function getConfigByFile(string $fileName) : array
     {
@@ -300,6 +304,8 @@ abstract class ManagerStructure
      * Validates initial configuration values are sane
      *
      * @return void
+     *
+     * @throws InvalidValueException if a value for a static key is not compatible with the SDK.
      */
     protected static function validateInitialConfigData() : void
     {

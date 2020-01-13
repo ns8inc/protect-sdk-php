@@ -55,42 +55,42 @@ class Client implements IProtectClient
     /**
      * HTTP Library Client attribute
      *
-     * @var Zend\Http\Client $client
+     * @var Zend\Http\Client
      */
     protected $client;
 
     /**
      * Attribute to permit auth user
      *
-     * @var string $authUsername
+     * @var string
      */
     protected $authUsername;
 
     /**
      * Attribute to permit access token usage
      *
-     * @var string $accessToken
+     * @var string
      */
     protected $accessToken;
 
     /**
      * Attribute to track session data to be sent in requests
      *
-     * @var mixed[] $sessionData
+     * @var mixed[]
      */
     protected $sessionData;
 
     /**
      * Config manager to fetch HTTP config info
      *
-     * @var ConfigManager $authHeaderStringconfigManager
+     * @var ConfigManager
      */
     protected $configManager;
 
     /**
      * Logging client to log data
      *
-     * @var LoggingClient $loggingClient
+     * @var LoggingClient
      */
     protected $loggingClient;
 

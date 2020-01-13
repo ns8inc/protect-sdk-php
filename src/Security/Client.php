@@ -15,7 +15,7 @@ class Client extends BaseClient
     /**
      * Config Manager used to fetch settings
      *
-     * @var ConfigManager $configManager
+     * @var ConfigManager
      */
     protected static $configManager;
 

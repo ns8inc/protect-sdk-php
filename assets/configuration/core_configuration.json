@@ -9,11 +9,11 @@
     "file": {
       "enabled": false,
       "relative_path": "logs/ns8.log",
-      "log_level": "Error"
+      "log_level": "ERROR"
     },
     "api": {
       "enabled": true,
-      "log_level": "Info"
+      "log_level": "INFO"
     },
     "record_all_http_calls": true
   },
