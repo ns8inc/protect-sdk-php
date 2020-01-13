@@ -32,6 +32,8 @@ class Manager extends ManagerStructure
      * @param string $key Key for configuration data we want to retrieve
      *
      * @return mixed Return value stored in config for the given key
+     *
+     * @throws ValueNotFoundException if the path does not exist in the configuration.
      */
     public static function getValue(string $key)
     {
@@ -96,6 +98,8 @@ class Manager extends ManagerStructure
      * @param mixed  $value Value for the associated key
      *
      * @return bool if the value setting was successful
+     *
+     * @throws InvalidValueException if the key provided is not permitted to be changed.
      */
     public static function setValue(string $key, $value) : bool
     {

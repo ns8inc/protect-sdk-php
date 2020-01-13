@@ -61,7 +61,7 @@ abstract class BaseClient
     /**
      * A list of predefined NS8 actions to serve enumeration/validation purposes
      *
-     * @var mixed[] $predefinedActions
+     * @var mixed[]
      */
     protected $predefinedActions = [
         self::CREATE_ORDER_ACTION,

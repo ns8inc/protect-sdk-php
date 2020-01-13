@@ -29,7 +29,7 @@ class Client extends BaseClient
     /**
      * HTTP Client used to make API requests
      *
-     * @var HttpClient $httpClient
+     * @var HttpClient
      */
     protected static $httpClient;
 

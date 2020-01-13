@@ -38,12 +38,12 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
      * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Http\Client::__construct
@@ -55,8 +55,8 @@ class ClientTest extends TestCase
     {
         // Ensure all handlers are enabled in Constructor call
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration();
+        $configManager->resetConfig();
+        $configManager->initConfiguration();
         $configManager->setValue('logging.file.enabled', true);
         $configManager->setValue('logging.api.enabled', true);
 
@@ -213,14 +213,14 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers NS8\ProtectSDK\Config\Manager::getConfigByFile
+     * @covers NS8\ProtectSDK\Config\Manager::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
      * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
-     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      */
     public function testFileLogWithConfigDisabled() : void
     {
@@ -243,8 +243,8 @@ class ClientTest extends TestCase
     public static function getConfigManager() : ConfigManager
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration();
+        $configManager->resetConfig();
+        $configManager->initConfiguration();
         $configManager->setValue('logging.file.log_level', 'debug');
         $configManager->setValue('logging.file.relative_path', 'logs/unit_tests_log.log');
         $configManager->setValue('logging.api.enabled', false);

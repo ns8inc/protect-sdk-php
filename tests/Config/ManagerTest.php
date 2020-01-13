@@ -110,12 +110,12 @@ class ManagerTest extends TestCase
      * @covers ::getValue
      * @covers ::setRuntimeConfigValues
      * @covers ::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::isConfigInitialized
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers ::getConfigByFile
+     * @covers ::initConfiguration
+     * @covers ::isConfigInitialized
+     * @covers ::readJsonFromFile
+     * @covers ::resetConfig
+     * @covers ::validateInitialConfigData
      */
     public function testIsConfigInitialized() : void
     {
@@ -141,7 +141,7 @@ class ManagerTest extends TestCase
     {
         $this->expectException(EnvironmentConfigException::class);
         $configManager = new ConfigManager('invalid_env', null, self::$testFilePath, null, null, true);
-        $configArray   = $configManager::getFullConfigArray();
+        $configArray   = $configManager->getFullConfigArray();
     }
 
     /**
@@ -164,9 +164,9 @@ class ManagerTest extends TestCase
     public function testConfigLoad() : void
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, self::$testFilePath);
-        $configArray = $configManager::getFullConfigArray();
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, self::$testFilePath);
+        $configArray = $configManager->getFullConfigArray();
 
         foreach (self::TEST_JSON as $key => $value) {
             $this->assertArrayHasKey($key, $configArray);
@@ -193,9 +193,9 @@ class ManagerTest extends TestCase
     public function testGetConfigFileValue() : void
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, self::$testFilePath);
-        $isLoggingEnabled = $configManager::getValue('logging.enabled');
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, self::$testFilePath);
+        $isLoggingEnabled = $configManager->getValue('logging.enabled');
         $this->assertEquals(self::TEST_JSON['logging']['enabled'], $isLoggingEnabled);
     }
 
@@ -219,9 +219,9 @@ class ManagerTest extends TestCase
     public function testGetEnvConfigValue() : void
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, self::$testFilePath);
-        $apiUrl = $configManager::getEnvValue('urls.api_url');
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, self::$testFilePath);
+        $apiUrl = $configManager->getEnvValue('urls.api_url');
         $this->assertEquals(self::TEST_JSON['testing']['urls']['api_url'], $apiUrl);
     }
 
@@ -245,12 +245,12 @@ class ManagerTest extends TestCase
     public function testValueExistsValidation() : void
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, self::$testFilePath);
-        $doesFakeValueExist = $configManager::doesValueExist('this.path.is.not.real');
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, self::$testFilePath);
+        $doesFakeValueExist = $configManager->doesValueExist('this.path.is.not.real');
         $this->assertEquals(false, $doesFakeValueExist);
 
-        $doesRealValueExist = $configManager::doesValueExist('logging.enabled');
+        $doesRealValueExist = $configManager->doesValueExist('logging.enabled');
         $this->assertEquals(true, $doesRealValueExist);
     }
 
@@ -275,8 +275,8 @@ class ManagerTest extends TestCase
     public function testSetValue() : void
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, self::$testFilePath);
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, self::$testFilePath);
 
         $configManager->setValue('new.path.value', true);
 
@@ -304,8 +304,8 @@ class ManagerTest extends TestCase
     public function testGetDynamicallySetValue() : void
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, self::$testFilePath);
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, self::$testFilePath);
 
         $this->expectException(ValueNotFoundException::class);
         $configManager->getValue('new.path.value');
@@ -330,8 +330,8 @@ class ManagerTest extends TestCase
     {
         $this->expectException(JsonException::class);
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, 'invalid_path');
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, 'invalid_path');
     }
 
     /**
@@ -349,8 +349,8 @@ class ManagerTest extends TestCase
     {
         $this->expectException(JsonException::class);
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, self::$invalidDataTestFilePath);
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, self::$invalidDataTestFilePath);
     }
 
     /**
@@ -372,8 +372,8 @@ class ManagerTest extends TestCase
     public function testDefaultPhpVersionCheck() : void
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, self::$testFilePath);
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, self::$testFilePath);
 
         $phpVersion = $configManager->getValue('php_version');
         $this->assertEquals(phpversion(), $phpVersion);
@@ -399,8 +399,8 @@ class ManagerTest extends TestCase
     {
         $testPhpVersion = 'PHP 7.2.25';
         $configManager  = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, self::$testFilePath, null, $testPhpVersion);
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, self::$testFilePath, null, $testPhpVersion);
         $configPhpVersion = $configManager->getValue('php_version');
         $this->assertEquals($testPhpVersion, $configPhpVersion);
     }
@@ -424,8 +424,8 @@ class ManagerTest extends TestCase
     public function testDefaultPlatformVersionCheck() : void
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, self::$testFilePath);
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, self::$testFilePath);
         $phpVersion = $configManager->getValue('platform_version');
         $this->assertEquals(null, $phpVersion);
     }
@@ -450,8 +450,8 @@ class ManagerTest extends TestCase
     {
         $testPlatformVersion = 'Magento 2.3.3';
         $configManager       = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration(
+        $configManager->resetConfig();
+        $configManager->initConfiguration(
             'testing',
             null,
             self::$testFilePath,
@@ -477,14 +477,14 @@ class ManagerTest extends TestCase
      * @covers ::resetConfig
      * @covers ::setRuntimeConfigValues
      * @covers ::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers ::getConfigByFile
+     * @covers ::readJsonFromFile
      */
     public function testSetEnvironmentMethod() : void
     {
         $configManager = new ConfigManager(null, null, null, null, null, true);
         $configManager->setEnvironment('testing');
-        $currentEnv = $configManager::getEnvironment();
+        $currentEnv = $configManager->getEnvironment();
 
         $this->assertEquals('testing', $currentEnv);
     }
@@ -504,16 +504,16 @@ class ManagerTest extends TestCase
      * @covers ::resetConfig
      * @covers ::setRuntimeConfigValues
      * @covers ::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers ::getConfigByFile
+     * @covers ::readJsonFromFile
      */
     public function testGetEnvironmentMethod() : void
     {
         $configManager = new ConfigManager(null, null, null, null, null, true);
-        $currentEnv    = $configManager::getEnvironment();
+        $currentEnv    = $configManager->getEnvironment();
         $this->assertEquals('testing', $currentEnv);
-        $configManager::setEnvironment('production');
-        $currentEnv = $configManager::getEnvironment();
+        $configManager->setEnvironment('production');
+        $currentEnv = $configManager->getEnvironment();
 
         $this->assertEquals('production', $currentEnv);
     }
@@ -535,14 +535,14 @@ class ManagerTest extends TestCase
      * @covers ::resetConfig
      * @covers ::setRuntimeConfigValues
      * @covers ::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers ::getConfigByFile
+     * @covers ::readJsonFromFile
      */
     public function testOverrideEnvUrl() : void
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
-        $configManager::initConfiguration('testing', null, self::$testFilePath);
+        $configManager->resetConfig();
+        $configManager->initConfiguration('testing', null, self::$testFilePath);
         $this->expectException(InvalidValueException::class);
         $configManager->setValue('testing.urls.client_url', 'https://test.com');
     }
@@ -566,10 +566,10 @@ class ManagerTest extends TestCase
     public function testInvalidEnvUrls() : void
     {
         $configManager = new ConfigManager();
-        $configManager::resetConfig();
+        $configManager->resetConfig();
 
         $this->expectException(InvalidValueException::class);
-        $configManager::initConfiguration('testing', null, self::$invalidValuesTestFilePath);
+        $configManager->initConfiguration('testing', null, self::$invalidValuesTestFilePath);
     }
 
     /**

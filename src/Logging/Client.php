@@ -88,14 +88,14 @@ class Client extends ClientBase
     /**
      * Logging client used to write to logs
      *
-     * @var Logger $logger
+     * @var Logger
      */
     protected $logger;
 
     /**
      * Config Manager used to fetch settings
      *
-     * @var ConfigManager $configManager
+     * @var ConfigManager
      */
     protected $configManager;
 
