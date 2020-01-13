@@ -1,6 +1,11 @@
-<phpunit beStrictAboutOutputDuringTests="true" beStrictAboutCoversAnnotation="true" forceCoversAnnotation="true">
+<phpunit bootstrap="tests/bootstrap.php" backupGlobals="false" beStrictAboutOutputDuringTests="true" beStrictAboutCoversAnnotation="true" forceCoversAnnotation="true">
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+       <!--
+         Unfortunately, there is a bug in AspectMock that requires processUncoveredFilesFromWhitelist to be false:
+         https://github.com/Codeception/AspectMock/issues/114
+        -->
+
+        <whitelist processUncoveredFilesFromWhitelist="false">
             <directory suffix=".php">src/</directory>
         </whitelist>
     </filter>
