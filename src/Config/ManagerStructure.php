@@ -48,31 +48,39 @@ abstract class ManagerStructure
     /**
      * Production URLs that should remain static in configuration
      */
-    public const PRODUCTION_CLIENT_URL_KEY   = self::ENV_PRODUCTION . self::KEY_DELIMITER
-        . 'urls' . self::KEY_DELIMITER . 'client_url';
     public const PRODUCTION_API_URL_KEY      = self::ENV_PRODUCTION . self::KEY_DELIMITER
         . 'urls' . self::KEY_DELIMITER . 'api_url';
-    public const PRODUCTION_CLEINT_URL_VALUE = 'https://protect-client.ns8.com';
     public const PRODUCTION_API_URL_VALUE    = 'https://protect.ns8.com';
+    public const PRODUCTION_CLIENT_URL_KEY   = self::ENV_PRODUCTION . self::KEY_DELIMITER
+        . 'urls' . self::KEY_DELIMITER . 'client_url';
+    public const PRODUCTION_CLIENT_URL_VALUE = 'https://protect-client.ns8.com';
+    public const PRODUCTION_JS_SDK_KEY       = self::ENV_PRODUCTION . self::KEY_DELIMITER
+        . 'urls' . self::KEY_DELIMITER . 'js_sdk';
+    public const PRODUCTION_JS_SDK_VALUE     = 'https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect.min.js';
 
     /**
      * Testing URLs that should remain static in configuration
      */
-    public const TESTING_CLIENT_URL_KEY   = self::ENV_TESTING . self::KEY_DELIMITER
-        . 'urls' . self::KEY_DELIMITER . 'client_url';
     public const TESTING_API_URL_KEY      = self::ENV_TESTING . self::KEY_DELIMITER
         . 'urls' . self::KEY_DELIMITER . 'api_url';
-    public const TESTING_CLIENT_URL_VALUE = 'https://test-protect-client.ns8.com';
     public const TESTING_API_URL_VALUE    = 'https://test-protect.ns8.com';
+    public const TESTING_CLIENT_URL_KEY   = self::ENV_TESTING . self::KEY_DELIMITER
+        . 'urls' . self::KEY_DELIMITER . 'client_url';
+    public const TESTING_CLIENT_URL_VALUE = 'https://test-protect-client.ns8.com';
+    public const TESTING_JS_SDK_KEY       = self::ENV_TESTING . self::KEY_DELIMITER
+        . 'urls' . self::KEY_DELIMITER . 'js_sdk';
+    public const TESTING_JS_SDK_VALUE     = 'https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect.min.js';
 
     /**
      * Mapping of keys/values that should remain static in configuration
      */
     public const STATIC_CONFIG_MAPPINGS = [
-        self::PRODUCTION_CLIENT_URL_KEY => self::PRODUCTION_CLEINT_URL_VALUE,
         self::PRODUCTION_API_URL_KEY => self::PRODUCTION_API_URL_VALUE,
-        self::TESTING_CLIENT_URL_KEY => self::TESTING_CLIENT_URL_VALUE,
+        self::PRODUCTION_CLIENT_URL_KEY => self::PRODUCTION_CLIENT_URL_VALUE,
+        self::PRODUCTION_JS_SDK_KEY => self::PRODUCTION_JS_SDK_VALUE,
         self::TESTING_API_URL_KEY => self::TESTING_API_URL_VALUE,
+        self::TESTING_CLIENT_URL_KEY => self::TESTING_CLIENT_URL_VALUE,
+        self::TESTING_JS_SDK_KEY => self::TESTING_JS_SDK_VALUE,
     ];
 
     /**

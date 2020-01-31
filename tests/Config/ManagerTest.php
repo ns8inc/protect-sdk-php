@@ -33,14 +33,16 @@ class ManagerTest extends TestCase
         'logging'   => ['enabled' => true],
         'production'    => [
             'urls' => [
-                'client_url' => 'https://protect-client.ns8.com',
                 'api_url'   => 'https://protect.ns8.com',
+                'client_url' => 'https://protect-client.ns8.com',
+                'js_sdk' => 'https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect.min.js',
             ],
         ],
         'testing'   => [
             'urls' => [
-                'client_url' => 'https://test-protect-client.ns8.com',
                 'api_url'   => 'https://test-protect.ns8.com',
+                'client_url' => 'https://test-protect-client.ns8.com',
+                'js_sdk' => 'https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect.min.js',
             ],
         ],
     ];
@@ -52,14 +54,16 @@ class ManagerTest extends TestCase
         'logging'   => ['enabled' => true],
         'production'    => [
             'urls' => [
-                'client_url' => 'https://test.ns8.com',
                 'api_url'   => 'https://test.ns8.com',
+                'client_url' => 'https://test.ns8.com',
+                'js_sdk' => 'https://test.ns8.com',
             ],
         ],
         'testing'   => [
             'urls' => [
-                'client_url' => 'https://protect-client.ns8.com',
                 'api_url'   => 'https://protect.ns8.com',
+                'client_url' => 'https://protect-client.ns8.com',
+                'js_sdk' => 'https://cdn.ns8.com/project.js',
             ],
         ],
     ];

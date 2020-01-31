@@ -35,8 +35,9 @@
       "auth_user": ""
     },
     "urls": {
+      "api_url": "https://test-protect.ns8.com",
       "client_url": "https://test-protect-client.ns8.com",
-      "api_url": "https://test-protect.ns8.com"
+      "js_sdk": "https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect.min.js"
     }
   }
 }
