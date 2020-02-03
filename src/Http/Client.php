@@ -161,26 +161,37 @@ class Client implements IProtectClient
     }
 
     /**
-     * Sends GET requests to NS8 services for retrieving information
+     * Sends requests to NS8 services for retrieving information
      *
      * @param string  $url        URL that is being accessed
+     * @param string  $method     HTTP request method to be used
      * @param mixed[] $parameters Parameters to include in request
      * @param mixed[] $headers    Array of heads to include in request
      * @param int     $timeout    Timeout length for the request
      *
      * @return string
      */
-    public function getNonJson(
+    public function sendNonObjectRequest(
         string $url,
+        string $method = self::POST_REQUEST_TYPE,
         array $parameters = [],
         array $headers = [],
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
     ) : string {
         try {
+            /**
+             * If we are fetching non-json, do not validate the access token as it is not
+             * explicitly required.
+             */
+            $accessToken      = $this->getAccessToken();
+            $authHeaderString = sprintf(self::AUTH_STRING_HEADER_FORMAT, $accessToken);
+            $authHeader       = ['Authorization' => $authHeaderString];
+            $headers          = array_merge($headers, $authHeader);
+
             return $this->executeRequest(
                 $url,
                 [],
-                self::GET_REQUEST_TYPE,
+                $method,
                 $parameters,
                 $headers,
                 $timeout
@@ -334,6 +345,12 @@ class Client implements IProtectClient
         $response = null;
         $baseUri  = $this->configManager->getEnvValue('urls.client_url');
         $uri      = $baseUri . self::ROUTE_PREFIX . $route;
+
+        // For non
+        $accessToken      = $this->getAccessToken();
+        $authHeaderString = sprintf(self::AUTH_STRING_HEADER_FORMAT, $accessToken);
+        $authHeader       = ['Authorization' => $authHeaderString];
+        $allHeaders       = array_merge($headers, $authHeader);
 
         $this->client->setUri($uri);
         $this->client->setOptions(['timeout' => $timeout]);

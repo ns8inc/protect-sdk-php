@@ -141,7 +141,7 @@ class ClientTest extends TestCase
      * @covers ::__construct
      * @covers ::getAccessToken
      * @covers ::setSessionData
-     * @covers ::getNonJson
+     * @covers ::sendNonObjectRequest
      * @covers ::executeRequest
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
@@ -175,7 +175,7 @@ class ClientTest extends TestCase
             $testHttpClient,
             self::$configManager
         );
-        $response       = $client->getNonJson(self::TEST_URI);
+        $response       = $client->sendNonObjectRequest(self::TEST_URI);
 
         $this->assertEquals('Test Response', $response);
     }
@@ -188,7 +188,7 @@ class ClientTest extends TestCase
      * @covers ::__construct
      * @covers ::getAccessToken
      * @covers ::setSessionData
-     * @covers ::getNonJson
+     * @covers ::sendNonObjectRequest
      * @covers ::executeRequest
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
@@ -229,7 +229,7 @@ class ClientTest extends TestCase
             self::$configManager
         );
         $this->expectException(ZendRuntimeException::class);
-        $response = $client->getNonJson(self::TEST_URI);
+        $response = $client->sendNonObjectRequest(self::TEST_URI);
     }
 
     /**

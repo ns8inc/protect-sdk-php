@@ -19,8 +19,8 @@ use NS8\ProtectSDK\Http\Client as HttpClient;
 $httpClient = new HttpClient('Auth Username', 'Access Token');
 $httpClient->get('endpoint/get', ['param_1' => 'value_2', 'param_2' => 'value_2']);
 
-// Send a GET request specifically intended for Non-JSON responses such as an analytics script.
-$httpClient->getNonJson('endpoint/nonjson', ['param_1' => 'value_2', 'param_2' => 'value_2']);
+// Send a GET (request type can be variable for this method) request specifically intended for Non-JSON responses such as an analytics script.
+$httpClient->sendNonObjectRequest('endpoint/nonjson', 'GET', ['param_1' => 'value_2', 'param_2' => 'value_2']);
 
 $httpClient->post('endpoint/post', ['new_record_key_1' => 'data_key_1', 'new_record_key_2' => 'data_key_2']);
 
