@@ -13,7 +13,6 @@ use stdClass;
 use Throwable;
 use Zend\Http\Client as ZendClient;
 use Zend\Http\PhpEnvironment\RemoteAddress as ZendRemoteAddress;
-use Zend\Http\PhpEnvironment\Request as ZendRequest;
 use Zend\Json\Decoder as ZendJsonDecoder;
 use function array_merge;
 use function in_array;
@@ -131,13 +130,10 @@ class Client implements IProtectClient
             return;
         }
 
-        $requestContext = new ZendRequest();
         $this->setSessionData([
-            'acceptLanguage' => $requestContext->getHeaders()->get('Accept-Language'),
-            // ToDo: Determine how we should add Customer Session Id
-            // 'id' => $this->customerSession->getSessionId(),
             'ip' => (new ZendRemoteAddress())->getIpAddress(),
-            'userAgent' => $requestContext->getHeaders()->get('User-Agent'),
+            'acceptLanguage' => $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? null,
+            'userAgent' => $_SERVER['HTTP_USER_AGENT'] ?? null,
         ]);
     }
 
@@ -228,7 +224,8 @@ class Client implements IProtectClient
             );
         }
 
-        $data['session']  = $this->getSessionData();
+        $sessionData      = $data['session'] ?? [];
+        $data['session']  = array_merge((array) $this->getSessionData(), $sessionData);
         $data['username'] = $this->getAuthUsername();
 
         return $this->executeWithAuth($url, $data, self::POST_REQUEST_TYPE, $parameters, $headers, $timeout);
