@@ -29,6 +29,6 @@
         "lint": "phpcs --extensions=php src/ tests/",
         "lint-fix": "phpcbf --extensions=php src/ tests/",
         "test": "phpunit tests/",
-        "test-coverage": "phpunit --coverage-clover /tmp/coverage.xml --coverage-text tests/ && coverage-check /tmp/coverage.xml 100"
+        "test-coverage": "phpunit --coverage-clover /tmp/coverage.xml --coverage-html me --coverage-text tests/ && coverage-check /tmp/coverage.xml 100"
     }
 }

@@ -139,7 +139,7 @@ class ClientTest extends TestCase
     public function setUp() : void
     {
         self::$configManager = new ConfigManager();
-        self::$configManager->initConfiguration();
+        self::$configManager->initConfiguration('testing');
         self::$configManager->setValue('logging.api.enabled', false);
         self::$configManager->setValue('logging.file.enabled', true);
         self::$configManager->setValue('testing.authorization.auth_user', 'test');

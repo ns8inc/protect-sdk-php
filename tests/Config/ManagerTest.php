@@ -513,7 +513,7 @@ class ManagerTest extends TestCase
      */
     public function testGetEnvironmentMethod() : void
     {
-        $configManager = new ConfigManager(null, null, null, null, null, true);
+        $configManager = new ConfigManager('testing', null, null, null, null, true);
         $currentEnv    = $configManager->getEnvironment();
         $this->assertEquals('testing', $currentEnv);
         $configManager->setEnvironment('production');

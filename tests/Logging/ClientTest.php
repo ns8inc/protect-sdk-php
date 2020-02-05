@@ -54,7 +54,7 @@ class ClientTest extends TestCase
     public function testConstructor() : void
     {
         // Ensure all handlers are enabled in Constructor call
-        $configManager = new ConfigManager();
+        $configManager = new ConfigManager('testing');
         $configManager->resetConfig();
         $configManager->initConfiguration();
         $configManager->setValue('logging.file.enabled', true);
@@ -242,7 +242,7 @@ class ClientTest extends TestCase
      */
     public static function getConfigManager() : ConfigManager
     {
-        $configManager = new ConfigManager();
+        $configManager = new ConfigManager('testing');
         $configManager->resetConfig();
         $configManager->initConfiguration();
         $configManager->setValue('logging.file.log_level', 'debug');

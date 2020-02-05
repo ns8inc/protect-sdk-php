@@ -73,6 +73,7 @@ class ApiTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
      * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
@@ -86,6 +87,7 @@ class ApiTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
      * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
      * @covers NS8\ProtectSDK\Http\Client::getSessionData
      * @covers NS8\ProtectSDK\Http\Client::post
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
@@ -102,9 +104,10 @@ class ApiTest extends TestCase
         $configManager = new ConfigManager();
         $configManager->resetConfig();
         $configManager->initConfiguration();
+        $configManager->setEnvironment('testing');
         $configManager->setValue('testing.authorization.auth_user', 'test');
         $configManager->setValue('testing.authorization.access_token', 'test');
-        $configManager->setValue('logging.api.enabled', false);
+        $configManager->setValue('logging.api.enabled', true);
         $testHttpClient = $this->getFailureClient();
         $ns8HttpClient  = new HttpClient(null, null, false, $testHttpClient);
 
