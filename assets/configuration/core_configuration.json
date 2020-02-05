@@ -1,6 +1,6 @@
 {
   "version": "0.0.1",
-  "default_environment": "testing",
+  "default_environment": "production",
   "logging": {
     "additional_info": {
       "category": "sdk",
