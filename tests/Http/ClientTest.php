@@ -235,6 +235,63 @@ class ClientTest extends TestCase
     }
 
     /**
+     * Test request for Non-JSON with Exception being thrown for missing access token
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers ::getAccessToken
+     * @covers ::setSessionData
+     * @covers ::sendNonObjectRequest
+     * @covers ::executeRequest
+     * @covers ::setAccessToken
+     * @covers ::setAuthUsername
+     * @covers ::executeJsonRequest
+     * @covers ::executeWithAuth
+     * @covers ::getAuthUsername
+     * @covers ::getSessionData
+     * @covers ::post
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::error
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
+     */
+    public function testNonJsonWithoutAccessToken() : void
+    {
+        $testHttpClient = $this->buildTestNonJsonHttpClient(true);
+        $client         = new Client(
+            self::TEST_AUTH_NAME,
+            null,
+            true,
+            $testHttpClient,
+            self::$configManager
+        );
+
+        $client->setAccessToken('');
+        $this->expectException(HttpException::class);
+        $response = $client->sendNonObjectRequest(self::TEST_URI);
+    }
+
+    /**
      * Test POST request
      *
      * @return void
