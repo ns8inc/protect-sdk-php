@@ -164,6 +164,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      * @covers NS8\ProtectSDK\Logging\Client::info
      * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      */
     public function testNonJsonGetRequest() : void
     {
@@ -217,6 +218,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      */
     public function testNonJsonGetRequestException() : void
     {
