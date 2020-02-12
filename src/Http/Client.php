@@ -175,11 +175,10 @@ class Client implements IProtectClient
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
     ) : string {
         try {
-            /**
-             * If we are fetching non-json, do not validate the access token as it is not
-             * explicitly required.
-             */
-            $accessToken      = $this->getAccessToken();
+            $accessToken = $this->getAccessToken();
+            if (! SecurityClient::validateNs8AccessToken($accessToken)) {
+                throw new HttpException('An authorization token is required for NS8 requests');
+            }
             $authHeaderString = sprintf(self::AUTH_STRING_HEADER_FORMAT, $accessToken);
             $authHeader       = ['Authorization' => $authHeaderString];
             $headers          = array_merge($headers, $authHeader);
