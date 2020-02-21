@@ -15,5 +15,5 @@ use NS8\ProtectSDK\Analytics\Client as AnalyticsClient;
 $this->config->initSdkConfiguration();
 $script = AnalyticsClient::getTrueStatsScript();
 
-return is_string($script) ? sprintf('<script>%s</script>', $script) : '';
+echo is_string($script) ? sprintf('<script>%s</script>', $script) : '';
 ```
