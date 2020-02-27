@@ -272,6 +272,38 @@ class ClientTest extends TestCase
     }
 
     /**
+     * Test getting the platform access token endpoint
+     *
+     * @return void
+     *
+     * @covers ::getConfigManager
+     * @covers ::validateAuthUser
+     * @covers ::getPlatformAccessTokenEndpoint
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     */
+    public function testGetPlatformAccessTokenEndpoint() : void
+    {
+        $clientUrl     = self::$configManager->getEnvValue('urls.client_url');
+        $platform      = '--platform-name--';
+        $expectedValue = $clientUrl . '/api/init/--platform-name--/access-token';
+        $value         = SecurityClient::getPlatformAccessTokenEndpoint($platform);
+        $expectedFalse = SecurityClient::validateAuthUser('');
+        $this->assertEquals($expectedValue, $value);
+    }
+
+    /**
      * Sets up Config Manager before a test is ran
      *
      * @return void
