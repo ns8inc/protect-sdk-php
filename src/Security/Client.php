@@ -117,4 +117,20 @@ class Client extends BaseClient
         $configKey = sprintf('%s.authorization.auth_user', ConfigManager::getEnvironment());
         self::getConfigManager()->setValue($configKey, $authUser);
     }
+
+    /**
+     * Returns the endpoint used exchange platform credentials for a protect access token
+     *
+     * @param string $platformName The name of the platform
+     *
+     * @return string The endpoint used to fetch a Protect access token
+     */
+    public static function getPlatformAccessTokenEndpoint(string $platformName) : string
+    {
+        return sprintf(
+            '%s/api/init/%s/access-token',
+            self::getConfigManager()->getEnvValue('urls.client_url'),
+            $platformName
+        );
+    }
 }
