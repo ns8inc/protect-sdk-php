@@ -1,19 +1,21 @@
-## Description
+# NS8 Protect PHP SDK
 
-[![CI](https://concourse.ns8-infrastructure.com/api/v1/teams/main/pipelines/protect-php-sdk/jobs/test/badge)](https://concourse.ns8-infrastructure.com/teams/main/pipelines/protect-php-sdk/jobs/test)
-[![CI](https://concourse.ns8-infrastructure.com/api/v1/teams/main/pipelines/protect-php-sdk/jobs/test/badge?title=tests)](https://concourse.ns8-infrastructure.com/teams/main/pipelines/protect-php-sdk/jobs/test)
+![Version](https://poser.pugx.org/ns8/protect-sdk/version)
+![CI](https://concourse.ns8-infrastructure.com/api/v1/teams/main/pipelines/protect-js-sdk/badge)
 
-<!--
+The PHP SDK for NS8 Protect.
 
-TODO: Uncomment when php sdk published to public packagist:
+# Getting Started
 
-[![Latest Stable Version](https://poser.pugx.org/ns8/protect-php-sdk/version)](https://packagist.org/packages/ns8/protect-php-sdk)
-[![Latest Stable Version](https://poser.pugx.org/ns8/protect-php-sdk/license)](https://packagist.org/packages/ns8/protect-php-sdk)
--->
-
-This is the PHP SDK for NS8 Protect.
-
-## Getting Started
-
-Please [read the docs](https://github.com/ns8inc/protect-php-sdk/tree/master/public/en/platform/protect-php-sdk).
-
+- [Action Documentation](public/en/platform/protect-php-sdk/action-documentation.md)
+- [Configuration Manager](public/en/platform/protect-php-sdk/configuration-documentation.md)
+- [Development](public/en/platform/protect-php-sdk/development.md)
+- [Git hooks](public/en/platform/protect-php-sdk/git-hooks.md)
+- [HTTP Documentation](public/en/platform/protect-php-sdk/http-documentation.md)
+- [Installation](public/en/platform/protect-php-sdk/installation.md)
+- [Linting](public/en/platform/protect-php-sdk/linting.md)
+- [Logging Client](public/en/platform/protect-php-sdk/logging-documentation.md)
+- [Order Documentation](public/en/platform/protect-php-sdk/order-documentation.md)
+- [Prerequisites](public/en/platform/protect-php-sdk/prerequisites.md)
+- [Security Documentation](public/en/platform/protect-php-sdk/security-documentation.md)
+- [Testing](public/en/platform/protect-php-sdk/testing.md)
