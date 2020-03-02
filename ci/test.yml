@@ -6,7 +6,7 @@ image_resource:
   source: { repository: php, tag: cli }
 
 inputs:
-  - name: protect-php-sdk
+  - name: protect-sdk-php
 
 run:
   path: /bin/sh
@@ -35,7 +35,7 @@ run:
         exit 1
       fi
 
-      cd protect-php-sdk
+      cd protect-sdk-php
       composer install -q
 
       if [ $? -ne 0 ]; then
