@@ -104,39 +104,6 @@ abstract class ManagerStructure
     protected static $configInitialized = false;
 
     /**
-     * Constructor for Configuration manager
-     *
-     * @param string $environment          The environment the configuration should utilize during runtime
-     * @param string $customConfigJsonFile Custom JSON file to be passed into the constructor for configuration set-up
-     * @param string $baseConfigJsonFile   Base JSON file to be passed into the construction for configuration set-up
-     * @param string $platformVersion      Current version of the platform being utilized
-     * @param string $phpVersion           Version of PHP being utilized
-     * @param bool   $forceConfigReload    Determines if we should force configuration reloading with the constructor
-     */
-    public function __construct(
-        ?string $environment = null,
-        ?string $customConfigJsonFile = null,
-        ?string $baseConfigJsonFile = null,
-        ?string $platformVersion = null,
-        ?string $phpVersion = null,
-        bool $forceConfigReload = false
-    ) {
-        if (! $forceConfigReload) {
-            return;
-        }
-
-        self::resetConfig();
-        self::initConfiguration(
-            $environment,
-            $customConfigJsonFile,
-            $baseConfigJsonFile,
-            $platformVersion,
-            $phpVersion,
-            $forceConfigReload
-        );
-    }
-
-    /**
      * Init configuration manager as needed
      *
      * @param string $environment          The environment the configuration should utilize during runtime
