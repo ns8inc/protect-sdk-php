@@ -63,7 +63,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -104,7 +103,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -152,7 +150,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -206,7 +203,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -259,7 +255,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -315,7 +310,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
@@ -365,7 +359,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -415,7 +408,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -460,7 +452,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -498,7 +489,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -536,7 +526,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -574,7 +563,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -613,7 +601,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -653,7 +640,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -698,7 +684,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -751,7 +736,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData

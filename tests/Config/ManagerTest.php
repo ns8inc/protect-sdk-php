@@ -94,7 +94,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::validateInitialConfigData
@@ -109,7 +108,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::setRuntimeConfigValues
@@ -133,27 +131,10 @@ class ManagerTest extends TestCase
     }
 
     /**
-     * Test Config Manager with invalid environment
-     *
-     * @return void
-     *
-     * @covers ::__construct
-     * @covers ::initConfiguration
-     * @covers ::resetConfig
-     */
-    public function testInvalidEnvInitalization() : void
-    {
-        $this->expectException(EnvironmentConfigException::class);
-        $configManager = new ConfigManager('invalid_env', null, self::$testFilePath, null, null, true);
-        $configArray   = $configManager->getFullConfigArray();
-    }
-
-    /**
      * Test if JSON config loads successfully
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
      * @covers ::getFullConfigArray
@@ -179,11 +160,27 @@ class ManagerTest extends TestCase
     }
 
     /**
+     * Test Config Manager with invalid environment
+     *
+     * @return void
+     *
+     * @covers ::initConfiguration
+     * @covers ::resetConfig
+     */
+    public function testInvalidEnvInitalization() : void
+    {
+        $configManager = new ConfigManager();
+        $configManager->resetConfig();
+        $this->expectException(EnvironmentConfigException::class);
+        $configManager->initConfiguration('invalid_env');
+        $configArray = $configManager->getFullConfigArray();
+    }
+
+    /**
      * Test fetching a config value
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
@@ -208,7 +205,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
@@ -234,7 +230,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
@@ -263,7 +258,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::validateKeyCanChange
@@ -293,7 +287,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
@@ -325,7 +318,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::getConfigByFile
      * @covers ::initConfiguration
      * @covers ::resetConfig
@@ -343,7 +335,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
      * @covers ::initConfiguration
@@ -362,7 +353,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getValue
@@ -388,7 +378,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getValue
@@ -414,7 +403,6 @@ class ManagerTest extends TestCase
       *
       * @return void
       *
-      * @covers ::__construct
       * @covers ::doesValueExist
       * @covers ::validateInitialConfigData
       * @covers ::getValue
@@ -439,7 +427,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::validateInitialConfigData
      * @covers ::doesValueExist
      * @covers ::getValue
@@ -471,7 +458,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::validateInitialConfigData
@@ -486,7 +472,8 @@ class ManagerTest extends TestCase
      */
     public function testSetEnvironmentMethod() : void
     {
-        $configManager = new ConfigManager(null, null, null, null, null, true);
+        $configManager = new ConfigManager();
+        $configManager->resetConfig();
         $configManager->setEnvironment('testing');
         $currentEnv = $configManager->getEnvironment();
 
@@ -498,7 +485,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::validateInitialConfigData
@@ -513,8 +499,10 @@ class ManagerTest extends TestCase
      */
     public function testGetEnvironmentMethod() : void
     {
-        $configManager = new ConfigManager('testing', null, null, null, null, true);
-        $currentEnv    = $configManager->getEnvironment();
+        $configManager = new ConfigManager();
+        $configManager->resetConfig();
+        $configManager->setEnvironment('testing');
+        $currentEnv = $configManager->getEnvironment();
         $this->assertEquals('testing', $currentEnv);
         $configManager->setEnvironment('production');
         $currentEnv = $configManager->getEnvironment();
@@ -527,7 +515,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::setValue
@@ -556,7 +543,6 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
-     * @covers ::__construct
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::getConfigByFile
@@ -571,7 +557,6 @@ class ManagerTest extends TestCase
     {
         $configManager = new ConfigManager();
         $configManager->resetConfig();
-
         $this->expectException(InvalidValueException::class);
         $configManager->initConfiguration('testing', null, self::$invalidValuesTestFilePath);
     }

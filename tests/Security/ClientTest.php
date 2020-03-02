@@ -31,13 +31,13 @@ class ClientTest extends TestCase
      *
      * @covers ::setConfigManager
      * @covers ::getConfigManager
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -56,13 +56,13 @@ class ClientTest extends TestCase
      * @return void
      *
      * @covers ::getConfigManager
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -83,6 +83,7 @@ class ClientTest extends TestCase
      * @covers ::getConfigManager
      * @covers ::getNs8AccessToken
      * @covers ::setNs8AccessToken
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -90,7 +91,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
@@ -114,6 +114,7 @@ class ClientTest extends TestCase
      * @covers ::getConfigManager
      * @covers ::getNs8AccessToken
      * @covers ::setNs8AccessToken
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -121,7 +122,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
@@ -149,6 +149,7 @@ class ClientTest extends TestCase
      *
      * @covers ::getConfigManager
      * @covers ::validateNs8AccessToken
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -156,7 +157,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
@@ -181,6 +181,7 @@ class ClientTest extends TestCase
      * @covers ::getConfigManager
      * @covers ::setAuthUser
      * @covers ::getAuthUser
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -188,7 +189,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
@@ -212,6 +212,7 @@ class ClientTest extends TestCase
      * @covers ::getConfigManager
      * @covers ::setAuthUser
      * @covers ::getAuthUser
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -219,7 +220,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
@@ -247,6 +247,7 @@ class ClientTest extends TestCase
      *
      * @covers ::getConfigManager
      * @covers ::validateAuthUser
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -254,7 +255,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
@@ -310,9 +310,10 @@ class ClientTest extends TestCase
      */
     public function setUp() : void
     {
-        self::$configManager = new ConfigManager('testing');
+        self::$configManager = new ConfigManager();
         self::$configManager->resetConfig();
         self::$configManager->initConfiguration();
+        self::$configManager->setEnvironment('testing');
         self::$configManager->setValue('logging.api.enabled', false);
         self::$configManager->setValue('logging.api.enabled', true);
         self::$configManager->setValue('testing.authorization.auth_user', 'test');

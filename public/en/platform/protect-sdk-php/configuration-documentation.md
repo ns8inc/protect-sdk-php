@@ -11,7 +11,7 @@ The Config Manager class is intended to be a flexible, functional class that can
 
 
 ### Example Configuration Manager Usages
-The Config Manager is explicitly designed for abstract usage. The following implementations are example usages of the Config Manager:
+The Config Manager is explicitly designed for abstract usage. It is important to note that **values are shared across all instances of the Config Manager class statically** to permit easy access to these values throughout runtime - The first time this class is initialized or used, the `initConfiguration` method should be invoked to set-up environmental and base values. The following implementations are example usages of the Config Manager:
 
 JSON Sample For Examples
 ```json
@@ -47,8 +47,9 @@ declare(strict_types=1);
 
 use NS8\ProtectSDK\Config\Manager as ConfigManager;
 
-// Initialize configuration manager to set environment and JSON files
-$configManager = new ConfigManager('testing', null, 'base_config.json');
+// Initialize configuration manager as an object and set environment and JSON files
+$configManager = new ConfigManager();
+$configManager::initConfiguration('testing', null, 'base_config.json')
 
 // Fetch a boolean value for if we should log HTTP calls
 $shouldLogHttpCalls = (boolean) $configManager::getValue('log_http_calls');
