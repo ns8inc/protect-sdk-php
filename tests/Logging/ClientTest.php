@@ -33,6 +33,7 @@ class ClientTest extends TestCase
      * @covers ::setStreamHandler
      * @covers ::getLogLevelIntegerValue
      * @covers NS8\ProtectSDK\Logging\Handlers\Api::__construct
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -40,7 +41,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -54,9 +54,10 @@ class ClientTest extends TestCase
     public function testConstructor() : void
     {
         // Ensure all handlers are enabled in Constructor call
-        $configManager = new ConfigManager('testing');
+        $configManager = new ConfigManager();
         $configManager->resetConfig();
         $configManager->initConfiguration();
+        $configManager->setEnvironment('testing');
         $configManager->setValue('logging.file.enabled', true);
         $configManager->setValue('logging.api.enabled', true);
 
@@ -74,13 +75,13 @@ class ClientTest extends TestCase
      * @covers ::setApiHandler
      * @covers ::setStreamHandler
      * @covers ::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -108,13 +109,13 @@ class ClientTest extends TestCase
      * @covers ::setApiHandler
      * @covers ::setStreamHandler
      * @covers ::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -142,13 +143,13 @@ class ClientTest extends TestCase
      * @covers ::setApiHandler
      * @covers ::setStreamHandler
      * @covers ::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -176,13 +177,13 @@ class ClientTest extends TestCase
      * @covers ::setApiHandler
      * @covers ::setStreamHandler
      * @covers ::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -209,13 +210,13 @@ class ClientTest extends TestCase
      * @covers ::addHandler
      * @covers ::setApiHandler
      * @covers ::setStreamHandler
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\Manager::getConfigByFile
      * @covers NS8\ProtectSDK\Config\Manager::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
@@ -242,9 +243,10 @@ class ClientTest extends TestCase
      */
     public static function getConfigManager() : ConfigManager
     {
-        $configManager = new ConfigManager('testing');
+        $configManager = new ConfigManager();
         $configManager->resetConfig();
         $configManager->initConfiguration();
+        $configManager->setEnvironment('testing');
         $configManager->setValue('logging.file.log_level', 'debug');
         $configManager->setValue('logging.file.relative_path', 'logs/unit_tests_log.log');
         $configManager->setValue('logging.api.enabled', false);
