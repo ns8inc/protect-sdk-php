@@ -279,6 +279,7 @@ class ClientTest extends TestCase
      * @covers ::getConfigManager
      * @covers ::validateAuthUser
      * @covers ::getPlatformAccessTokenEndpoint
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -286,7 +287,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
-     * @covers NS8\ProtectSDK\Config\ManagerStructure::__construct
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
