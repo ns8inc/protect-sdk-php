@@ -12,21 +12,21 @@ The following serve as examples of implementation of the Action Client to demons
 <?php
 declare(strict_types=1);
 
-use NS8\ProtectSDK\Action\Client as ActionClient;
+use NS8\ProtectSDK\Actions\Client as ActionsClient;
 
-$actionClient = new ActionClient();
+$actionsClient = new ActionsClient();
 
 // Posts a new order to NS8's API
 $orderData = ['id' => 123];
-$actionClient->set(ActionClient::CREATE_ORDER_ACTION, $orderData);
+$actionsClient->set(ActionClient::CREATE_ORDER_ACTION, $orderData);
 
 // Posts updated merchant data to NS8's API
 $merchantData = ['store_name' => 'Test Store'];
-$actionClient->set(ActionClient::UPDATE_MERCHANT_ACTION, $merchantData);
+$actionsClient->setAction(ActionClient::UPDATE_MERCHANT_ACTION, $merchantData);
 
 // Retrieve an NS8 order details and parse out score
 $orderIncrementId = 123;
-$ns8Order = $actionClient->get(sprintf('/orders/order-name/%s', base64_encode($orderIncrementId));
+$ns8Order = $actionsClient->getEntity(sprintf('/orders/order-name/%s', base64_encode($orderIncrementId));
 $fraudAssesments  = $ns8Order->fraudAssessments;
 $eq8Score = array_reduce($fraudAssesments, function (?int $foundScore, \stdClass $fraudAssessment): ?int {
             if (!empty($foundScore)) {
