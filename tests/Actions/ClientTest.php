@@ -82,6 +82,60 @@ class ClientTest extends TestCase
     }
 
     /**
+     * Test Set Action functionality
+     *
+     * @return void
+     *
+     * @covers ::getHttpClient
+     * @covers ::setHttpClient
+     * @covers ::triggerEvent
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getSessionData
+     * @covers NS8\ProtectSDK\Http\Client::post
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     */
+    public function testTriggerEvent() : void
+    {
+        $httpClient   = new HttpClient(null, null, true, $this->buildTestHttpClient());
+        $actionClient = new ActionClient();
+        $actionClient->setHttpClient($httpClient);
+        $setActionResponse = $actionClient->triggerEvent(
+            ActionClient::CREATE_ORDER_ACTION,
+            ['data_key' => 'data_value']
+        );
+        $this->assertEquals(true, $setActionResponse);
+    }
+
+    /**
      * Test Get Entity functionality
      *
      * @return void

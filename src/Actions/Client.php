@@ -81,6 +81,33 @@ class Client extends BaseClient
      */
     public static function setAction(string $eventName, array $data = []) : bool
     {
+        return self::sendProtectData($eventName, $data);
+    }
+
+   /**
+    * Event trigger function that serves as a wrapper method for HTTP POST calls to NS8 when Events
+    * are triggered on the client side.
+    *
+    * @param string  $eventName The event that has occurred to send data to the NS8 API
+    * @param mixed[] $data      Data related to the event that has occurred
+    *
+    * @return bool if the NS8 API trigger event call was completed successfully (true if successful, false otherwise)
+    */
+    public static function triggerEvent(string $eventName, array $data = []) : bool
+    {
+        return self::sendProtectData($eventName, $data);
+    }
+
+    /**
+     * Sends data for a given action/event to the Protect API
+     *
+     * @param string  $eventName The event that has occurred to send data to the NS8 API
+     * @param mixed[] $data      Data related to the event that has occurred
+     *
+     * @return bool if the call was completed successfully (true if successful, false otherwise)
+     */
+    protected static function sendProtectData(string $eventName, array $data = []) : bool
+    {
         $result = self::getHttpClient()->post(self::SWITCH_EXECUTOR_PATH, $data, [self::ACTION_KEY => $eventName]);
 
         return $result->httpCode === self::ACTION_SUCCESS_CODE;
