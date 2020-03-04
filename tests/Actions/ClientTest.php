@@ -38,6 +38,7 @@ class ClientTest extends TestCase
      * @covers ::getHttpClient
      * @covers ::setHttpClient
      * @covers ::setAction
+     * @covers ::sendProtectData
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
@@ -89,6 +90,7 @@ class ClientTest extends TestCase
      * @covers ::getHttpClient
      * @covers ::setHttpClient
      * @covers ::triggerEvent
+     * @covers ::sendProtectData
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist

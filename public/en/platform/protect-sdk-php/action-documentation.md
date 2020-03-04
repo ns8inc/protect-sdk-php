@@ -6,6 +6,13 @@ The purpose of the Action Client is to enable calls to NS8 vi the API for managi
   * The ability to pass new, unknown (to the SDK) events to the API for processing
   * Interaction with the NS8 API without specifically utilizing HTTP components or needing to customize request logic
 
+### Actions VS Events
+As a general rule, actions occur on the platform side while events occur occur on the NS8 Protect side. There are 3 events that are an exception to this as well as a related action:
+* ON_DISABLE_EXTENSION_EVENT: This event should be triggered when the module is disabled on the platform side.
+* ON_ENABLE_EXTENSION_EVENT: This event should be triggered when the module is *re-enabled* on the platform side. This is not needed when it is initially enabled.
+* ON_INSTALL_PLATFORM_EVENT: This event should be triggered when the module is first installed.
+* UNINSTALL_ACTION: This action should be set when the module is removed from the platform.
+
 ### Example Action Client Implementations
 The following serve as examples of implementation of the Action Client to demonstrate intended uses:
 ```php
@@ -18,11 +25,14 @@ $actionsClient = new ActionsClient();
 
 // Posts a new order to NS8's API
 $orderData = ['id' => 123];
-$actionsClient->set(ActionClient::CREATE_ORDER_ACTION, $orderData);
+$actionsClient->setAction(ActionClient::CREATE_ORDER_ACTION, $orderData);
 
 // Posts updated merchant data to NS8's API
 $merchantData = ['store_name' => 'Test Store'];
 $actionsClient->setAction(ActionClient::UPDATE_MERCHANT_ACTION, $merchantData);
+
+// Posts a triggered event from the platform
+$actionsClient->triggerEvent(ActionClient::ON_DISABLE_EXTENSION_EVENT, $merchantData);
 
 // Retrieve an NS8 order details and parse out score
 $orderIncrementId = 123;
