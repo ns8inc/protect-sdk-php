@@ -13,6 +13,8 @@ As a general rule, actions occur on the platform side while events occur occur o
 * ON_INSTALL_PLATFORM_EVENT: This event should be triggered when the module is first installed.
 * UNINSTALL_ACTION: This action should be set when the module is removed from the platform.
 
+Further information pre-defined actions and events is available in the [Switchboards Foundational Switches documentation](https://github.com/ns8inc/protect-integration-docs/blob/dev/public/en/platform/protect-integration-docs/switchboards_foundational_switches.md) and additional information regarding the differences between actions and events can be found in the [Switchboards Actions vs Events](https://github.com/ns8inc/protect-integration-docs/blob/dev/public/en/platform/protect-integration-docs/switchboards_actions_v_events.md).
+
 ### Example Action Client Implementations
 The following serve as examples of implementation of the Action Client to demonstrate intended uses:
 ```php
