@@ -5,7 +5,7 @@
 
 <!--
 
-TODO: Uncomment when php sdk is published to public packagist:
+TODO: Uncomment when php sdk published to public packagist:
 
 [![Latest Stable Version](https://poser.pugx.org/ns8/protect-sdk-php/version)](https://packagist.org/packages/ns8/protect-sdk-php)
 [![Latest Stable Version](https://poser.pugx.org/ns8/protect-sdk-php/license)](https://packagist.org/packages/ns8/protect-sdk-php)
