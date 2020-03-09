@@ -6,6 +6,21 @@ The purpose of the HTTP client is to provide a clean, functional class that deve
   * Provide flexibility, generic request options for fetching and posting data to NS8's API
   * Provide basic sanitization and validation for calls being sent to NS8's API
 
+The HTTP Client is structured to permit calls only to NS8's Client (Middleware) API (`https://protect-client.ns8.com`) and should not be utilized when attempting to reach out outside of the Client API for tasks such as OAUTH integration where the Back-End Protect API must be utlized (`https://protect.ns8.com`). The Back-End Protect API URL should have very limited interaction outside of standard OAUTH integration can be retrieved from the Config Client with a call such as the following to be used with a seperate HTTP or Authentication library:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use NS8\ProtectSDK\Config\Manager as ConfigManager;
+
+// Initialize configuration manager as an object and set environment and JSON files
+ConfigManager::initConfiguration('testing', null, 'base_config.json')
+
+// Fetch the API url for the given environment
+$apiUrl = ConfigManager::getEnvValue('api_url');
+```
 
 ### Example HTTP Client Implementations
 The following serves as example of implentations of the HTTP Client. Please note that the HTTP client will handle the domain component of the URI so only the endpoint path needs to be specified.
