@@ -5,7 +5,7 @@
       ]
     },
     "description": "NS8 Protect SDK",
-    "license": "UNLICENSED",
+    "license": "proprietary",
     "minimum-stability": "stable",
     "name": "ns8/protect-sdk",
     "require": {
