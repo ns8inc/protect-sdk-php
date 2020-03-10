@@ -72,21 +72,6 @@ class ManagerTest extends TestCase
      * Test JSON to use for a valid JSON config file with invalid values
      */
     public const EMPTY_URLS_TEST_JSON = [
-        'logging'   => ['enabled' => true],
-        'production'    => [
-            'urls' => [
-                'api_url'   => 'https://test.ns8.com',
-                'client_url' => 'https://test.ns8.com',
-                'js_sdk' => 'https://test.ns8.com',
-            ],
-        ],
-        'testing'   => [
-            'urls' => [
-                'api_url'   => 'https://protect.ns8.com',
-                'client_url' => 'https://protect-client.ns8.com',
-                'js_sdk' => 'https://cdn.ns8.com/project.js',
-            ],
-        ],
         'development'   => [
             'urls' => [
                 'api_url'   => '',
