@@ -295,7 +295,7 @@ abstract class ManagerStructure
     {
         foreach (self::ENV_REQUIRED_FIELDS as $fieldName) {
             $key = sprintf('%s.%s', self::getEnvironment(), $fieldName);
-            if (! static::doesValueExist($key) || empty(static::getValue($key))) {
+            if (static::doesValueExist($key) && empty(static::getValue($key))) {
                 throw new InvalidValueException(
                     sprintf('%s must not be an empty configuration value. Verify configuration json.', $key)
                 );
