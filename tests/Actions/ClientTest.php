@@ -46,6 +46,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::validateConfigEnvRequirements
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData

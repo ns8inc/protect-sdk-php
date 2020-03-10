@@ -72,6 +72,14 @@ abstract class ManagerStructure
     public const TESTING_JS_SDK_VALUE     = 'https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect.min.js';
 
     /**
+     * Fields that must be set for requests
+     */
+    public const ENV_REQUIRED_FIELDS = [
+        'urls' . self::KEY_DELIMITER . 'api_url',
+        'urls' . self::KEY_DELIMITER . 'client_url',
+    ];
+
+    /**
      * Mapping of keys/values that should remain static in configuration
      */
     public const STATIC_CONFIG_MAPPINGS = [
@@ -144,6 +152,7 @@ abstract class ManagerStructure
         self::$configData['platform_version'] = $platformVersion;
         self::$configData['php_version']      = $phpVersion ?? phpversion();
         self::$environment                    = $environment ?? self::$configData['default_environment'];
+        self::validateConfigEnvRequirements();
         self::validateInitialConfigData();
         self::$configInitialized = true;
     }
@@ -273,6 +282,25 @@ abstract class ManagerStructure
         }
 
         return $jsonData;
+    }
+
+    /**
+     * Validates initial configuration values required are not empty
+     *
+     * @return void
+     *
+     * @throws InvalidValueException if a value for a static key is not populated.
+     */
+    protected static function validateConfigEnvRequirements() : void
+    {
+        foreach (self::ENV_REQUIRED_FIELDS as $fieldName) {
+            $key = sprintf('%s.%s', self::getEnvironment(), $fieldName);
+            if (! static::doesValueExist($key) || empty(static::getValue($key))) {
+                throw new InvalidValueException(
+                    sprintf('%s must not be an empty configuration value. Verify configuration json.', $key)
+                );
+            }
+        }
     }
 
     /**

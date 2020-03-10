@@ -69,6 +69,34 @@ class ManagerTest extends TestCase
     ];
 
     /**
+     * Test JSON to use for a valid JSON config file with invalid values
+     */
+    public const EMPTY_URLS_TEST_JSON = [
+        'logging'   => ['enabled' => true],
+        'production'    => [
+            'urls' => [
+                'api_url'   => 'https://test.ns8.com',
+                'client_url' => 'https://test.ns8.com',
+                'js_sdk' => 'https://test.ns8.com',
+            ],
+        ],
+        'testing'   => [
+            'urls' => [
+                'api_url'   => 'https://protect.ns8.com',
+                'client_url' => 'https://protect-client.ns8.com',
+                'js_sdk' => 'https://cdn.ns8.com/project.js',
+            ],
+        ],
+        'development'   => [
+            'urls' => [
+                'api_url'   => '',
+                'client_url' => '',
+                'js_sdk' => 'https://cdn.ns8.com/project.js',
+            ],
+        ],
+    ];
+
+    /**
      * The test file path with valid JSON for test methods
      *
      * @var string $testFilePath
@@ -90,6 +118,13 @@ class ManagerTest extends TestCase
     protected static $invalidDataTestFilePath = null;
 
     /**
+     * The test file path with empty development URLs
+     *
+     * @var string $emptyUrlTestFilePath
+     */
+    protected static $emptyUrlTestFilePath = null;
+
+    /**
      * Test constructor implementation
      *
      * @return void
@@ -108,6 +143,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::setRuntimeConfigValues
@@ -135,6 +172,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::getConfigByFile
      * @covers ::readJsonFromFile
      * @covers ::getFullConfigArray
@@ -181,6 +220,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
@@ -205,6 +246,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
@@ -230,6 +273,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
@@ -258,6 +303,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::validateKeyCanChange
@@ -287,6 +334,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getConfigByFile
@@ -353,6 +402,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getValue
@@ -378,6 +429,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::doesValueExist
      * @covers ::validateInitialConfigData
      * @covers ::getValue
@@ -403,6 +456,8 @@ class ManagerTest extends TestCase
       *
       * @return void
       *
+      * @covers ::getEnvironment
+      * @covers ::validateConfigEnvRequirements
       * @covers ::doesValueExist
       * @covers ::validateInitialConfigData
       * @covers ::getValue
@@ -427,6 +482,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::validateInitialConfigData
      * @covers ::doesValueExist
      * @covers ::getValue
@@ -515,6 +572,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::setValue
@@ -543,6 +602,8 @@ class ManagerTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
      * @covers ::doesValueExist
      * @covers ::getValue
      * @covers ::getConfigByFile
@@ -559,6 +620,32 @@ class ManagerTest extends TestCase
         $configManager->resetConfig();
         $this->expectException(InvalidValueException::class);
         $configManager->initConfiguration('testing', null, self::$invalidValuesTestFilePath);
+    }
+
+    /**
+     * Test if we can instantiate a Configuration Manager with empty env URLs
+     * for the development environment
+     *
+     * @return void
+     *
+     * @covers ::getEnvironment
+     * @covers ::validateConfigEnvRequirements
+     * @covers ::doesValueExist
+     * @covers ::getValue
+     * @covers ::getConfigByFile
+     * @covers ::readJsonFromFile
+     * @covers ::validateInitialConfigData
+     * @covers ::setRuntimeConfigValues
+     * @covers ::setValueWithoutValidation
+     * @covers ::initConfiguration
+     * @covers ::resetConfig
+     */
+    public function testEmptyEnvUrls() : void
+    {
+        $configManager = new ConfigManager();
+        $configManager->resetConfig();
+        $this->expectException(InvalidValueException::class);
+        $configManager->initConfiguration('development', null, self::$emptyUrlTestFilePath);
     }
 
     /**
@@ -601,6 +688,9 @@ class ManagerTest extends TestCase
 
         self::$invalidValuesTestFilePath = tempnam(self::getJsonConfigDirectoryPath(), 'php_unit_test_data_');
         self::writeTestData(self::$invalidValuesTestFilePath, json_encode(self::INVALID_URLS_TEST_JSON));
+
+        self::$emptyUrlTestFilePath = tempnam(self::getJsonConfigDirectoryPath(), 'php_unit_test_data_');
+        self::writeTestData(self::$emptyUrlTestFilePath, json_encode(self::EMPTY_URLS_TEST_JSON));
     }
 
     /**
@@ -613,5 +703,6 @@ class ManagerTest extends TestCase
         unlink(self::$testFilePath);
         unlink(self::$invalidDataTestFilePath);
         unlink(self::$invalidValuesTestFilePath);
+        unlink(self::$emptyUrlTestFilePath);
     }
 }
