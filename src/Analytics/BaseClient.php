@@ -12,7 +12,7 @@ abstract class BaseClient
     /**
      * Returns TrueStats URL
      *
-     * @return bool Returns true if NS8 Access Token is valid, false otherwise
+     * @return string Path to TrueStats Script endpoint
      */
     abstract public static function getTrueStatsRoute() : string;
 
