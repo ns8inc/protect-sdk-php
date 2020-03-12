@@ -42,7 +42,7 @@ class ManagerTest extends TestCase
             'urls' => [
                 'api_url'   => 'https://test-protect.ns8.com',
                 'client_url' => 'https://test-protect-client.ns8.com',
-                'js_sdk' => 'https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect.min.js',
+                'js_sdk' => 'https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect-dev.min.js',
             ],
         ],
     ];
