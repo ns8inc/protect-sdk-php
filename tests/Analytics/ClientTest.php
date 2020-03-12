@@ -13,7 +13,7 @@ use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
 use function json_encode;
 
 /**
- * Security Test Class
+ * Analytics Test Class
  *
  * @coversDefaultClass NS8\ProtectSDK\Analytics\Client
  */
@@ -27,7 +27,7 @@ class ClientTest extends TestCase
     protected static $configManager;
 
     /**
-     * Test vale return for fetching the True Stats route
+     * Test value returned for fetching the True Stats route
      *
      * @return void
      *
