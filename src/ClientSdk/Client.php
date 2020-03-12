@@ -8,6 +8,8 @@ use NS8\ProtectSDK\Config\Manager as SdkConfigManager;
 
 /**
  * Class for dictating general NS8 Analytics components
+ *
+ * AHHHH!
  */
 class Client extends BaseClient
 {
