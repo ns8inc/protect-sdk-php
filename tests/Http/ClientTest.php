@@ -229,8 +229,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
-     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      */
     public function testNonJsonGetRequestException() : void
     {
@@ -262,8 +262,8 @@ class ClientTest extends TestCase
      * @covers ::executeWithAuth
      * @covers ::getAuthUsername
      * @covers ::getSessionData
-     * @covers ::setPlatformIdentifier
      * @covers ::post
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -313,16 +313,16 @@ class ClientTest extends TestCase
      * @covers ::__construct
      * @covers ::getAccessToken
      * @covers ::getAuthUsername
+     * @covers ::getPlatformIdentifier
      * @covers ::getSessionData
-     * @covers ::post
-     * @covers ::setSessionData
      * @covers ::executeWithAuth
      * @covers ::executeJsonRequest
      * @covers ::executeRequest
+     * @covers ::post
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
      * @covers ::setPlatformIdentifier
-     * @covers ::getPlatformIdentifier
+     * @covers ::setSessionData
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -381,10 +381,10 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
-     * @covers NS8\ProtectSDK\Config\Manager::setValue
-     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
      * @covers NS8\ProtectSDK\Config\ManagerStructure::validateConfigEnvRequirements
@@ -730,8 +730,8 @@ class ClientTest extends TestCase
      * @covers ::executeRequest
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
-     * @covers ::setPlatformIdentifier
      * @covers ::getPlatformIdentifier
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
