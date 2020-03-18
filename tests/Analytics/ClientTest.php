@@ -35,6 +35,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
      */
     public function testGetTrueStatsUrl() : void
@@ -58,6 +59,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
      * @covers NS8\ProtectSDK\Http\Client::__construct
      * @covers NS8\ProtectSDK\Http\Client::executeRequest

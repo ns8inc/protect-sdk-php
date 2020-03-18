@@ -84,3 +84,5 @@ use NS8\ProtectSDK\Config\Manager as ConfigManager;
 // Does Foo config value exist?
 $doesFooExist = ConfigManager::doesValueExist('foo');
 ```
+
+
