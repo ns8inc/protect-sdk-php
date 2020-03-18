@@ -39,6 +39,7 @@ class ClientTest extends TestCase
      *
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
      * @covers NS8\ProtectSDK\Http\Client::__construct
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
