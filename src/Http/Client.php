@@ -475,7 +475,7 @@ class Client implements IProtectClient
     /**
      * Set Platform identifier used in post requests
      *
-     * @param srtring $platformIdentifier Platform identifier to use when sending requests
+     * @param string $platformIdentifier Platform identifier to use when sending requests
      *
      * @return IProtectClient
      */
