@@ -38,11 +38,11 @@ abstract class BaseClient
     /**
      * Validate NS8 Auth User
      *
-     * @param string $authUser The auth user value we are validating
+     * @param ?string $authUser The auth user value we are validating
      *
      * @return bool Returns true if NS8 Auth User is valid, false otherwise
      */
-    abstract public static function validateAuthUser(string $authUser) : bool;
+    abstract public static function validateAuthUser(?string $authUser) : bool;
 
     /**
      * Returns the NS8 Auth User to be used when sending requests to NS8.
