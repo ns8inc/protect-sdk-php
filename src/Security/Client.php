@@ -85,11 +85,11 @@ class Client extends BaseClient
     /**
      * Validate NS8 Auth User
      *
-     * @param string $authUser The auth user value we are validating
+     * @param ?string $authUser The auth user value we are validating
      *
      * @return bool Returns true if NS8 Auth User is valid, false otherwise
      */
-    public static function validateAuthUser(string $authUser) : bool
+    public static function validateAuthUser(?string $authUser) : bool
     {
         return ! self::getConfigManager()->getEnvValue('authorization.required') || ! empty($authUser);
     }
