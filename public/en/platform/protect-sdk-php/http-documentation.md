@@ -60,7 +60,7 @@ $testHttpClient = new ZendClient('ns8.com', ['adapter' => $adapter]);
 $httpClient = new Client('test', 'test', true, $testHttpClient);
 ```
 
-The HTTP client permits setting/getting auth username, access token, and session data dynamically following object instantation as well.
+The HTTP client permits setting/getting auth username, access token, platform UUID and session data dynamically following object instantation as well.
 ```php
 <?php
 declare(strict_types=1);
@@ -80,6 +80,11 @@ $authUsername = $client->getAuthUsername();
 $accessToken = 'test_token';
 $httpClient = new HttpClient();
 $httpClient->setAccessToken($accessToken);
+
+// Platform UUID
+$uuid = '12345';
+$httpClient = new HttpClient();
+$httpClient->setPlatformIdentifier($uuid);
 
 // Later fetching access token from client object
 $accessToken = httpClient->getAccessToken();

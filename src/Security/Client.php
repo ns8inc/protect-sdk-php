@@ -55,7 +55,7 @@ class Client extends BaseClient
      */
     public static function validateNs8AccessToken(string $accessToken) : bool
     {
-        return ! empty($accessToken);
+        return ! self::getConfigManager()->getEnvValue('authorization.required') || ! empty($accessToken);
     }
 
     /**
@@ -91,7 +91,7 @@ class Client extends BaseClient
      */
     public static function validateAuthUser(?string $authUser) : bool
     {
-        return ! empty($authUser);
+        return ! self::getConfigManager()->getEnvValue('authorization.required') || ! empty($authUser);
     }
 
     /**

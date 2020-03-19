@@ -63,6 +63,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
      * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getPlatformIdentifier
      * @covers NS8\ProtectSDK\Http\Client::getSessionData
      * @covers NS8\ProtectSDK\Http\Client::post
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
@@ -115,6 +116,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
      * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getPlatformIdentifier
      * @covers NS8\ProtectSDK\Http\Client::getSessionData
      * @covers NS8\ProtectSDK\Http\Client::post
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken

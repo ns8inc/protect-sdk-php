@@ -41,6 +41,7 @@ class ClientTest extends TestCase
      *
      * @return void
      *
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration

@@ -19,18 +19,21 @@
   },
   "production": {
     "authorization": {
+      "required": true,
       "access_token": "",
       "auth_user": ""
     }
   },
   "testing": {
     "authorization": {
+      "required": true,
       "access_token": "",
       "auth_user": ""
     }
   },
   "development": {
     "authorization": {
+      "required": true,
       "access_token": "",
       "auth_user": ""
     },
