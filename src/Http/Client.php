@@ -225,7 +225,7 @@ class Client implements IProtectClient
 
         $sessionData      = $data['session'] ?? [];
         $data['session']  = array_merge((array) $this->getSessionData(), $sessionData);
-        $data['username'] = $this->getAuthUsername();
+        $data['username'] = $authUsername;
 
         return $this->executeWithAuth($url, $data, self::POST_REQUEST_TYPE, $parameters, $headers, $timeout);
     }
