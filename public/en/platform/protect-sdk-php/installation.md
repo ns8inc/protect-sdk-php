@@ -1,5 +1,5 @@
-## Installation
+# Installation
 
 ```bash
-$ composer install
+composer install
 ```
