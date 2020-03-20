@@ -27,8 +27,8 @@
         "norberttech/md-link-linter": "^0.0.8"
     },
     "scripts": {
-        "lint": "phpcs --extensions=php src/ tests/ && npm install -g markdownlint-cli && markdownlint . --ignore vendor/ && mdlinklint . --exclude=vendor",
-        "lint-fix": "phpcbf --extensions=php src/ tests/ && npm install -g markdownlint-cli && markdownlint . --fix --ignore vendor/",
+        "lint": "phpcs --extensions=php src/ tests/ && yarn global add markdownlint-cli && markdownlint . --ignore vendor/ && mdlinklint . --exclude=vendor",
+        "lint-fix": "phpcbf --extensions=php src/ tests/ && yarn global add markdownlint-cli && markdownlint . --fix --ignore vendor/",
         "test": "phpunit tests/",
         "test-coverage": "phpunit --coverage-clover /tmp/coverage.xml --coverage-text tests/ && coverage-check /tmp/coverage.xml 100"
     }
