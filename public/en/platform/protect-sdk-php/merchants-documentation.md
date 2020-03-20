@@ -1,11 +1,15 @@
-## Merchants Documentation
+# Merchants Documentation
 
-### Purpose of the Merchants Client
-The purpose of the Merchants class is to easily acquire information about the current merchant. This is necessary in order to load the Protect client iframe.
+## Purpose of the Merchants Client
 
-### Example Merchants Client Usage
+The purpose of the Merchants class is to easily acquire information about the
+current merchant. This is necessary in order to load the Protect client iframe.
 
-Fetching the access token for requests within the HTTP Client. By default, the HTTP Client will automatically pull the access token and does not need to be set individually for requests unless specifically told to do so.
+## Example Merchants Client Usage
+
+Fetching the access token for requests within the HTTP Client. By default, the
+HTTP Client will automatically pull the access token and does not need to be set
+individually for requests unless specifically told to do so.
 
 ```php
 <?php
@@ -18,8 +22,8 @@ $merchantsClient = new MerchantsClient();
 $merchant = $merchantsClient->getCurrent();
 
 if (empty($merchant->error)) {
-    echo "Success: $merchant->name\n";
+  echo "Success: $merchant->name\n";
 } else {
-    echo "Error: $merchant->statusCode $merchant->error\n";
+  echo "Error: $merchant->statusCode $merchant->error\n";
 }
 ```

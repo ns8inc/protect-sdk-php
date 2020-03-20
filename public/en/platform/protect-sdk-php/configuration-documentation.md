@@ -1,19 +1,34 @@
-## Configuration Manager
+# Configuration Manager
 
-### Purpose of The Configuration Manager
-The Config Manager class is intended to be a flexible, functional class that can be used as a static class to manage configurable values during runtime or as a class instance to be used repeatedly throughout a method. Given this, the developmental goals of implementing the class were:
+## Purpose of The Configuration Manager
 
-  * Avoid excessive initialization of static configurable values (e.g. avoid loading config files or fetching config data multiple times)
+The Config Manager class is intended to be a flexible, functional class that can
+be used as a static class to manage configurable values during runtime or as a
+class instance to be used repeatedly throughout a method. Given this, the
+developmental goals of implementing the class were:
 
-  * Provide a simple service that allows developers to set, check, and retrieve configurable values such as version info, environment relevant URIs, & base values required for authentication.
+* Avoid excessive initialization of static configurable values (e.g. avoid
+  loading config files or fetching config data multiple times)
 
-  * Provide a simple structure for fetching configuration data and allow configuration data to be structured in a way that is intuitive to add, read, & edit.
+* Provide a simple service that allows developers to set, check, and retrieve
+  configurable values such as version info, environment relevant URIs, & base
+  values required for authentication.
 
+* Provide a simple structure for fetching configuration data and allow
+  configuration data to be structured in a way that is intuitive to add, read, &
+  edit.
 
-### Example Configuration Manager Usages
-The Config Manager is explicitly designed for abstract usage. It is important to note that **values are shared across all instances of the Config Manager class statically** to permit easy access to these values throughout runtime - The first time this class is initialized or used, the `initConfiguration` method should be invoked to set-up environmental and base values. The following implementations are example usages of the Config Manager:
+## Example Configuration Manager Usages
+
+The Config Manager is explicitly designed for abstract usage. It is important to
+note that **values are shared across all instances of the Config Manager class
+statically** to permit easy access to these values throughout runtime - The
+first time this class is initialized or used, the `initConfiguration` method
+should be invoked to set-up environmental and base values. The following
+implementations are example usages of the Config Manager:
 
 JSON Sample For Examples
+
 ```json
 {
   "version": 2,
@@ -39,7 +54,9 @@ JSON Sample For Examples
 }
 ```
 
-Initalizing the Configuration Manager and fetching if we should log HTTP calls and the API URL for the enviornment
+Initalizing the Configuration Manager and fetching if we should log HTTP calls
+and the API URL for the enviornment
+
 ```php
 <?php
 
@@ -59,6 +76,7 @@ $apiUrl = $configManager::getEnvValue('api_url');
 ```
 
 Setting then retrieving a sample value
+
 ```php
 <?php
 
@@ -74,6 +92,7 @@ ConfigManager::getValue('store.currency');
 ```
 
 Checking if a config value exists
+
 ```php
 <?php
 
