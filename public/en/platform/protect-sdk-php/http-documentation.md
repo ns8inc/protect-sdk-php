@@ -20,7 +20,7 @@ The core functions of the class are to:
 The HTTP Client is structured to permit calls only to NS8's Client (Middleware)
 API (`https://protect-client.ns8.com`) and should not be utilized when
 attempting to reach out outside of the Client API for tasks such as OAUTH
-integration where the Back-End Protect API must be utlized
+integration where the Back-End Protect API must be utilized
 (`https://protect.ns8.com`). The Back-End Protect API URL should have very
 limited interaction outside of standard OAUTH integration can be retrieved from
 the Config Client with a call such as the following to be used with a seperate

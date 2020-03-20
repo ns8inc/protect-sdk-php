@@ -1,6 +1,7 @@
 # Queue Documentation
 
 ## Purpose of the Queue Client
+
 The purpose of the Queue Client is to allow easy access to
 update messages from the NS8 Protect queue to update order
 information. The NS8 Protect service sends order update
@@ -8,8 +9,10 @@ data to a First In, First Out (FIFO) queue specifically
 associated with your account.
 
 ## Example of a Queue Client Implementation
+
 The following serve as examples of implementation of the
 Action Client to demonstrate intended uses:
+
 ```php
 <?php
 declare(strict_types=1);
