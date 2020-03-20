@@ -22,7 +22,7 @@ class Client extends BaseClient
      *
      * @var string $url
      */
-    public static $url;
+    protected static $url;
 
     /**
      * Attribute to track HTTTP Client used for sending requests
