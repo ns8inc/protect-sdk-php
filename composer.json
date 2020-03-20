@@ -23,11 +23,12 @@
         "ccinn/composer-husky-plugin": "^0.1.0",
         "ccinn/husky-php": "^0.1.0",
         "symfony/finder": "^4.4.2",
-        "codeception/aspect-mock": "^3.0.2"
+        "codeception/aspect-mock": "^3.0.2",
+        "norberttech/md-link-linter": "^0.0.8"
     },
     "scripts": {
-        "lint": "phpcs --extensions=php src/ tests/",
-        "lint-fix": "phpcbf --extensions=php src/ tests/",
+        "lint": "phpcs --extensions=php src/ tests/ && npm install -g markdownlint-cli && markdownlint . --ignore vendor/ && mdlinklint . --exclude=vendor",
+        "lint-fix": "phpcbf --extensions=php src/ tests/ && npm install -g markdownlint-cli && markdownlint . --fix --ignore vendor/",
         "test": "phpunit tests/",
         "test-coverage": "phpunit --coverage-clover /tmp/coverage.xml --coverage-text tests/ && coverage-check /tmp/coverage.xml 100"
     }
