@@ -51,6 +51,13 @@ class Client extends BaseClient
     public const RECEIVE_MESSAGE_SET_KEY      = 'messages';
 
     /**
+     * Available message actions that can be present in a message
+     */
+    public const MESSAGE_ACTION_UPDATE_EQ8_SCORE          = 'UPDATE_EQ8_SCORE_EVENT';
+    public const MESSAGE_ACTION_UPDATE_ORDER_RISK_EVENT   = 'UPDATE_ORDER_RISK_EVENT';
+    public const MESSAGE_ACTION_UPDATE_ORDER_STATUS_EVENT = 'UPDATE_ORDER_STATUS_EVENT';
+
+    /**
      * Static headers that we are required to send in SQS requests
      */
     public const REQUIRED_HEADERS = [
