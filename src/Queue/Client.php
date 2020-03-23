@@ -117,6 +117,19 @@ class Client extends BaseClient
     }
 
     /**
+     * Deletes a message from the queue.
+     *
+     * @param string $receiptHandle The receipt handle of the message we want to delete
+     *
+     * @return bool Returns true if the API call to delete the message was successful otherwise false
+     */
+    public static function deleteMessage(string $receiptHandle) : bool
+    {
+        // Stub until the API endpoint is implemented to delete messages
+        return true;
+    }
+
+    /**
      * Process results to check if any errors exist
      *
      * @param mixed[] $response       The array resulting from decoding the JSON response
@@ -160,16 +173,12 @@ class Client extends BaseClient
 
         $resultArray = [];
         foreach ($messages as $messageData) {
-            $attributes = [];
-            foreach ((array) $messageData['MessageAttributes'] as $attributeData) {
-                $attributes[$attributeData['Name']] = $attributeData['Value']['StringValue'];
+            $messageBody = json_decode($messageData['Body'], true);
+            if (empty($messageBody)) {
+                throw new DecodingException('Emmpty message body received from Queue.');
             }
-
-            $resultArray[] = [
-                'attributes' => $attributes,
-                'body' => $messageData['Body'],
-                'message_id' => $messageData['MessageId'],
-            ];
+            $messageBody['receipt_handle'] = $messageData['ReceiptHandle'];
+            $resultArray[]                 = $messageBody;
         }
 
         return $resultArray;

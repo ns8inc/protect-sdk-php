@@ -38,6 +38,9 @@ class ClientTest extends TestCase
      *
      * @return void
      *
+     * @covers ::getHttpClient
+     * @covers ::setHttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
@@ -54,8 +57,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
-     * @covers NS8\ProtectSDK\Uninstall\Client::getHttpClient
-     * @covers NS8\ProtectSDK\Uninstall\Client::setHttpClient
      */
     public function testGetAndSetHttpClient() : void
     {
@@ -69,9 +70,9 @@ class ClientTest extends TestCase
      *
      * @return void
      *
-     * @covers NS8\ProtectSDK\Uninstaller\Client::getHttpClient
-     * @covers NS8\ProtectSDK\Uninstaller\Client::setHttpClient
-     * @covers NS8\ProtectSDK\Uninstaller\Client::uninstall
+     * @covers ::getHttpClient
+     * @covers ::setHttpClient
+     * @covers ::uninstall
      */
     public function testUninstall() : void
     {
