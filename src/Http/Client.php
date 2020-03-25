@@ -359,11 +359,12 @@ class Client implements IProtectClient
         $baseUri  = $this->configManager->getEnvValue('urls.client_url');
         $uri      = $baseUri . self::ROUTE_PREFIX . $route;
 
-        // For non
-        $accessToken      = $this->getAccessToken();
-        $authHeaderString = sprintf(self::AUTH_STRING_HEADER_FORMAT, $accessToken);
-        $authHeader       = ['Authorization' => $authHeaderString];
-        $allHeaders       = array_merge($headers, $authHeader);
+        $accessToken = $this->getAccessToken();
+        if (! empty($accessToken)) {
+            $authHeaderString = sprintf(self::AUTH_STRING_HEADER_FORMAT, $accessToken);
+            $authHeader       = ['Authorization' => $authHeaderString];
+            $allHeaders       = array_merge($headers, $authHeader);
+        }
 
         $this->client->setUri($uri);
         $this->client->setOptions(['timeout' => $timeout]);
@@ -411,7 +412,7 @@ class Client implements IProtectClient
      *
      * @return stdClass
      */
-    protected function executeJsonRequest(
+    public function executeJsonRequest(
         string $route,
         array $data = [],
         string $method = self::POST_REQUEST_TYPE,
