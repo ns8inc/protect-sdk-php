@@ -73,14 +73,6 @@ class Client implements IProtectClient
     protected $accessToken;
 
     /**
-     * Attribute to identify merchant platform
-     *
-     * @var string
-     */
-    protected $platformIdentifier;
-
-
-    /**
      * Attribute to track session data to be sent in requests
      *
      * @var mixed[]
@@ -132,10 +124,6 @@ class Client implements IProtectClient
         $authUsername = $authUsername ?? SecurityClient::getAuthUser();
         if (! empty($authUsername)) {
             $this->setAuthUsername($authUsername);
-        }
-
-        if ($this->configManager::doesValueExist('platform.identifier')) {
-            $this->setPlatformIdentifier($this->configManager::getValue('platform.identifier'));
         }
 
         if (! $setSessionData) {
@@ -235,11 +223,6 @@ class Client implements IProtectClient
             );
         }
 
-        $platformIdentifier = $this->getPlatformIdentifier();
-        if (! empty($platformIdentifier)) {
-            $data['platform_uuid'] = $platformIdentifier;
-        }
-
         $sessionData      = $data['session'] ?? [];
         $data['session']  = array_merge((array) $this->getSessionData(), $sessionData);
         $data['username'] = $authUsername;
@@ -287,6 +270,31 @@ class Client implements IProtectClient
         int $timeout = self::DEFAULT_TIMEOUT_VALUE
     ) : stdClass {
         return $this->executeWithAuth($url, $data, self::DELETE_REQUEST_TYPE, $parameters, $headers, $timeout);
+    }
+
+    /**
+     * Return a formatted JSON request response without pre-request validations/set-up
+     *
+     * @param string  $route      URL that is being accessed
+     * @param mixed[] $data       Data to include in body of the request
+     * @param string  $method     The HTTP method being used to send the request
+     * @param mixed[] $parameters Parameters to include in request
+     * @param mixed[] $headers    Array of heads to include in request
+     * @param int     $timeout    Timeout length for the request
+     *
+     * @return stdClass
+     */
+    public function executeJsonRequest(
+        string $route,
+        array $data = [],
+        string $method = self::POST_REQUEST_TYPE,
+        array $parameters = [],
+        array $headers = [],
+        int $timeout = self::DEFAULT_TIMEOUT_VALUE
+    ) : stdClass {
+        $body = $this->executeRequest($route, $data, $method, $parameters, $headers, $timeout);
+
+        return ZendJsonDecoder::decode($body);
     }
 
     /**
@@ -401,31 +409,6 @@ class Client implements IProtectClient
     }
 
     /**
-     * Return a formatted JSON request response
-     *
-     * @param string  $route      URL that is being accessed
-     * @param mixed[] $data       Data to include in body of the request
-     * @param string  $method     The HTTP method being used to send the request
-     * @param mixed[] $parameters Parameters to include in request
-     * @param mixed[] $headers    Array of heads to include in request
-     * @param int     $timeout    Timeout length for the request
-     *
-     * @return stdClass
-     */
-    public function executeJsonRequest(
-        string $route,
-        array $data = [],
-        string $method = self::POST_REQUEST_TYPE,
-        array $parameters = [],
-        array $headers = [],
-        int $timeout = self::DEFAULT_TIMEOUT_VALUE
-    ) : stdClass {
-        $body = $this->executeRequest($route, $data, $method, $parameters, $headers, $timeout);
-
-        return ZendJsonDecoder::decode($body);
-    }
-
-    /**
      * Sets session data intended to be passed to NS8 services
      *
      * @param mixed[] $sessionData Session data being set for request
@@ -459,30 +442,6 @@ class Client implements IProtectClient
     public function setAuthUsername(string $authUsername) : IProtectClient
     {
         $this->authUsername = $authUsername;
-
-        return $this;
-    }
-
-    /**
-     * Returns session data used in HTTP requests to NS8 services
-     *
-     * @return mixed[]|null
-     */
-    public function getPlatformIdentifier() : ?string
-    {
-        return $this->platformIdentifier;
-    }
-
-    /**
-     * Set Platform identifier used in post requests
-     *
-     * @param string $platformIdentifier Platform identifier to use when sending requests
-     *
-     * @return IProtectClient
-     */
-    public function setPlatformIdentifier(string $platformIdentifier) : IProtectClient
-    {
-        $this->platformIdentifier = $platformIdentifier;
 
         return $this;
     }

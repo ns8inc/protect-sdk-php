@@ -51,7 +51,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::__construct
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
      * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
-     * @covers NS8\ProtectSDK\Http\Client::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Http\Client::setSessionData
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
@@ -86,7 +85,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
      * @covers NS8\ProtectSDK\Http\Client::executeRequest
      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
-     * @covers NS8\ProtectSDK\Http\Client::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Http\Client::setSessionData
      * @covers NS8\ProtectSDK\Installer\Client::validateInstallDataArray
      * @covers NS8\ProtectSDK\Logging\Client::__construct
@@ -134,7 +132,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
      * @covers NS8\ProtectSDK\Http\Client::executeRequest
      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
-     * @covers NS8\ProtectSDK\Http\Client::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Http\Client::setSessionData
      * @covers NS8\ProtectSDK\Installer\Client::validateInstallDataArray
      * @covers NS8\ProtectSDK\Logging\Client::__construct
