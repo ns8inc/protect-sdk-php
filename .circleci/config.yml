@@ -1,0 +1,79 @@
+jobs:
+  deploy:
+    docker:
+      - image: php:cli
+    steps:
+      - run:
+          command: |
+            apt-get update
+            apt-get install -y git
+          name: Install Git
+      - checkout
+      - run:
+          command: |
+            git config user.email noreply@ns8.com
+            git config user.name 'CircleCI'
+          name:
+            Setup Git
+      - run:
+          command: |
+            echo "Using this SSH key for deployment:"
+            ssh-keygen -y -f ~/.ssh/id_rsa
+            version=$(git tag -l | sort -V | tail -n 1 | awk -F . '{$NF+=1; print $0}' OFS=".") # Find highest version tag
+            version="${version:-0.0.0}" # If the repo has no tags, default the initial version to 0.0.0
+            git tag $version
+            if ! git push origin $version; then
+              echo "Push failed. Please delete and re-add the above CircleCI deploy key to your repo with write access."
+              exit 1
+            fi
+          name: Bump Version
+  test:
+    docker:
+      - image: php:cli
+    steps:
+      - run:
+          command: |
+            apt-get update
+            apt-get install -y git unzip wget yarnpkg
+            ln -s /usr/bin/yarnpkg /usr/local/bin/yarn
+          name: Install Tools
+      - checkout
+      - run:
+          command: |
+            pecl install xdebug
+            docker-php-ext-enable xdebug
+          name: Install XDebug
+      - run:
+          command: |
+            cd /tmp
+            expected_signature="$(wget -q -O - https://composer.github.io/installer.sig)"
+            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+            actual_signature="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
+            if [ "$expected_signature" != "$actual_signature" ]; then
+              >&2 echo 'ERROR: Invalid installer signature'
+              exit 1
+            fi
+            php composer-setup.php --filename=composer --install-dir=/usr/local/bin --quiet
+          name: Install Composer
+      - run:
+          command: composer install --no-ansi
+          name: Install PHP SDK
+      - run:
+          command: composer lint
+          name: Lint
+      - run:
+          command: composer test-coverage
+          name: Test
+
+version: 2.1
+
+workflows:
+  test_and_deploy:
+    jobs:
+      - test
+      - deploy:
+          filters:
+            branches:
+              only: master
+          requires:
+            - test
