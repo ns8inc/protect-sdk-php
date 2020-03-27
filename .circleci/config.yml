@@ -17,13 +17,12 @@ jobs:
             Setup Git
       - run:
           command: |
-            echo "Using this SSH key for deployment:"
-            ssh-keygen -y -f ~/.ssh/id_rsa
             version=$(git tag -l | sort -V | tail -n 1 | awk -F . '{$NF+=1; print $0}' OFS=".") # Find highest version tag
             version="${version:-0.0.0}" # If the repo has no tags, default the initial version to 0.0.0
             git tag $version
             if ! git push origin $version; then
-              echo "Push failed. Please delete and re-add the above CircleCI deploy key to your repo with write access."
+              echo "Push failed. Please delete and re-add this CircleCI deploy key to your repo with write access:"
+              ssh-keygen -y -f ~/.ssh/id_rsa
               exit 1
             fi
           name: Bump Version
