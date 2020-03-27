@@ -62,7 +62,7 @@ jobs:
           name: Lint
       - run:
           command: composer test-coverage
-          name: Test
+          name: Run Tests
 
 version: 2.1
 
