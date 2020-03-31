@@ -99,9 +99,9 @@ class ClientTest extends TestCase
       * @covers ::getMessages
       * @covers ::getNs8HttpClient
       * @covers ::getQueueUrl
-      * @covers ::setNs8HttpClient
       * @covers ::parseResponseMessages
       * @covers ::processResultErrors
+      * @covers ::setNs8HttpClient
       * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
       * @covers NS8\ProtectSDK\Config\Manager::getValue
       * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
