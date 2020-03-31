@@ -8,8 +8,6 @@ information. The NS8 Protect service sends order update
 data to a First In, First Out (FIFO) queue specifically
 associated with your account.
 
-## Timing and pausing while iterating through the queue
-
 ## Example of a Queue Client Implementation
 
 The following serve as examples of implementation of the
@@ -31,11 +29,13 @@ while ($messageArray) {
 function processOrderUpdates(array $messageArray) {
   foreach ($messageArray as $message) {
     $order = OrderClient::getOrder(
-      $message['attributes']['order_id']
+      $message['orderId']
     );
     $order->setStatus(
       $message['attributes']['status']
     )->save();
+
+    QueueClient::deleteMessage($message['receipt_handle']);
   }
 }
 ```
