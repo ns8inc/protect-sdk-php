@@ -48,8 +48,8 @@ class Client extends BaseClient
     /**
      * URLs to manage SQS information through Protect
      */
-    public const GET_QUEUE_URL            = '/platform/testGetQueue';
-    public const DELETE_QUEUE_MESSAGE_URL = '/platform/testDeleteQueue';
+    public const GET_QUEUE_URL            = '/polling/GetQueueUrl';
+    public const DELETE_QUEUE_MESSAGE_URL = '/polling/DeleteQueueMessage';
 
     /**
      * Error keys used when receiving errors from SQS
