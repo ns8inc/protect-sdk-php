@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Tests\Queue;
 
+use NS8\ProtectSDK\Http\Client as HttpClient;
 use NS8\ProtectSDK\Queue\Client as QueueClient;
 use NS8\ProtectSDK\Queue\Exceptions\Decoding as DecodingException;
 use NS8\ProtectSDK\Queue\Exceptions\Response as ResponseException;
@@ -192,7 +193,7 @@ class ClientTest extends TestCase
      */
     public function testDeleteMessage() : void
     {
-        // Stub test until logic for delete requests is in place
+        QueueClient::setNs8HttpClient($this->buildNS8DeleteHttpClient());
         $this->assertEquals(true, QueueClient::deleteMessage('123'));
     }
 
@@ -304,5 +305,26 @@ class ClientTest extends TestCase
         $adapter->setResponse($response);
 
         return $testHttpClient;
+    }
+
+    /**
+     * Returns a test NS8 HTTP Client to use when testing delete requests
+     *
+     * @return HttpClient The HTTP Client to use as a stub object
+     */
+    protected function buildNS8DeleteHttpClient() : HttpClient
+    {
+        $adapter        = new ZendTestAdapter();
+        $testHttpClient = new ZendClient('', ['adapter' => $adapter]);
+
+        $response =  'HTTP/1.1 200 OK' . "\n" .
+        'Content-type: application/json' . "\n\n" .
+        '{' .
+        '   "success": ' . true .
+        "}\n";
+
+        $adapter->setResponse($response);
+
+        return new HttpClient(null, null, true, $testHttpClient);
     }
 }
