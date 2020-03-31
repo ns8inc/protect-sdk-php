@@ -15,7 +15,7 @@
       "enabled": true,
       "log_level": "INFO"
     },
-    "record_all_http_calls": true
+    "record_all_http_calls": false
   },
   "production": {
     "authorization": {
