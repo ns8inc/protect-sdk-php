@@ -114,7 +114,6 @@ class Api extends AbstractProcessingHandler
             $data = [
                 'level' => $record['level_name'],
                 'errString' =>  $record['message'],
-                'stackTrace' => (new Exception())->getTraceAsString(),
                 'category' => $this->configManager->getValue('logging.additional_info.category')
                 . '_'
                 . $this->configManager->getValue('logging.additional_info.integration_type'),
@@ -126,6 +125,10 @@ class Api extends AbstractProcessingHandler
                     'phpOS' => PHP_OS,
                 ],
             ];
+
+            if ($record['level_name'] === 'ERROR') {
+                $data['stackTrace'] = (new Exception())->getTraceAsString();
+            }
 
             self::$selfCall = true;
             $this->client->post(self::LOGGING_PATH, $data);

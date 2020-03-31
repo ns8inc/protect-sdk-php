@@ -196,6 +196,7 @@ class ClientTest extends TestCase
     {
         self::$configManager = new ConfigManager();
         self::$configManager->initConfiguration('testing');
+        self::$configManager->setValue('logging.record_all_http_calls', true);
         self::$configManager->setValue('logging.api.enabled', false);
         self::$configManager->setValue('logging.file.enabled', true);
         self::$configManager->setValue('testing.authorization.auth_user', 'test');
