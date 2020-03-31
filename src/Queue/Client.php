@@ -158,11 +158,11 @@ class Client extends BaseClient
     /**
      * Sets an explicit NS8 HTTP client for making API requests
      *
-     * @param NS8HttpClient $httpClient The client we are passing in to make requests
+     * @param NS8HttpClient $ns8HttpClient The client we are passing in to make requests
      *
      * @return void
      */
-    public static function setNs8HttpClient(NS8HttpClient $httpClient) : void
+    public static function setNs8HttpClient(NS8HttpClient $ns8HttpClient) : void
     {
         self::$ns8HttpClient = $ns8HttpClient;
     }
