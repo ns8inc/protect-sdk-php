@@ -8,6 +8,8 @@ information. The NS8 Protect service sends order update
 data to a First In, First Out (FIFO) queue specifically
 associated with your account.
 
+## Timing and pausing while iterating through the queue
+
 ## Example of a Queue Client Implementation
 
 The following serve as examples of implementation of the

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Queue;
 
+use NS8\ProtectSDK\Http\Client as NS8HttpClient;
 use NS8\ProtectSDK\Queue\Exceptions\Decoding as DecodingException;
 use NS8\ProtectSDK\Queue\Exceptions\Response as ResponseException;
 use Zend\Http\Client as ZendClient;
 use function array_key_exists;
+use function http_build_query;
 use function json_decode;
 use function json_last_error;
 use function sprintf;
@@ -31,10 +33,23 @@ class Client extends BaseClient
      */
     protected static $httpClient;
 
+     /**
+      * Attribute to track HTTTP Client used for sending requests
+      *
+      * @var NS8HttpClient $ns8HttpClient
+      */
+    protected static $ns8HttpClient;
+
     /**
      * SQS Request Constants
      */
     public const DEFAULT_SQS_REQUEST_TYPE = 'GET';
+
+    /**
+     * URLs to manage SQS information through Protect
+     */
+    public const GET_QUEUE_URL            = '/platform/testGetQueue';
+    public const DELETE_QUEUE_MESSAGE_URL = '/platform/testDeleteQueue';
 
     /**
      * Error keys used when receiving errors from SQS
@@ -60,10 +75,7 @@ class Client extends BaseClient
     /**
      * Static headers that we are required to send in SQS requests
      */
-    public const REQUIRED_HEADERS = [
-        'Accept'    => 'application/json',
-        'Host'      => 'sqs.us-west-2.amazonaws.com',
-    ];
+    public const REQUIRED_HEADERS = ['Accept' => 'application/json'];
 
     /**
      * Initializes the class to ensure attributes are set up correctly.
@@ -90,8 +102,8 @@ class Client extends BaseClient
             return self::$url;
         }
 
-        //TODO: This MUST be updated once queue URL lambda is in-place
-        self::$url = '';
+        $urlData   = self::getNs8HttpClient()->post(self::GET_QUEUE_URL);
+        self::$url = $urlData->url;
 
         return self::$url;
     }
@@ -125,8 +137,34 @@ class Client extends BaseClient
      */
     public static function deleteMessage(string $receiptHandle) : bool
     {
-        // Stub until the API endpoint is implemented to delete messages
-        return true;
+        $deleteUrl    = self::DELETE_QUEUE_MESSAGE_URL . '?' . http_build_query(['receiptHandle' => $receiptHandle]);
+        $deleteResult = self::getNs8HttpClient()->post($deleteUrl);
+
+        return $deleteResult->success;
+    }
+
+    /**
+     * Returns the NS8 HTTP client to be used for making API requests
+     *
+     * @return NS8HttpClient the client to be used
+     */
+    public static function getNs8HttpClient() : NS8HttpClient
+    {
+        self::$ns8HttpClient = self::$ns8HttpClient ?? new NS8HttpClient();
+
+        return self::$ns8HttpClient;
+    }
+
+    /**
+     * Sets an explicit NS8 HTTP client for making API requests
+     *
+     * @param NS8HttpClient $httpClient The client we are passing in to make requests
+     *
+     * @return void
+     */
+    public static function setNs8HttpClient(NS8HttpClient $httpClient) : void
+    {
+        self::$ns8HttpClient = $ns8HttpClient;
     }
 
     /**
