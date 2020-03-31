@@ -36,7 +36,7 @@ class Client extends BaseClient
      /**
       * Attribute to track HTTTP Client used for sending requests
       *
-      * @var NS8HttpClient $ns8HttpClient
+      * @var NS8HttpClient
       */
     protected static $ns8HttpClient;
 
