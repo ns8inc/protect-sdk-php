@@ -96,10 +96,41 @@ class ClientTest extends TestCase
       * @return void
       *
       * @covers ::initialize
-      * @covers ::getQueueUrl
       * @covers ::getMessages
+      * @covers ::getNs8HttpClient
+      * @covers ::getQueueUrl
+      * @covers ::setNs8HttpClient
       * @covers ::parseResponseMessages
       * @covers ::processResultErrors
+      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+      * @covers NS8\ProtectSDK\Config\Manager::getValue
+      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+      * @covers NS8\ProtectSDK\Http\Client::__construct
+      * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
+      * @covers NS8\ProtectSDK\Http\Client::executeRequest
+      * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
+      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+      * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+      * @covers NS8\ProtectSDK\Http\Client::getSessionData
+      * @covers NS8\ProtectSDK\Http\Client::post
+      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+      * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+      * @covers NS8\ProtectSDK\Http\Client::setSessionData
+      * @covers NS8\ProtectSDK\Logging\Client::__construct
+      * @covers NS8\ProtectSDK\Logging\Client::addHandler
+      * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+      * @covers NS8\ProtectSDK\Logging\Client::info
+      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+      * @covers NS8\ProtectSDK\Logging\Handlers\Api::__construct
+      * @covers NS8\ProtectSDK\Logging\Handlers\Api::getHttpClient
+      * @covers NS8\ProtectSDK\Logging\Handlers\Api::initialize
+      * @covers NS8\ProtectSDK\Logging\Handlers\Api::write
+      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+      * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
+      * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
       */
     public function testSuccessResponse() : void
     {
@@ -130,10 +161,41 @@ class ClientTest extends TestCase
      * @return void
      *
      * @covers ::initialize
-     * @covers ::getQueueUrl
      * @covers ::getMessages
+     * @covers ::getNs8HttpClient
+     * @covers ::getQueueUrl
      * @covers ::parseResponseMessages
      * @covers ::processResultErrors
+     * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getSessionData
+     * @covers NS8\ProtectSDK\Http\Client::post
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::__construct
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::getHttpClient
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::initialize
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::write
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      */
     public function testEmptymessageBodyResponse() : void
     {
@@ -150,10 +212,41 @@ class ClientTest extends TestCase
      * @return void
      *
      * @covers ::initialize
-     * @covers ::getQueueUrl
      * @covers ::getMessages
+     * @covers ::getNs8HttpClient
+     * @covers ::getQueueUrl
      * @covers ::parseResponseMessages
      * @covers ::processResultErrors
+     * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getSessionData
+     * @covers NS8\ProtectSDK\Http\Client::post
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::__construct
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::getHttpClient
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::initialize
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::write
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      */
     public function testEmptySuccessResponse() : void
     {
@@ -170,10 +263,41 @@ class ClientTest extends TestCase
      * @return void
      *
      * @covers ::initialize
-     * @covers ::getQueueUrl
      * @covers ::getMessages
+     * @covers ::getNs8HttpClient
+     * @covers ::getQueueUrl
      * @covers ::parseResponseMessages
      * @covers ::processResultErrors
+     * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getSessionData
+     * @covers NS8\ProtectSDK\Http\Client::post
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::__construct
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::getHttpClient
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::initialize
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::write
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      */
     public function testResponseError() : void
     {
@@ -190,11 +314,43 @@ class ClientTest extends TestCase
      * @return void
      *
      * @covers ::deleteMessage
+     * @covers ::getNs8HttpClient
+     * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getSessionData
+     * @covers NS8\ProtectSDK\Http\Client::post
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::__construct
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::getHttpClient
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::initialize
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::write
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      */
     public function testDeleteMessage() : void
     {
-        QueueClient::setNs8HttpClient($this->buildNS8DeleteHttpClient());
-        $this->assertEquals(true, QueueClient::deleteMessage('123'));
+        $isSuccessful = true;
+        QueueClient::setNs8HttpClient($this->buildNS8HttpClient(['success' => $isSuccessful]));
+        $this->assertEquals($isSuccessful, QueueClient::deleteMessage('123'));
     }
 
     /**
@@ -204,13 +360,27 @@ class ClientTest extends TestCase
      *
      * @covers ::initialize
      * @covers ::getQueueUrl
+     * @covers ::getNs8HttpClient
+     * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::__construct
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
      */
     public function testGetQueueUrl() : void
     {
-        $url = QueueClient::getQueueUrl();
-        $this->assertEmpty($url);
-
-        QueueClient::initialize(null, 'https://google.com');
         $url = QueueClient::getQueueUrl();
         $this->assertNotEmpty($url);
 
@@ -227,8 +397,39 @@ class ClientTest extends TestCase
      * @covers ::initialize
      * @covers ::getQueueUrl
      * @covers ::getMessages
+     * @covers ::getNs8HttpClient
      * @covers ::parseResponseMessages
      * @covers ::processResultErrors
+     * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getSessionData
+     * @covers NS8\ProtectSDK\Http\Client::post
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::__construct
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::getHttpClient
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::initialize
+     * @covers NS8\ProtectSDK\Logging\Handlers\Api::write
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      */
     public function testInvalidJsonResponseError() : void
     {
@@ -237,6 +438,16 @@ class ClientTest extends TestCase
         $this->expectException(DecodingException::class);
 
         $messageSet = QueueClient::getMessages();
+    }
+
+    /**
+     * Sets up Queue Client before a test is ran
+     *
+     * @return void
+     */
+    public function setUp() : void
+    {
+        QueueClient::setNs8HttpClient($this->buildNS8HttpClient(['url' => 'https://example.com']));
     }
 
     /**
@@ -308,20 +519,21 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Returns a test NS8 HTTP Client to use when testing delete requests
+     * Returns a test NS8 HTTP Client to use when testing requests
+     *
+     * @param mixed[] $jsonData JSON data to include in the response
      *
      * @return HttpClient The HTTP Client to use as a stub object
      */
-    protected function buildNS8DeleteHttpClient() : HttpClient
+    protected function buildNS8HttpClient(array $jsonData) : HttpClient
     {
         $adapter        = new ZendTestAdapter();
         $testHttpClient = new ZendClient('', ['adapter' => $adapter]);
 
         $response =  'HTTP/1.1 200 OK' . "\n" .
         'Content-type: application/json' . "\n\n" .
-        '{' .
-        '   "success": ' . true .
-        "}\n";
+        json_encode($jsonData) .
+        "\n";
 
         $adapter->setResponse($response);
 
