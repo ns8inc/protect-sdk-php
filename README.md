@@ -1,9 +1,10 @@
 # Description
 
-[![CI](https://concourse.ns8-infrastructure.com/api/v1/teams/main/pipelines/protect-sdk-php/jobs/test/badge)](https://concourse.ns8-infrastructure.com/teams/main/pipelines/protect-sdk-php/jobs/test)
-[![CI](https://concourse.ns8-infrastructure.com/api/v1/teams/main/pipelines/protect-sdk-php/jobs/test/badge?title=tests)](https://concourse.ns8-infrastructure.com/teams/main/pipelines/protect-sdk-php/jobs/test)
-[![Latest Stable Version](https://poser.pugx.org/ns8/protect-sdk-php/version)](https://packagist.org/packages/ns8/protect-sdk-php)
-[![Latest Stable Version](https://poser.pugx.org/ns8/protect-sdk-php/license)](https://packagist.org/packages/ns8/protect-sdk-php)
+[![CircleCI](https://circleci.com/gh/ns8inc/protect-sdk-php.svg?style=svg&circle-token=763e49eaad4690e1be48369b54c62d99cf049e4f)](https://app.circleci.com/pipelines/github/ns8inc/protect-sdk-php)
+[![Latest Stable Version](https://poser.pugx.org/ns8/protect-sdk/v/stable)](https://packagist.org/packages/ns8/protect-sdk)
+[![Latest Stable Version](https://poser.pugx.org/ns8/protect-sdk-php/license)](https://packagist.org/packages/ns8/protect-sdk)
+[![Total Downloads](https://poser.pugx.org/ns8/protect-sdk/downloads)](https://packagist.org/packages/ns8/protect-sdk)
+[![Monthly Downloads](https://poser.pugx.org/ns8/protect-sdk/d/monthly)](https://packagist.org/packages/ns8/protect-sdk)
 
 This is the PHP SDK for NS8 Protect.
 
