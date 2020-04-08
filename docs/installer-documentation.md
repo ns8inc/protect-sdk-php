@@ -1,5 +1,10 @@
 # Installer Documentation
 
+## Table of Contents
+
+- [Purpose of the Queue Client](#purpose-of-the-queue-client)
+- [Example of a Queue Client Implementation](#example-of-a-queue-client-implementation)
+
 ## Purpose of the Queue Client
 
 The purpose of the Installer Client is to provide easy access with initiating
@@ -15,9 +20,7 @@ Installl Client to demonstrate intended uses:
 ```php
 <?php
 declare(strict_types=1);
-
 use NS8\ProtectSDK\Install\Client as InstallClient;
-
 $platform = 'magento'; // A valid platform type must be provided as a string
 $installData = [
             'email' => '123@test.com', // email is a mandatory attribute
@@ -26,7 +29,6 @@ $installData = [
             'lastName' => 'User', // lastName is an optional attribute
             'phone' => '(111) 222-3333' // phone is an optional attribute
 ;
-
 $installResult = InstallClient::install($platform, $installData);
 $accessToken = $installResult['accessToken'];
 Platform::save('ns8/access_token', $accessToken);

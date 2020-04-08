@@ -11,3 +11,5 @@ Code coverage must be 100%. To verify the coverage:
 ```bash
 composer test-coverage
 ```
+
+## Table of Contents

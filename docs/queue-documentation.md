@@ -1,5 +1,10 @@
 # Queue Documentation
 
+## Table of Contents
+
+- [Purpose of the Queue Client](#purpose-of-the-queue-client)
+- [Example of a Queue Client Implementation](#example-of-a-queue-client-implementation)
+
 ## Purpose of the Queue Client
 
 The purpose of the Queue Client is to allow easy access to
@@ -16,16 +21,13 @@ Action Client to demonstrate intended uses:
 ```php
 <?php
 declare(strict_types=1);
-
 use NS8\ProtectSDK\Queue\Client as QueueClient;
 use MyPlatform\OrderService\Client as OrderClient;
-
 QueueClient::initialize();
 $messageArray = QueueClient::getMessages();
 while ($messageArray) {
   processOrderUpdates($messageArray);
 }
-
 function processOrderUpdates(array $messageArray) {
   foreach ($messageArray as $message) {
     $order = OrderClient::getOrder(
@@ -34,7 +36,6 @@ function processOrderUpdates(array $messageArray) {
     $order->setStatus(
       $message['attributes']['status']
     )->save();
-
     QueueClient::deleteMessage($message['receipt_handle']);
   }
 }

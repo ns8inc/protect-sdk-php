@@ -1,5 +1,10 @@
 # Analytics Documentation
 
+## Table of Contents
+
+- [Purpose of the Analytics Client](#purpose-of-the-analytics-client)
+- [Example Analytics Client Implementation](#example-analytics-client-implementation)
+
 ## Purpose of the Analytics Client
 
 The purpose of the Analytics Client is to offer easy-to-use methods to render
@@ -15,12 +20,9 @@ demonstrate intended uses:
 ```php
 <?php
 declare(strict_types=1);
-
 use NS8\ProtectSDK\Analytics\Client as AnalyticsClient;
-
 // Init SDK configuration so SDK is ready for use.
 $this->config->initSdkConfiguration();
 $script = AnalyticsClient::getTrueStatsScript();
-
 echo is_string($script) ? sprintf('<script>%s</script>', $script) : '';
 ```
