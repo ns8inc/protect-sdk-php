@@ -10,7 +10,6 @@ This is the PHP SDK for NS8 Protect.
 ## Table of Contents
 
 - [Getting Started](#getting-started)
-- [`package.json` scripts](#packagejson-scripts)
 - [License](#license)
 
 ## Getting Started
@@ -34,8 +33,6 @@ To get started, take a look at the documentation listed below:
 - [Security Documentation](docs/security-documentation.md)
 - [Templates Documentation](docs/templates-documentation.md)
 - [Testing](docs/testing.md)
-
-## `package.json` scripts
 
 ## License
 
