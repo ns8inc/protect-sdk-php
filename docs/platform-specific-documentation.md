@@ -2,10 +2,10 @@
 
 ## Table of Contents
 
-- [What is platform specific in the SDK & why](#what-is-platform-specific-in-the-sdk--why)
+- [What is platform specific in the SDK and why](#what-is-platform-specific-in-the-sdk-and-why)
   - [Magento Specific Methods](#magento-specific-methods)
 
-## What is platform specific in the SDK & why
+## What is platform specific in the SDK and why
 
 The SDK is intended to be as flexible and dynamic as possible to provide easy
 usage within any PHP environment. However, aspects of the SDK have been added to
