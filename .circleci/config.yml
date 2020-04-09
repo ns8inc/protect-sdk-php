@@ -63,6 +63,10 @@ jobs:
       - run:
           command: composer test-coverage
           name: Run Tests
+      - store_test_results:
+          path: coverage
+      - store_artifacts:
+          path: coverage/html
 
 version: 2.1
 

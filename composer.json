@@ -30,6 +30,6 @@
         "lint": "phpcs --extensions=php src/ tests/ && yarn global add markdownlint-cli && markdownlint . --ignore vendor/ && mdlinklint . --exclude=vendor",
         "lint-fix": "phpcbf --extensions=php src/ tests/ && yarn global add markdownlint-cli && markdownlint . --fix --ignore vendor/",
         "test": "phpunit tests/",
-        "test-coverage": "phpunit --coverage-clover /tmp/coverage.xml --coverage-text tests/ && coverage-check /tmp/coverage.xml 100"
+        "test-coverage": "phpunit --coverage-clover coverage/clover.xml --coverage-html coverage/html --coverage-text --log-junit coverage/junit.xml tests/ && coverage-check coverage/clover.xml 100"
     }
 }
