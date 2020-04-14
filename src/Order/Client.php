@@ -21,7 +21,7 @@ class Client extends BaseClient
      */
     public const APPROVED_STATE        = 'APPROVED';
     public const MERCHANT_REVIEW_STATE = 'MERCHANT_REVIEW';
-    public const CANCELED_STATE        = 'CANCELED';
+    public const CANCELLED_STATE       = 'CANCELLED';
 
     /**
      * Get the current merchant.
