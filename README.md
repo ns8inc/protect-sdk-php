@@ -1,10 +1,13 @@
-# Description
+# NS8 Protect SDK
 
 [![CircleCI](https://circleci.com/gh/ns8inc/protect-sdk-php.svg?style=svg)](https://app.circleci.com/pipelines/github/ns8inc/protect-sdk-php)
 [![Latest Stable Version](https://poser.pugx.org/ns8/protect-sdk/v/stable)](https://packagist.org/packages/ns8/protect-sdk)
 [![License](https://poser.pugx.org/ns8/protect-sdk/license)](https://packagist.org/packages/ns8/protect-sdk)
 [![Total Downloads](https://poser.pugx.org/ns8/protect-sdk/downloads)](https://packagist.org/packages/ns8/protect-sdk)
 [![Monthly Downloads](https://poser.pugx.org/ns8/protect-sdk/d/monthly)](https://packagist.org/packages/ns8/protect-sdk)
+
+## Description
+
 This is the PHP SDK for NS8 Protect.
 
 ## Table of Contents
