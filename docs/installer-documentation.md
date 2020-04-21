@@ -2,15 +2,22 @@
 
 ## Table of Contents
 
-- [Purpose of the Queue Client](#purpose-of-the-queue-client)
-- [Example of a Queue Client Implementation](#example-of-a-queue-client-implementation)
+- [Installer Documentation](#installer-documentation)
+  - [Table of Contents](#table-of-contents)
+  - [Purpose of the Installer Client](#purpose-of-the-installer-client)
+  - [Example of a Queue Client Implementation](#example-of-a-queue-client-implementation)
 
-## Purpose of the Queue Client
+## Purpose of the Installer Client
 
 The purpose of the Installer Client is to provide easy access with initiating
 contact with the NS8 Protect API through allowing registration via the
 `install` method which returns an array containing an access token needed for
 making requests.
+
+If you are reinstalling access to NS8 Protect **and** already have an
+access token, initialize the configuration with this token present.
+This will allow the SDK to submit a reinstall request rather than trying
+to create a new merchant.
 
 ## Example of a Queue Client Implementation
 
