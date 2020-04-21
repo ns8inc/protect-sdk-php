@@ -6,6 +6,8 @@ namespace NS8\ProtectSDK\Installer;
 
 use NS8\ProtectSDK\Http\Client as HttpClient;
 use NS8\ProtectSDK\Installer\Exceptions\MissingData as MissingDataException;
+use NS8\ProtectSDK\Installer\Exceptions\RequestFailed as RequestFailedException;
+use NS8\ProtectSDK\Security\Client as SecurityClient;
 use function array_key_exists;
 use function sprintf;
 
@@ -15,9 +17,11 @@ use function sprintf;
 class Client extends BaseClient
 {
     /**
-     * Platform Installation endpoint
+     * Platform Installation endpoints
      */
-    public const INSTALL_ENDPOINT = '/platform/install/%s';
+    public const INSTALL_ENDPOINT   = '/platform/install/%s';
+    public const REINSTALL_ENDPOINT = '/platform/reinstall/%s';
+
     /**
      * Array keys required for NS8 Protect installation
      */
@@ -62,14 +66,26 @@ class Client extends BaseClient
      * @param string  $platformName The platform we are utilizing (e.g. Magento)
      * @param mixed[] $installData  The data related to the merchant install
      *
-     * @return mixed[] The response containing accessToken information
+     * @return mixed[] The response or array containing accessToken information
      */
     public static function install(string $platformName, array $installData) : array
     {
         self::validateInstallDataArray($installData);
-        $installEndpoint = sprintf(self::INSTALL_ENDPOINT, $platformName);
 
-        return (array) self::getHttpClient()->executeJsonRequest($installEndpoint, $installData);
+        $accessToken = SecurityClient::getNs8AccessToken();
+        if (empty($accessToken)) {
+            $installEndpoint = sprintf(self::INSTALL_ENDPOINT, $platformName);
+
+            return (array) self::getHttpClient()->executeJsonRequest($installEndpoint, $installData);
+        }
+
+        $reinstallEndpoint = sprintf(self::REINSTALL_ENDPOINT, $platformName);
+        $response          = (array) self::getHttpClient()->post($reinstallEndpoint, $installData);
+        if (! isset($response['success']) || ! $response['success']) {
+            throw new RequestFailedException('Reactivation request was not successful');
+        }
+
+        return ['accessToken' => $accessToken];
     }
 
     /**

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Tests\Installer;
 
+use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Http\Client as HttpClient;
 use NS8\ProtectSDK\Installer\Client as InstallerClient;
 use NS8\ProtectSDK\Installer\Exceptions\MissingData as MissingDataException;
+use NS8\ProtectSDK\Installer\Exceptions\RequestFailed as RequestFailedException;
 use PHPUnit\Framework\TestCase;
 use Zend\Http\Client as ZendClient;
 use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
@@ -117,6 +119,131 @@ class ClientTest extends TestCase
     }
 
     /**
+     * Test reinstalling.
+     *
+     * @return void
+     *
+     * @covers ::getHttpClient
+     * @covers ::setHttpClient
+     * @covers ::install
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getSessionData
+     * @covers NS8\ProtectSDK\Http\Client::post
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Installer\Client::validateInstallDataArray
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
+     */
+    public function testReinstall() : void
+    {
+        $configManager = new ConfigManager();
+        $configManager->setEnvironment('testing');
+        $configManager->setValue('testing.authorization.auth_user', 'test');
+        $configManager->setValue('testing.authorization.access_token', '123456');
+        $testPlatform = 'magento';
+        $responseData = ['success' => true];
+
+        $httpClientMock = $this->buildTestHttpClient($responseData);
+        $this->installerClient->setHttpClient($httpClientMock);
+        $installData = [
+            'email' => '123@test.com',
+            'storeUrl' => 'https://example.com',
+        ];
+
+        $installResponse = $this->installerClient->install('magento', $installData);
+        $this->assertEquals(
+            $configManager->getValue(
+                'testing.authorization.access_token'
+            ),
+            $installResponse['accessToken']
+        );
+    }
+
+    /**
+     * Test reinstalling without a success response
+     *
+     * @return void
+     *
+     * @covers ::getHttpClient
+     * @covers ::setHttpClient
+     * @covers ::install
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getSessionData
+     * @covers NS8\ProtectSDK\Http\Client::post
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Installer\Client::validateInstallDataArray
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
+     */
+    public function testReinstallUnsuccessful() : void
+    {
+        $configManager = new ConfigManager();
+        $configManager->setEnvironment('testing');
+        $configManager->setValue('testing.authorization.auth_user', 'test');
+        $configManager->setValue('testing.authorization.access_token', '123456');
+        $testPlatform = 'magento';
+        $responseData = ['success' => false];
+
+        $httpClientMock = $this->buildTestHttpClient($responseData);
+        $this->installerClient->setHttpClient($httpClientMock);
+        $installData = [
+            'email' => '123@test.com',
+            'storeUrl' => 'https://example.com',
+        ];
+
+        $this->expectException(RequestFailedException::class);
+        $installResponse = $this->installerClient->install('magento', $installData);
+    }
+
+    /**
      * Test installing while missing required installation attributes.
      *
      * @return void
@@ -132,6 +259,8 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
      * @covers NS8\ProtectSDK\Http\Client::executeRequest
      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
      * @covers NS8\ProtectSDK\Http\Client::setSessionData
      * @covers NS8\ProtectSDK\Installer\Client::validateInstallDataArray
      * @covers NS8\ProtectSDK\Logging\Client::__construct
