@@ -20,8 +20,9 @@ class Client extends BaseClient
      * Order status values for NS8 Protect Orders
      */
     public const APPROVED_STATE        = 'APPROVED';
-    public const MERCHANT_REVIEW_STATE = 'MERCHANT_REVIEW';
     public const CANCELLED_STATE       = 'CANCELLED';
+    public const HOLDED_STATE          = 'HOLDED';
+    public const MERCHANT_REVIEW_STATE = 'MERCHANT_REVIEW';
 
     /**
      * Get the current merchant.
