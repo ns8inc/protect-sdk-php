@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Installer;
 
+use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Http\Client as HttpClient;
 use NS8\ProtectSDK\Installer\Exceptions\MissingData as MissingDataException;
 use NS8\ProtectSDK\Installer\Exceptions\RequestFailed as RequestFailedException;
 use NS8\ProtectSDK\Security\Client as SecurityClient;
 use function array_key_exists;
+use function array_merge;
 use function sprintf;
 
 /**
@@ -70,6 +72,7 @@ class Client extends BaseClient
      */
     public static function install(string $platformName, array $installData) : array
     {
+        $installData = array_merge($installData, ['sdkVersion' => ConfigManager::getValue('version')]);
         self::validateInstallDataArray($installData);
 
         $accessToken = SecurityClient::getNs8AccessToken();
