@@ -73,6 +73,14 @@ class Client implements IProtectClient
     protected $accessToken;
 
     /**
+     * Attribute to identify merchant platform
+     *
+     * @var string
+     */
+    protected $platformIdentifier;
+
+
+    /**
      * Attribute to track session data to be sent in requests
      *
      * @var mixed[]
@@ -124,6 +132,10 @@ class Client implements IProtectClient
         $authUsername = $authUsername ?? SecurityClient::getAuthUser();
         if (! empty($authUsername)) {
             $this->setAuthUsername($authUsername);
+        }
+
+        if ($this->configManager::doesValueExist('platform.identifier')) {
+            $this->setPlatformIdentifier($this->configManager::getValue('platform.identifier'));
         }
 
         if (! $setSessionData) {
@@ -221,6 +233,11 @@ class Client implements IProtectClient
             throw new HttpException(
                 sprintf('An auth username is required for NS8 %s requests.', self::POST_REQUEST_TYPE)
             );
+        }
+
+        $platformIdentifier = $this->getPlatformIdentifier();
+        if (! empty($platformIdentifier)) {
+            $data['platform_uuid'] = $platformIdentifier;
         }
 
         $sessionData      = $data['session'] ?? [];
@@ -442,6 +459,30 @@ class Client implements IProtectClient
     public function setAuthUsername(string $authUsername) : IProtectClient
     {
         $this->authUsername = $authUsername;
+
+        return $this;
+    }
+
+    /**
+     * Returns session data used in HTTP requests to NS8 services
+     *
+     * @return mixed[]|null
+     */
+    public function getPlatformIdentifier() : ?string
+    {
+        return $this->platformIdentifier;
+    }
+
+    /**
+     * Set Platform identifier used in post requests
+     *
+     * @param string $platformIdentifier Platform identifier to use when sending requests
+     *
+     * @return IProtectClient
+     */
+    public function setPlatformIdentifier(string $platformIdentifier) : IProtectClient
+    {
+        $this->platformIdentifier = $platformIdentifier;
 
         return $this;
     }

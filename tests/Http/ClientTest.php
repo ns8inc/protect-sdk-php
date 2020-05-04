@@ -57,6 +57,7 @@ class ClientTest extends TestCase
      * @covers ::setSessionData
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::setValue
      * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
@@ -99,6 +100,7 @@ class ClientTest extends TestCase
      * @covers ::executeRequest
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -149,6 +151,7 @@ class ClientTest extends TestCase
      * @covers ::executeRequest
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -203,6 +206,7 @@ class ClientTest extends TestCase
      * @covers ::executeWithAuth
      * @covers ::getAuthUsername
      * @covers ::getSessionData
+     * @covers ::setPlatformIdentifier
      * @covers ::post
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
@@ -259,6 +263,7 @@ class ClientTest extends TestCase
      * @covers ::getAuthUsername
      * @covers ::getSessionData
      * @covers ::post
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -308,6 +313,7 @@ class ClientTest extends TestCase
      * @covers ::__construct
      * @covers ::getAccessToken
      * @covers ::getAuthUsername
+     * @covers ::getPlatformIdentifier
      * @covers ::getSessionData
      * @covers ::executeWithAuth
      * @covers ::executeJsonRequest
@@ -315,6 +321,7 @@ class ClientTest extends TestCase
      * @covers ::post
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
      * @covers ::setSessionData
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
@@ -369,6 +376,8 @@ class ClientTest extends TestCase
      * @covers ::executeRequest
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
+     * @covers ::getPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -423,6 +432,7 @@ class ClientTest extends TestCase
      * @covers ::executeRequest
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -470,6 +480,7 @@ class ClientTest extends TestCase
      * @covers ::setAuthUsername
      * @covers ::getAuthUsername
      * @covers ::setAccessToken
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -509,6 +520,7 @@ class ClientTest extends TestCase
      * @covers ::setAuthUsername
      * @covers ::getAuthUsername
      * @covers ::setAccessToken
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -548,6 +560,7 @@ class ClientTest extends TestCase
      * @covers ::setAccessToken
      * @covers ::getAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -587,6 +600,7 @@ class ClientTest extends TestCase
      * @covers ::setAccessToken
      * @covers ::getAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -627,6 +641,7 @@ class ClientTest extends TestCase
      * @covers ::getSessionData
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -668,6 +683,7 @@ class ClientTest extends TestCase
      * @covers ::getSessionData
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -714,6 +730,8 @@ class ClientTest extends TestCase
      * @covers ::executeRequest
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
+     * @covers ::getPlatformIdentifier
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -768,6 +786,8 @@ class ClientTest extends TestCase
      * @covers ::executeRequest
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
+     * @covers ::getPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -828,6 +848,7 @@ class ClientTest extends TestCase
      * @covers ::executeRequest
      * @covers ::setAccessToken
      * @covers ::setAuthUsername
+     * @covers ::setPlatformIdentifier
      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
@@ -871,6 +892,7 @@ class ClientTest extends TestCase
         self::$configManager = new ConfigManager();
         self::$configManager->resetConfig();
         self::$configManager->initConfiguration('testing');
+        self::$configManager->setValue('platform.identifier', '123');
         self::$configManager->setValue('logging.api.enabled', false);
         self::$configManager->setValue('logging.file.enabled', true);
     }
