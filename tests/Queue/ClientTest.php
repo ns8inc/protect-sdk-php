@@ -102,6 +102,7 @@ class ClientTest extends TestCase
       * @covers ::parseResponseMessages
       * @covers ::processResultErrors
       * @covers ::setNs8HttpClient
+      * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
       * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
       * @covers NS8\ProtectSDK\Config\Manager::getValue
       * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
@@ -111,6 +112,7 @@ class ClientTest extends TestCase
       * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
       * @covers NS8\ProtectSDK\Http\Client::getAccessToken
       * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+      * @covers NS8\ProtectSDK\Http\Client::getPlatformIdentifier
       * @covers NS8\ProtectSDK\Http\Client::getSessionData
       * @covers NS8\ProtectSDK\Http\Client::post
       * @covers NS8\ProtectSDK\Http\Client::setAccessToken
@@ -167,6 +169,7 @@ class ClientTest extends TestCase
      * @covers ::parseResponseMessages
      * @covers ::processResultErrors
      * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
@@ -176,6 +179,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
      * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getPlatformIdentifier
      * @covers NS8\ProtectSDK\Http\Client::getSessionData
      * @covers NS8\ProtectSDK\Http\Client::post
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
@@ -197,7 +201,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
      * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
      */
-    public function testEmptymessageBodyResponse() : void
+    public function testEmptyMessageBodyResponse() : void
     {
         $httpClient = $this->buildTestSuccessHttpClient(self::TEST_EMPTY_MESSAGE_BODY);
         QueueClient::initialize($httpClient);
@@ -218,6 +222,7 @@ class ClientTest extends TestCase
      * @covers ::parseResponseMessages
      * @covers ::processResultErrors
      * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
@@ -227,6 +232,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
      * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getPlatformIdentifier
      * @covers NS8\ProtectSDK\Http\Client::getSessionData
      * @covers NS8\ProtectSDK\Http\Client::post
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
@@ -269,6 +275,7 @@ class ClientTest extends TestCase
      * @covers ::parseResponseMessages
      * @covers ::processResultErrors
      * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
@@ -278,6 +285,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
      * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getPlatformIdentifier
      * @covers NS8\ProtectSDK\Http\Client::getSessionData
      * @covers NS8\ProtectSDK\Http\Client::post
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
@@ -316,6 +324,7 @@ class ClientTest extends TestCase
      * @covers ::deleteMessage
      * @covers ::getNs8HttpClient
      * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
@@ -325,6 +334,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
      * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getPlatformIdentifier
      * @covers NS8\ProtectSDK\Http\Client::getSessionData
      * @covers NS8\ProtectSDK\Http\Client::post
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
@@ -362,12 +372,14 @@ class ClientTest extends TestCase
      * @covers ::getQueueUrl
      * @covers ::getNs8HttpClient
      * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
      * @covers NS8\ProtectSDK\Http\Client::__construct
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken
      * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getPlatformIdentifier
      * @covers NS8\ProtectSDK\Http\Client::setSessionData
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
@@ -401,6 +413,7 @@ class ClientTest extends TestCase
      * @covers ::parseResponseMessages
      * @covers ::processResultErrors
      * @covers ::setNs8HttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
      * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
      * @covers NS8\ProtectSDK\Config\Manager::getValue
      * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
@@ -410,6 +423,7 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
      * @covers NS8\ProtectSDK\Http\Client::getAccessToken
      * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getPlatformIdentifier
      * @covers NS8\ProtectSDK\Http\Client::getSessionData
      * @covers NS8\ProtectSDK\Http\Client::post
      * @covers NS8\ProtectSDK\Http\Client::setAccessToken

@@ -57,8 +57,6 @@ class ClientTest extends TestCase
      * @covers NS8\ProtectSDK\Security\Client::getAuthUser
      * @covers NS8\ProtectSDK\Security\Client::getConfigManager
      * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
-     * @covers NS8\ProtectSDK\Uninstall\Client::getHttpClient
-     * @covers NS8\ProtectSDK\Uninstall\Client::setHttpClient
      */
     public function testGetAndSetHttpClient() : void
     {
