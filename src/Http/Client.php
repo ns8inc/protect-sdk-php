@@ -290,6 +290,31 @@ class Client implements IProtectClient
     }
 
     /**
+     * Return a formatted JSON request response without pre-request validations/set-up
+     *
+     * @param string  $route      URL that is being accessed
+     * @param mixed[] $data       Data to include in body of the request
+     * @param string  $method     The HTTP method being used to send the request
+     * @param mixed[] $parameters Parameters to include in request
+     * @param mixed[] $headers    Array of heads to include in request
+     * @param int     $timeout    Timeout length for the request
+     *
+     * @return stdClass
+     */
+    public function executeJsonRequest(
+        string $route,
+        array $data = [],
+        string $method = self::POST_REQUEST_TYPE,
+        array $parameters = [],
+        array $headers = [],
+        int $timeout = self::DEFAULT_TIMEOUT_VALUE
+    ) : stdClass {
+        $body = $this->executeRequest($route, $data, $method, $parameters, $headers, $timeout);
+
+        return ZendJsonDecoder::decode($body);
+    }
+
+    /**
      * Sends requests to NS8 services with authorization credentials in place
      *
      * @param string  $url        URL that is being accessed
@@ -359,11 +384,12 @@ class Client implements IProtectClient
         $baseUri  = $this->configManager->getEnvValue('urls.client_url');
         $uri      = $baseUri . self::ROUTE_PREFIX . $route;
 
-        // For non
-        $accessToken      = $this->getAccessToken();
-        $authHeaderString = sprintf(self::AUTH_STRING_HEADER_FORMAT, $accessToken);
-        $authHeader       = ['Authorization' => $authHeaderString];
-        $allHeaders       = array_merge($headers, $authHeader);
+        $accessToken = $this->getAccessToken();
+        if (! empty($accessToken)) {
+            $authHeaderString = sprintf(self::AUTH_STRING_HEADER_FORMAT, $accessToken);
+            $authHeader       = ['Authorization' => $authHeaderString];
+            $allHeaders       = array_merge($headers, $authHeader);
+        }
 
         $this->client->setUri($uri);
         $this->client->setOptions(['timeout' => $timeout]);
@@ -397,31 +423,6 @@ class Client implements IProtectClient
         $this->client->resetParameters(true);
 
         return $response;
-    }
-
-    /**
-     * Return a formatted JSON request response
-     *
-     * @param string  $route      URL that is being accessed
-     * @param mixed[] $data       Data to include in body of the request
-     * @param string  $method     The HTTP method being used to send the request
-     * @param mixed[] $parameters Parameters to include in request
-     * @param mixed[] $headers    Array of heads to include in request
-     * @param int     $timeout    Timeout length for the request
-     *
-     * @return stdClass
-     */
-    protected function executeJsonRequest(
-        string $route,
-        array $data = [],
-        string $method = self::POST_REQUEST_TYPE,
-        array $parameters = [],
-        array $headers = [],
-        int $timeout = self::DEFAULT_TIMEOUT_VALUE
-    ) : stdClass {
-        $body = $this->executeRequest($route, $data, $method, $parameters, $headers, $timeout);
-
-        return ZendJsonDecoder::decode($body);
     }
 
     /**

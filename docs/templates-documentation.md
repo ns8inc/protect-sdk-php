@@ -1,5 +1,10 @@
 # Templates Documentation
 
+## Table of Contents
+
+- [Purpose of the Templates Client](#purpose-of-the-templates-client)
+- [Example Templates Client Usage](#example-templates-client-usage)
+
 ## Purpose of the Templates Client
 
 The purpose of the Templates class is to manage communication with the NS8
@@ -14,24 +19,18 @@ individually for requests unless specifically told to do so.
 
 ```php
 <?php
-
 declare(strict_types=1);
-
 use NS8\ProtectSDK\Templates\Client as TemplatesClient;
-
 // Some sample order data.
 $view = 'orders-validiate';
 $orderId = '0000123';
 $token = 'abc';
 $verificationId = '123';
 $postData = null; // Change to an array to make a POST request instead of GET.
-
 // Variables beginning with a colon will get interpolated by the Template
 // Service upon redirect.
 $returnUri = 'http://example.org/:orderId/:token/:verificationId/:view';
-
 $templatesClient = new TemplatesClient();
-
 $template = $templatesClient->get(
   $view,
   $orderId,
@@ -43,6 +42,5 @@ $template = $templatesClient->get(
 ```
 
 For GET requests, the template will be available in `$template->html`.
-
 For POST requets, the user will be redirected to the URI defined in
 `$template->location`.

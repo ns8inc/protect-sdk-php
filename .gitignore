@@ -1,6 +1,7 @@
+/.phpunit.result.cache
 *.swp
+/coverage/
+/logs/
 /phpcs.xml
 /phpunit.xml
-/.phpunit.result.cache
-/logs/
 /vendor/

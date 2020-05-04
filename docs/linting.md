@@ -13,3 +13,5 @@ To automatically fix errors, when possible:
 ```bash
 composer lint-fix
 ```
+
+## Table of Contents
