@@ -156,7 +156,8 @@ class ClientTest extends TestCase
     public function testScriptLoading() : void
     {
         $GLOBALS['ns8_unit_testing_env'] = true;
-        require '/Users/chris/Documents/Development/ns8-protect-php-sdk/src/Polling/Script.php';
+        require dirname(__FILE__).'/../../../src/Polling/Script.php';
+
         $this->waitForProcessFile();
         $this->assertEquals(true, PollingClient::isServiceRunning());
         unlink(PollingClient::getProcessIdFilePath());
