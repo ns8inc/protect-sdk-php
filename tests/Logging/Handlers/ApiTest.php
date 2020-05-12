@@ -15,7 +15,7 @@ use Zend\Http\Client as ZendClient;
 use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
 
 /**
- * Logging CLient Test Class
+ * Logging Client Test Class
  *
  * @coversDefaultClass NS8\ProtectSDK\Logging\Handlers\Api
  */
@@ -122,6 +122,74 @@ class ApiTest extends TestCase
 
         $this->expectException(Throwable::class);
         $ns8HttpClient->post('/test');
+    }
+
+    /**
+     * Verify that stackTrace is an empty string (not null!) on non-errors.
+     *
+     * @return void
+     *
+     * @covers ::__construct
+     * @covers ::getHttpClient
+     * @covers ::setHttpClient
+     * @covers ::write
+     * @covers ::initialize
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\Manager::setRuntimeConfigValues
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getEnvironment
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::validateConfigEnvRequirements
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::getConfigByFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::readJsonFromFile
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::validateInitialConfigData
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::setEnvironment
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::resetConfig
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeJsonRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::executeWithAuth
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::getAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Http\Client::getSessionData
+     * @covers NS8\ProtectSDK\Http\Client::post
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::getPlatformIdentifier
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::error
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     */
+    public function testStackTraceIsNotNull() : void
+    {
+        $configManager = new ConfigManager();
+        $configManager->resetConfig();
+        $configManager->initConfiguration();
+        $configManager->setEnvironment('testing');
+        $configManager->setValue('testing.authorization.auth_user', 'test');
+        $configManager->setValue('testing.authorization.access_token', 'test');
+        $configManager->setValue('logging.api.enabled', true);
+        $testHttpClient = $this->getFailureClient();
+        $ns8HttpClient  = new HttpClient(null, null, false, $testHttpClient);
+        $logger         = new LoggingClient(null, $configManager);
+        $apiHandler     = new ApiHandler();
+        $apiHandler->setHttpClient($ns8HttpClient);
+        $logger->addHandler($apiHandler);
+        $logger->info('Not a big deal');
+        $this->assertEquals('', $testHttpClient->getRequest()->getPost('stackTrace'));
     }
 
     /**
