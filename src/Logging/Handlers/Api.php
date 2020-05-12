@@ -124,6 +124,7 @@ class Api extends AbstractProcessingHandler
                     'phpVersion' => $this->configManager->getValue('php_version'),
                     'phpOS' => PHP_OS,
                 ],
+                'stackTrace' => '',
             ];
 
             if ($record['level_name'] === 'ERROR') {
