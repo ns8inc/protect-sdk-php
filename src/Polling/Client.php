@@ -4,168 +4,67 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Polling;
 
-use const PHP_BINARY;
-use function dirname;
-use function exec;
-use function file_exists;
-use function file_get_contents;
-use function json_decode;
-use function proc_open;
-use function sprintf;
-use function strtotime;
-use function time;
-use function unlink;
+use const PHP_OS;
+use function call_user_func_array;
+use function strtoupper;
+use function substr;
 
 /**
- * Manage background service polling logic
+ * Client for invoking Polling logic
  */
-class Client extends BaseClient
+class Client
 {
     /**
-     * The max length we are comfortable with the process running for
-     *
-     * @var string $maxRunTimeDuration
+     * Define set of Operating Systems to support
      */
-    public static $maxRunTimeDuration = '1 hours';
+    public const OS_LINUX   = 'LINUX';
+    public const OS_WINDOWS = 'WINDOWS';
+
+    // Define OS Client paths as ::CLASS is not available until PHP 5.5
+    public const LINUX_CLIENT   = 'NS8\ProtectSDK\Polling\Linux\Client';
+    public const WINDOWS_CLIENT = 'NS8\ProtectSDK\Polling\Windows\Client';
 
     /**
-     * Retrieve and store process details from Process Id File Path
-     *
-     * @return mixed[] Details regarding the process
+     * Map operating systems to their respective clients
      */
-    protected static function getProcessDetails() : array
+    public const CLASS_MAPPING = [
+        self::OS_LINUX => self::LINUX_CLIENT,
+        self::OS_WINDOWS => self::WINDOWS_CLIENT,
+    ];
+
+    /**
+     * The type of Operating System being utilized
+     *
+     * @var string $osType
+     */
+    protected static $osType = null;
+
+    /**
+     * Call method for given operating system client
+     * @param string $method The method for the static class being called
+     * @param mixed[] $args An array of arguments to supply the given method
+     *
+     * @return mixed Return static function result
+     */
+    public static function __callStatic($method, $args)
     {
-        if (! self::isServiceRunning()) {
-            return [];
+        $operatingSystem = self::getOperatingSystem();
+
+        return call_user_func_array(self::CLASS_MAPPING[$operatingSystem] . '::' . $method, $args);
+    }
+
+    /**
+     * Fetch the operating system. If we cannot determine it then assume Linux
+     *
+     * @return string The operating system constant
+     */
+    protected static function getOperatingSystem() : string
+    {
+        if (! empty(self::$osType)) {
+            return self::$osType;
         }
-        $processDetailsString = file_get_contents(self::getProcessIdFilePath());
-        $processDetails       = json_decode($processDetailsString, true);
+        self::$osType = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? self::OS_WINDOWS : self::OS_LINUX;
 
-        return (array) $processDetails;
-    }
-
-    /**
-     * Returns the path for the PHP binary executable on the current system
-     *
-     * @return string The path for the PHP executable
-     */
-    protected static function getPHPBinaryPath() : string
-    {
-        return PHP_BINARY;
-    }
-
-    /**
-     * Removes the file storing the process ID
-     *
-     * @return void
-     */
-    protected static function removeProcessIdFile() : void
-    {
-        unlink(self::getProcessIdFilePath());
-    }
-
-    /**
-     * Returns the command used to execute the background polling service
-     *
-     * @return string The command that is needed to begin polling
-     */
-    protected static function getServiceCommand() : string
-    {
-        $currentDirectory = dirname(__FILE__);
-
-        return sprintf('nohup %s %s/%s &', self::getPHPBinaryPath(), $currentDirectory, self::PHP_POLLING_SCRIPT);
-    }
-
-    /**
-     * Checks if the background service has been running for to long.
-     * If it has then we kill it to avoid potential long-running issues
-     *
-     * @return bool True is the process was terminated, false otherwise
-     */
-    protected static function checkProcessRuntime() : bool
-    {
-        $processDetails          = self::getProcessDetails();
-        $lastUpdateTime          = isset($processDetails['last_update_time']) ?
-            (int) $processDetails['last_update_time'] : time();
-        $latestAcceptableRunTime = strtotime(sprintf('-%s', self::$maxRunTimeDuration));
-        if ($lastUpdateTime <= $latestAcceptableRunTime) {
-            return self::killService();
-        }
-
-        return false;
-    }
-
-     /**
-      * Return the process ID of the background polling process
-      *
-      * @return int|null The process ID as an integer
-      */
-    public static function getProcessId() : ?int
-    {
-        $processDetails = self::getProcessDetails();
-
-        return isset($processDetails['process_id']) ? (int) $processDetails['process_id'] : null;
-    }
-
-    /**
-     * Determines if the polling background service is running
-     *
-     * @return bool True if running otherwise false
-     */
-    public static function isServiceRunning() : bool
-    {
-        return file_exists(self::getProcessIdFilePath());
-    }
-
-    /**
-     * Starts the polling background service.
-     *
-     * @return bool True if the service was started otherwise false.
-     */
-    public static function startService() : bool
-    {
-        if (self::isServiceRunning() && ! self::checkProcessRuntime()) {
-            return false;
-        }
-        $command        = self::getServiceCommand();
-        $descriptorspec = [
-            0 => ['pipe', 'r'],
-            1 => ['pipe', 'w'],
-            2 => ['pipe', 'a'],
-        ];
-
-        proc_open($command, $descriptorspec, $pipes);
-
-        return true;
-    }
-
-    /**
-     * Stops the polling background service from running and removes the Process ID File
-     *
-     * @return bool True if the service was successfully stopped, otherwise false.
-     */
-    public static function killService() : bool
-    {
-        if (! self::isServiceRunning()) {
-            return false;
-        }
-
-        $processId = self::getProcessId();
-        exec(sprintf('kill -9 %d', $processId));
-        self::removeProcessIdFile();
-
-        return true;
-    }
-
-    /**
-     * Returns the path for the Process ID file
-     *
-     * @return string The path to the file
-     */
-    public static function getProcessIdFilePath() : string
-    {
-        $currentDirectory = dirname(__FILE__);
-
-        return $currentDirectory . '/' . self::BACKGROUND_SERVICE_PROCESS_INFO_FILE;
+        return self::$osType;
     }
 }

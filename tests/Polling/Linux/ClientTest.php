@@ -14,7 +14,7 @@ use function unlink;
 /**
  * Polling Client test class
  *
- * @coversDefaultClass NS8\ProtectSDK\Polling\Client
+ * @coversDefaultClass NS8\ProtectSDK\Polling\Linux\Client
  */
 class ClientTest extends TestCase
 {
@@ -102,8 +102,8 @@ class ClientTest extends TestCase
      */
     public function testProcessRestart() : void
     {
-        $originalMaxRunTimeDuration        = PollingClient::$maxRunTimeDuration;
-        PollingClient::$maxRunTimeDuration = '0 seconds';
+        $originalMaxRunTimeDuration = PollingClient::getMaxRunTime();
+        PollingClient::setMaxRunTime('0 seconds');
         $this->assertEquals(false, PollingClient::isServiceRunning());
         PollingClient::startService();
         $this->waitForProcessFile();
@@ -113,7 +113,7 @@ class ClientTest extends TestCase
         $newProcessId = PollingClient::getProcessId();
         $this->assertNotEquals($processId, $newProcessId);
         PollingClient::killService();
-        PollingClient::$maxRunTimeDuration = $originalMaxRunTimeDuration;
+        PollingClient::setMaxRunTime($originalMaxRunTimeDuration);
     }
 
     /**
