@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Polling;
 
-use Throwable;
 use const FILE_APPEND;
 use const PHP_EOL;
 use function dirname;
@@ -15,11 +14,16 @@ use function sleep;
 use function time;
 
 /**
- * Class to run background polling service
+ * Class to run background polling service.
+ * Disable linting in this file to permit class declaration and execution for running the script.
  */
 // phpcs:disable
 class Script
 {
+    /**
+     * Globals key to look for when running specific unit tests to avoid infinite loop trigger
+     */
+    const UNIT_TEST_PRESENT_KEY = 'ns8_unit_testing_env';
     /**
      * Run the polling script
      *
@@ -27,15 +31,17 @@ class Script
      */
     public function run() : void
     {
+        // Provides an outlet for unit testing in a fashion that still enables outside process run-time
+        $shouldRunContinuous = !(isset($GLOBALS[self::UNIT_TEST_PRESENT_KEY]) && $GLOBALS[self::UNIT_TEST_PRESENT_KEY]);
         $currentDirectory = dirname(__FILE__);
         $fileData         = json_encode([
             'process_id' => getmypid(),
             'last_update_time' => time(),
         ]);
         file_put_contents($currentDirectory . '/BACKGROUND_PROCESS_INFO', $fileData);
-        while (true) {
+        do {
             $this->action();
-        }
+        } while ($shouldRunContinuous);
     }
 
     /**
@@ -45,14 +51,11 @@ class Script
      */
     public function action() : void
     {
-        try {
-            file_put_contents('/tmp/test_output.txt', 'Script is running...' . PHP_EOL, FILE_APPEND);
-            sleep(2);
-        } catch (Throwable $t) {
-            return;
-        }
+        file_put_contents('/tmp/test_output.txt', 'Script is running...' . PHP_EOL, FILE_APPEND);
+        sleep(2);
     }
 }
-
+// @codeCoverageIgnoreStart
 (new Script())->run();
+// @codeCoverageIgnoreEnd
 // phpcs:enable

@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Polling;
 
-use Throwable;
 use const PHP_BINARY;
 use function dirname;
+use function exec;
 use function file_exists;
 use function file_get_contents;
 use function json_decode;
-use function posix_kill;
 use function proc_open;
 use function sprintf;
 use function strtotime;
@@ -23,11 +22,11 @@ use function unlink;
 class Client extends BaseClient
 {
     /**
-     * Attribute to store process details once fetched
+     * The max length we are comfortable with the process running for
      *
-     * @var mixed[] $processDetails
+     * @var string $maxRunTimeDuration
      */
-    protected static $processDetails = [];
+    public static $maxRunTimeDuration = '1 hours';
 
     /**
      * Retrieve and store process details from Process Id File Path
@@ -36,25 +35,13 @@ class Client extends BaseClient
      */
     protected static function getProcessDetails() : array
     {
-        if (! self::isServiceRunning() || ! empty(self::$processDetails)) {
-            return self::$processDetails;
+        if (! self::isServiceRunning()) {
+            return [];
         }
         $processDetailsString = file_get_contents(self::getProcessIdFilePath());
-        self::$processDetails = json_decode($processDetailsString, true);
+        $processDetails       = json_decode($processDetailsString, true);
 
-        return self::$processDetails;
-    }
-
-    /**
-     * Return the process ID of the background polling process
-     *
-     * @return int|null The process ID as an integer
-     */
-    protected static function getProcessId() : ?int
-    {
-        $processDetails = self::getProcessDetails();
-
-        return isset($processDetails['process_id']) ? (int) $processDetails['process_id'] : null;
+        return (array) $processDetails;
     }
 
     /**
@@ -86,19 +73,7 @@ class Client extends BaseClient
     {
         $currentDirectory = dirname(__FILE__);
 
-        return sprintf('/usr/bin/nohup php %s/%s &', $currentDirectory, self::PHP_POLLING_SCRIPT);
-    }
-
-    /**
-     * Returns the path for the Process ID file
-     *
-     * @return string The path to the file
-     */
-    protected static function getProcessIdFilePath() : string
-    {
-        $currentDirectory = dirname(__FILE__);
-
-        return $currentDirectory . '/' . self::BACKGROUND_SERVICE_PROCESS_INFO_FILE;
+        return sprintf('nohup %s %s/%s &', self::getPHPBinaryPath(), $currentDirectory, self::PHP_POLLING_SCRIPT);
     }
 
     /**
@@ -112,12 +87,24 @@ class Client extends BaseClient
         $processDetails          = self::getProcessDetails();
         $lastUpdateTime          = isset($processDetails['last_update_time']) ?
             (int) $processDetails['last_update_time'] : time();
-        $latestAcceptableRunTime = strtotime(sprintf('-%d hours', self::MAX_PROCESS_RUN_TIME_IN_HOURS));
+        $latestAcceptableRunTime = strtotime(sprintf('-%s', self::$maxRunTimeDuration));
         if ($lastUpdateTime <= $latestAcceptableRunTime) {
             return self::killService();
         }
 
         return false;
+    }
+
+     /**
+      * Return the process ID of the background polling process
+      *
+      * @return int|null The process ID as an integer
+      */
+    public static function getProcessId() : ?int
+    {
+        $processDetails = self::getProcessDetails();
+
+        return isset($processDetails['process_id']) ? (int) $processDetails['process_id'] : null;
     }
 
     /**
@@ -137,22 +124,19 @@ class Client extends BaseClient
      */
     public static function startService() : bool
     {
-        try {
-            if (self::isServiceRunning() && ! self::checkProcessRuntime()) {
-                return false;
-            }
-            $command        = self::getServiceCommand();
-            $descriptorspec = [
-                0 => ['pipe', 'r'],
-                1 => ['pipe', 'w'],
-                2 => ['pipe', 'a'],
-            ];
-            proc_open($command, $descriptorspec, $pipes);
-
-            return true;
-        } catch (Throwable $t) {
+        if (self::isServiceRunning() && ! self::checkProcessRuntime()) {
             return false;
         }
+        $command        = self::getServiceCommand();
+        $descriptorspec = [
+            0 => ['pipe', 'r'],
+            1 => ['pipe', 'w'],
+            2 => ['pipe', 'a'],
+        ];
+
+        proc_open($command, $descriptorspec, $pipes);
+
+        return true;
     }
 
     /**
@@ -166,14 +150,22 @@ class Client extends BaseClient
             return false;
         }
 
-        try {
-            $processId = self::getProcessId();
-            posix_kill($processId, self::DEFAULT_KILL_SIGNAL);
-            self::removeProcessIdFile();
+        $processId = self::getProcessId();
+        exec(sprintf('kill -9 %d', $processId));
+        self::removeProcessIdFile();
 
-            return true;
-        } catch (Throwable $t) {
-            return false;
-        }
+        return true;
+    }
+
+    /**
+     * Returns the path for the Process ID file
+     *
+     * @return string The path to the file
+     */
+    public static function getProcessIdFilePath() : string
+    {
+        $currentDirectory = dirname(__FILE__);
+
+        return $currentDirectory . '/' . self::BACKGROUND_SERVICE_PROCESS_INFO_FILE;
     }
 }

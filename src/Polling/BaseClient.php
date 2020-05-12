@@ -20,11 +20,6 @@ abstract class BaseClient
     public const PHP_POLLING_SCRIPT = 'Script.php';
 
     /**
-     * The max length we are comfortable with the process running for in hours
-     */
-    public const MAX_PROCESS_RUN_TIME_IN_HOURS = 1;
-
-    /**
      * Default process kill signal
      */
     public const DEFAULT_KILL_SIGNAL = 9;
