@@ -12,6 +12,8 @@ use function explode;
 use function preg_match;
 use function shell_exec;
 use function sprintf;
+use function strlen;
+use function substr;
 
 /**
  * Manage background service polling logic on Windows
@@ -21,7 +23,9 @@ class Client extends BaseClient
     /**
      * Regex to match PHP app for executing the script
      */
-    public const PHP_REGEX = '/php[^\\]*\.exe$/i';
+    public const PHP_REGEX = '/php[^\\\]*\.exe$/i';
+
+    public const PHP_APP_EXTENSION = '.exe';
 
     /**
      * Returns the command used to execute the background polling service
@@ -38,12 +42,17 @@ class Client extends BaseClient
         if (preg_match(self::PHP_REGEX, $defaultphpBinary)) {
             $phpBinary = $defaultphpBinary;
         } elseif (count($phpBinaryOptionsArray) && preg_match(self::PHP_REGEX, (string) $phpBinaryOptionsArray[0])) {
-            $phpBinary = $phpBinaryOptionsArray[0];
+            $phpBinary = phpBinaryOptionsArray[0];
         }
 
-        return empty($phpBinary) ?
-            '' :
-            sprintf('start %s %s/%s', $phpBinary, $currentDirectory, self::PHP_POLLING_SCRIPT);
+        $command = '';
+        if (! empty($phpBinary)) {
+            // Parse out ".exe" ending to enable passing file argument in
+            $phpBinary = substr($phpBinary, 0, strlen(self::PHP_APP_EXTENSION)*-1);
+            $command   = sprintf('start %s %s\\%s', $phpBinary, $currentDirectory, self::PHP_POLLING_SCRIPT);
+        }
+
+        return $command;
     }
 
     /**
