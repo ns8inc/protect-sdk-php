@@ -67,13 +67,16 @@ abstract class BaseClient
             return false;
         }
 
-        $command        = static::getServiceCommand();
+        $command = static::getServiceCommand();
+        if (empty($command)) {
+            return false;
+        }
+
         $descriptorspec = [
             0 => ['pipe', 'r'],
             1 => ['pipe', 'w'],
             2 => ['pipe', 'a'],
         ];
-
         proc_open($command, $descriptorspec, $pipes);
 
         return true;

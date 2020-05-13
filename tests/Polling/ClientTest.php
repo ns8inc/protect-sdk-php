@@ -7,6 +7,7 @@ namespace NS8\ProtectSDK\Tests\Polling;
 use AspectMock\Test;
 use NS8\ProtectSDK\Polling\Client as PollingClient;
 use PHPUnit\Framework\TestCase;
+use function dirname;
 use function file_exists;
 use function sleep;
 use function unlink;
@@ -156,7 +157,7 @@ class ClientTest extends TestCase
     public function testScriptLoading() : void
     {
         $GLOBALS['ns8_unit_testing_env'] = true;
-        require dirname(__FILE__).'/../../src/Polling/Script.php';
+        require dirname(__FILE__) . '/../../src/Polling/Script.php';
 
         $this->waitForProcessFile();
         $this->assertEquals(true, PollingClient::isServiceRunning());

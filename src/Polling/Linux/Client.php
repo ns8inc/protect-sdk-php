@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace NS8\ProtectSDK\Polling\Linux;
 
 use NS8\ProtectSDK\Polling\BaseClient;
+use function count;
 use function dirname;
 use function exec;
+use function explode;
+use function preg_match;
+use function shell_exec;
 use function sprintf;
 
 /**
@@ -15,15 +19,31 @@ use function sprintf;
 class Client extends BaseClient
 {
     /**
+     * Regex to match PHP app for executing the script
+     */
+    public const PHP_REGEX = '/\/php[^\/]*$/i';
+
+    /**
      * Returns the command used to execute the background polling service
      *
      * @return string The command that is needed to begin polling
      */
     protected static function getServiceCommand() : string
     {
-        $currentDirectory = dirname(dirname(__FILE__));
+        $currentDirectory       = dirname(dirname(__FILE__));
+        $phpBinary              = '';
+        $phpBinaryOptionsString = shell_exec('which php');
+        $phpBinaryOptionsArray  = empty($phpBinaryOptionsString) ? [] : explode('\n', (string) $phpBinaryOptionsString);
+        $defaultphpBinary       = self::getPHPBinaryPath();
+        if (preg_match(self::PHP_REGEX, $defaultphpBinary)) {
+            $phpBinary = $defaultphpBinary;
+        } elseif (count($phpBinaryOptionsArray) && preg_match(self::PHP_REGEX, (string) $phpBinaryOptionsArray[0])) {
+            $phpBinary = $phpBinaryOptionsArray[0];
+        }
 
-        return sprintf('nohup %s %s/%s &', self::getPHPBinaryPath(), $currentDirectory, self::PHP_POLLING_SCRIPT);
+        return empty($phpBinary) ?
+            '' :
+            sprintf('nohup %s %s/%s &', self::getPHPBinaryPath(), $currentDirectory, self::PHP_POLLING_SCRIPT);
     }
 
     /**

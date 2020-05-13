@@ -41,12 +41,13 @@ class Client
 
     /**
      * Call method for given operating system client
-     * @param string $method The method for the static class being called
-     * @param mixed[] $args An array of arguments to supply the given method
+     *
+     * @param string  $method The method for the static class being called
+     * @param mixed[] $args   An array of arguments to supply the given method
      *
      * @return mixed Return static function result
      */
-    public static function __callStatic($method, $args)
+    public static function __callStatic(string $method, array $args)
     {
         $operatingSystem = self::getOperatingSystem();
 
