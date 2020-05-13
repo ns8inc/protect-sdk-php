@@ -38,7 +38,7 @@ class Client extends BaseClient
         }
 
         $processId = self::getProcessId();
-        exec(sprintf('kill -9 %d', $processId));
+        exec(sprintf('kill -%d %d', self::DEFAULT_KILL_SIGNAL, $processId));
         self::removeProcessIdFile();
 
         return true;
