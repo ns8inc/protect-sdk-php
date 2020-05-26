@@ -33,8 +33,7 @@ jobs:
       - run:
           command: |
             apt-get update
-            apt-get install -y git unzip wget yarnpkg
-            ln -s /usr/bin/yarnpkg /usr/local/bin/yarn
+            apt-get install -y git unzip wget
           name: Install Tools
       - checkout
       - run:
