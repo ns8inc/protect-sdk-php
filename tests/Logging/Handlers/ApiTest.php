@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NS8\ProtectSDK\Tests\Logging;
+namespace NS8\ProtectSDK\Tests\Logging\Handlers;
 
 use Exception;
 use NS8\ProtectSDK\Config\Manager as ConfigManager;
@@ -169,6 +169,7 @@ class ApiTest extends TestCase
      * @covers NS8\ProtectSDK\Logging\Client::__construct
      * @covers NS8\ProtectSDK\Logging\Client::addHandler
      * @covers NS8\ProtectSDK\Logging\Client::error
+     * @covers NS8\ProtectSDK\Logging\Client::info
      * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
      * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
      * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
