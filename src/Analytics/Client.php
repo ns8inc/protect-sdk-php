@@ -67,8 +67,9 @@ class Client extends BaseClient
 
         $script        = self::getHttpClient()->sendNonObjectRequest(self::getTrueStatsRoute());
         $decodedScript = json_decode($script) ?? '';
+        $error         = json_decode($decodedScript, true);
 
-        if ($decodedScript !== '') {
+        if ($decodedScript !== '' && ! isset($error['error'])) {
             self::saveScriptToCache($decodedScript);
         }
 
