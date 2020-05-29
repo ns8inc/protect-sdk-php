@@ -253,7 +253,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Test value return for fetching the True Stats script (cached)
+     * Assert that the script doesn't get cached in case of a Protect error
      *
      * @return void
      *
