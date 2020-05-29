@@ -247,6 +247,65 @@ class ClientTest extends TestCase
         // Fetch the script, which should not come from the cache
         $script = $this->analyticsClient->getTrueStatsScript();
         $this->assertEquals($this->getTestHttpResponseBody(), $script);
+
+        // The script should now be cached in a temporary file
+        $this->assertTrue(file_exists($this->getCacheFile()));
+    }
+
+    /**
+     * Test value return for fetching the True Stats script (cached)
+     *
+     * @return void
+     *
+     * @covers ::getFullPathToScriptCacheFile
+     * @covers ::getHttpClient
+     * @covers ::getScriptFromCache
+     * @covers ::getTrueStatsRoute
+     * @covers ::getTrueStatsScript
+     * @covers ::setHttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::sendNonObjectRequest
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
+     */
+    public function testGetTrueStatsScriptDontCacheOnError() : void
+    {
+        // Mock the HTTP client so we can make sure it doesn't make any requests
+        $httpClientMock = $this->createMock(HttpClient::class);
+        $this->analyticsClient->setHttpClient($httpClientMock);
+
+        // Protect errors get returned as double-encoded JSON
+        $httpClientMock->expects($this->once())
+            ->method('sendNonObjectRequest')
+            ->with('/init/script')
+            ->willReturn(json_encode($this->getTestHttpResponseError()));
+
+        // Fetch the script, which should not come from the cache
+        $script = $this->analyticsClient->getTrueStatsScript();
+        $this->assertEquals($this->getTestHttpResponseError(), $script);
+
+        // Because of the error, the script should not get cached.
+        $this->assertFalse(file_exists($this->getCacheFile()));
     }
 
     /**
@@ -267,5 +326,20 @@ class ClientTest extends TestCase
     protected function getTestHttpResponseBody() : string
     {
         return '<script>console.log("Hello");</script>';
+    }
+
+    /**
+     * Returns the test HTTP response error
+     *
+     * @return string Value in mock HTTP response
+     */
+    protected function getTestHttpResponseError() : string
+    {
+        $error = [
+            'error' => 'An error occurred.',
+            'statusCode' => 400,
+        ];
+
+        return json_encode($error);
     }
 }
