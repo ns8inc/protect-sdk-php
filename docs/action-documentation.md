@@ -33,9 +33,9 @@ well as a related action:
 - UNINSTALL_ACTION: This action should be set when the module is removed from
   the platform.
   Further information pre-defined actions and events is available in the
-  [Switchboards Foundational Switches documentation](https://github.com/ns8inc/protect-integration-docs/blob/dev/docs/switchboards_foundational_switches.md)
+  [Switchboards Foundational Switches documentation](https://github.com/ns8inc/engineering/blob/master/integrations/switchboards_foundational_switches.md)
   and additional information regarding the differences between actions and events
-  can be found in the [Switchboards Actions vs Events](https://github.com/ns8inc/protect-integration-docs/blob/dev/docs/switchboards_actions_v_events.md).
+  can be found in the [Switchboards Actions vs Events](https://github.com/ns8inc/engineering/blob/master/integrations/switchboards_actions_v_events.md).
 
 ## Example Action Client Implementations
 
