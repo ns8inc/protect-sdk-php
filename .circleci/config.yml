@@ -19,7 +19,7 @@ commands:
 
 jobs:
   deploy:
-    docker
+    docker:
       - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php
     steps:
       - add_ssh_keys:
