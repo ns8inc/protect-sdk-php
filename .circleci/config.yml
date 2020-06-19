@@ -19,8 +19,8 @@ commands:
 
 jobs:
   deploy:
-    docker:
-      - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php:latest
+    docker
+      - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -45,7 +45,7 @@ jobs:
           name: Bump Version
   test_latest:
     docker:
-      - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php:latest
+      - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php
     steps:
       - test
   test_7-1:
