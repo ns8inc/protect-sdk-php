@@ -1,13 +1,27 @@
+commands:
+  test:
+    description: "Run All Unit Tests"
+    steps:
+      - checkout
+      - run:
+          command: composer install --no-ansi
+          name: Install PHP SDK
+      - run:
+          command: composer lint
+          name: Lint
+      - run:
+          command: composer test-coverage
+          name: Run Tests
+      - store_test_results:
+          path: coverage
+      - store_artifacts:
+          path: coverage/html
+
 jobs:
   deploy:
     docker:
-      - image: php:cli
+      - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php:latest
     steps:
-      - run:
-          command: |
-            apt-get update
-            apt-get install -y git
-          name: Install Git
       - add_ssh_keys:
           fingerprints:
             - "85:07:c0:6d:1b:fd:2f:3e:74:05:82:8e:d6:23:cb:c0"
@@ -29,57 +43,54 @@ jobs:
               exit 1
             fi
           name: Bump Version
-  test:
+  test_latest:
     docker:
-      - image: php:cli
+      - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php:latest
     steps:
-      - run:
-          command: |
-            apt-get update
-            apt-get install -y git unzip wget yarnpkg
-            ln -s /usr/bin/yarnpkg /usr/local/bin/yarn
-          name: Install Tools
-      - checkout
-      - run:
-          command: |
-            pecl install xdebug
-            docker-php-ext-enable xdebug
-          name: Install XDebug
-      - run:
-          command: |
-            cd /tmp
-            expected_signature="$(wget -q -O - https://composer.github.io/installer.sig)"
-            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-            actual_signature="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
-            if [ "$expected_signature" != "$actual_signature" ]; then
-              >&2 echo 'ERROR: Invalid installer signature'
-              exit 1
-            fi
-            php composer-setup.php --filename=composer --install-dir=/usr/local/bin --quiet
-          name: Install Composer
-      - run:
-          command: composer install --no-ansi
-          name: Install PHP SDK
-      - run:
-          command: composer lint
-          name: Lint
-      - run:
-          command: composer test-coverage
-          name: Run Tests
-      - store_test_results:
-          path: coverage
-      - store_artifacts:
-          path: coverage/html
+      - test
+  test_7-1:
+    docker:
+      - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php:7.1
+    steps:
+      - test
+  test_7-2:
+    docker:
+      - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php:7.2
+    steps:
+      - test
+  test_7-3:
+    docker:
+      - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php:7.3
+    steps:
+      - test
 
 version: 2.1
 
 workflows:
   test_and_deploy:
     jobs:
-      - test
+      - test_latest
+      - approve:
+          type: approval
+          filters:
+            branches:
+              only: master
+          requires:
+            - test_latest
+      - test_7-1:
+          requires:
+            - approve
+      - test_7-2:
+          requires:
+            - approve
+      - test_7-3:
+          requires:
+            - approve
       - deploy:
           filters:
             branches:
               only: master
           requires:
-            - test
+            - test_7-1
+            - test_7-2
+            - test_7-3
