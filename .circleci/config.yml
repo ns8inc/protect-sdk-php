@@ -52,7 +52,7 @@ jobs:
           name: Install gren
       - run:
           command: |
-            version=$(git tag -l | sort -V | tail -n 1 | awk -F . '{$NF+=1; print $0}' OFS=".")
+            version=$(git tag -l | sort -V | tail -n 1)
             echo "export VERSION=$version" >> $BASH_ENV
           name: Get Version
       - run:
