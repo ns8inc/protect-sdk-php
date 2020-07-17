@@ -16,7 +16,6 @@ commands:
           path: coverage
       - store_artifacts:
           path: coverage/html
-
 jobs:
   deploy:
     docker:
@@ -43,6 +42,24 @@ jobs:
               exit 1
             fi
           name: Bump Version
+  publish:
+    docker:
+      - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php
+    steps:
+      - checkout
+      - run:
+          command: yarn global add github-release-notes
+          name: Install gren
+      - run:
+          command: |
+            version=$(git tag -l | sort -V | tail -n 1 | awk -F . '{$NF+=1; print $0}' OFS=".")
+            echo "export VERSION=$version" >> $BASH_ENV
+          name: Get Version
+      - run:
+          command: |
+            gren release -m -t $VERSION -T $GITHUB_ACCESS_TOKEN
+            gren release -o -t $VERSION -T $GITHUB_ACCESS_TOKEN
+          name: Create GitHub Release
   test_latest:
     docker:
       - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php
@@ -63,10 +80,16 @@ jobs:
       - image: 244249143763.dkr.ecr.us-west-2.amazonaws.com/ns8-php:7.3
     steps:
       - test
-
 version: 2.1
-
 workflows:
+  publish:
+    jobs:
+      - publish:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^\d+\.\d+\.\d+$/
   test_and_deploy:
     jobs:
       - test_latest
