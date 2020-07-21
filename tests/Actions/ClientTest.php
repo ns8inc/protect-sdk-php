@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Tests\Actions;
 
+use Laminas\Http\Client as LaminasClient;
+use Laminas\Http\Client\Adapter\Test as LaminasTestAdapter;
 use NS8\ProtectSDK\Actions\Client as ActionClient;
 use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Http\Client as HttpClient;
 use PHPUnit\Framework\TestCase;
-use Zend\Http\Client as ZendClient;
-use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
 
 /**
  * Actions Test Class
@@ -206,14 +206,14 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Returns a test Zend HTTP client to utilize when invoking the NS8 Core HTTP Client
+     * Returns a test Laminas HTTP client to utilize when invoking the NS8 Core HTTP Client
      *
-     * @return ZendClient
+     * @return LaminasClient
      */
-    protected function buildTestHttpClient() : ZendClient
+    protected function buildTestHttpClient() : LaminasClient
     {
-        $adapter        = new ZendTestAdapter();
-        $testHttpClient = new ZendClient('', ['adapter' => $adapter]);
+        $adapter        = new LaminasTestAdapter();
+        $testHttpClient = new LaminasClient('', ['adapter' => $adapter]);
 
         $response =  'HTTP/1.1 200 OK' . "\n" .
         'Content-type: application/json' . "\n\n" .

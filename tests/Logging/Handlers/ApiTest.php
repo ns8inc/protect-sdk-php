@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace NS8\ProtectSDK\Tests\Logging\Handlers;
 
 use Exception;
+use Laminas\Http\Client as LaminasClient;
+use Laminas\Http\Client\Adapter\Test as LaminasTestAdapter;
 use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Http\Client as HttpClient;
 use NS8\ProtectSDK\Logging\Client as LoggingClient;
 use NS8\ProtectSDK\Logging\Handlers\Api as ApiHandler;
 use PHPUnit\Framework\TestCase;
 use Throwable;
-use Zend\Http\Client as ZendClient;
-use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
 
 /**
  * Logging Client Test Class
@@ -196,12 +196,12 @@ class ApiTest extends TestCase
     /**
      * Return HTTP client that will fail all requests
      *
-     * @return ZendClient HTTP client to be used in NS8 HTTP client set-up
+     * @return LaminasClient HTTP client to be used in NS8 HTTP client set-up
      */
-    protected function getFailureClient() : ZendClient
+    protected function getFailureClient() : LaminasClient
     {
-        $adapter = new ZendTestAdapter();
-        $adapter = new class extends ZendTestAdapter {
+        $adapter = new LaminasTestAdapter();
+        $adapter = new class extends LaminasTestAdapter {
             /**
              * Overrides connect function to gurantee connection will always fail
              *
@@ -224,6 +224,6 @@ class ApiTest extends TestCase
         "}\n";
         $adapter->setResponse($response);
 
-        return new ZendClient('/path', ['adapter' => $adapter]);
+        return new LaminasClient('/path', ['adapter' => $adapter]);
     }
 }
