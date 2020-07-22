@@ -39,5 +39,5 @@ To get started, take a look at the documentation listed below:
 
 ## License
 
-See [License](./LICENSE)
+See our [license](./LICENSE).
 © [ns8inc](https://ns8.com)
