@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Tests\Installer;
 
-use Laminas\Http\Client as LaminasClient;
-use Laminas\Http\Client\Adapter\Test as LaminasTestAdapter;
 use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Http\Client as HttpClient;
 use NS8\ProtectSDK\Installer\Client as InstallerClient;
 use NS8\ProtectSDK\Installer\Exceptions\MissingData as MissingDataException;
 use NS8\ProtectSDK\Installer\Exceptions\RequestFailed as RequestFailedException;
 use PHPUnit\Framework\TestCase;
+use Zend\Http\Client as ZendClient;
+use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
 use function json_encode;
 use function sprintf;
 
@@ -301,7 +301,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Returns a test Laminas HTTP client to utilize when testing successful outputs
+     * Returns a test Zend HTTP client to utilize when testing successful outputs
      *
      * @param mixed[] $data Array of data that should be present in JSON
      *
@@ -309,8 +309,8 @@ class ClientTest extends TestCase
      */
     protected function buildTestHttpClient(array $data) : HttpClient
     {
-        $adapter        = new LaminasTestAdapter();
-        $testHttpClient = new LaminasClient(
+        $adapter        = new ZendTestAdapter();
+        $testHttpClient = new ZendClient(
             sprintf(InstallerClient::INSTALL_ENDPOINT, 'magento'),
             ['adapter' => $adapter]
         );
