@@ -103,7 +103,7 @@ class Client extends ClientBase
      * Constructor to initialize logging client
      *
      * @param ?Logger        $logger        Logging object to be used by the client
-     * @param ?ConfigManager $configManager Config manager usrd to fetch settings
+     * @param ?ConfigManager $configManager Config manager used to fetch settings
      */
     public function __construct(?Logger $logger = null, ?ConfigManager $configManager = null)
     {

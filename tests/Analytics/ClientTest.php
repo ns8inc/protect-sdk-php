@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use function file_exists;
 use function file_put_contents;
 use function json_encode;
+use function sprintf;
 use function sys_get_temp_dir;
 use function time;
 use function touch;
@@ -58,6 +59,7 @@ class ClientTest extends TestCase
      */
     public function tearDown() : void
     {
+        self::$configManager->setValue('store_id', null); // defaults to 1
         $cacheFile = $this->getCacheFile();
 
         if (! file_exists($cacheFile)) {
@@ -135,6 +137,63 @@ class ClientTest extends TestCase
 
         // Fetch the script, which should come from the cache
         $this->assertEquals($this->getTestHttpResponseBody(), $this->analyticsClient->getTrueStatsScript());
+    }
+
+    /**
+     * Test value return for fetching the True Stats script for a different store (cached)
+     *
+     * @return void
+     *
+     * @covers ::getFullPathToScriptCacheFile
+     * @covers ::getHttpClient
+     * @covers ::getScriptFromCache
+     * @covers ::getTrueStatsRoute
+     * @covers ::getTrueStatsScript
+     * @covers ::setHttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::sendNonObjectRequest
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
+     */
+    public function testGetTrueStatsScriptCachedForDifferentStore() : void
+    {
+        $storeId = 2;
+        self::$configManager->setValue('store_id', $storeId);
+
+        // Store our script in the cache
+        file_put_contents($this->getCacheFile($storeId), $this->getTestHttpResponseBody());
+
+        // Mock the HTTP client so we can make sure it doesn't make any requests
+        $httpClientMock = $this->createMock(HttpClient::class);
+        $this->analyticsClient->setHttpClient($httpClientMock);
+
+        $httpClientMock->expects($this->never())
+            ->method('sendNonObjectRequest');
+
+        // Fetch the script, which should come from the cache
+        $this->assertEquals($this->getTestHttpResponseBody(), $this->analyticsClient->getTrueStatsScript());
+
+        unlink($this->getCacheFile($storeId));
     }
 
     /**
@@ -253,6 +312,66 @@ class ClientTest extends TestCase
     }
 
     /**
+     * Test value return for fetching the True Stats script for a different store (uncached)
+     *
+     * @return void
+     *
+     * @covers ::getFullPathToScriptCacheFile
+     * @covers ::getHttpClient
+     * @covers ::getScriptFromCache
+     * @covers ::getTrueStatsRoute
+     * @covers ::getTrueStatsScript
+     * @covers ::saveScriptToCache
+     * @covers ::setHttpClient
+     * @covers NS8\ProtectSDK\Config\Manager::doesValueExist
+     * @covers NS8\ProtectSDK\Config\Manager::getEnvValue
+     * @covers NS8\ProtectSDK\Config\Manager::getValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValue
+     * @covers NS8\ProtectSDK\Config\Manager::setValueWithoutValidation
+     * @covers NS8\ProtectSDK\Config\Manager::validateKeyCanChange
+     * @covers NS8\ProtectSDK\Config\ManagerStructure::initConfiguration
+     * @covers NS8\ProtectSDK\Http\Client::__construct
+     * @covers NS8\ProtectSDK\Http\Client::executeRequest
+     * @covers NS8\ProtectSDK\Http\Client::getAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::sendNonObjectRequest
+     * @covers NS8\ProtectSDK\Http\Client::setAccessToken
+     * @covers NS8\ProtectSDK\Http\Client::setAuthUsername
+     * @covers NS8\ProtectSDK\Http\Client::setSessionData
+     * @covers NS8\ProtectSDK\Logging\Client::__construct
+     * @covers NS8\ProtectSDK\Logging\Client::addHandler
+     * @covers NS8\ProtectSDK\Logging\Client::getLogLevelIntegerValue
+     * @covers NS8\ProtectSDK\Logging\Client::info
+     * @covers NS8\ProtectSDK\Logging\Client::setApiHandler
+     * @covers NS8\ProtectSDK\Logging\Client::setStreamHandler
+     * @covers NS8\ProtectSDK\Security\Client::getAuthUser
+     * @covers NS8\ProtectSDK\Security\Client::getConfigManager
+     * @covers NS8\ProtectSDK\Security\Client::getNs8AccessToken
+     * @covers NS8\ProtectSDK\Security\Client::validateNs8AccessToken
+     */
+    public function testGetTrueStatsScriptUncachedForDifferentStore() : void
+    {
+        $storeId = 2;
+        self::$configManager->setValue('store_id', $storeId);
+
+        // Mock the HTTP client so we can make sure it really makes a request
+        $httpClientMock = $this->createMock(HttpClient::class);
+        $this->analyticsClient->setHttpClient($httpClientMock);
+
+        $httpClientMock->expects($this->once())
+            ->method('sendNonObjectRequest')
+            ->with('/init/script')
+            ->willReturn(json_encode($this->getTestHttpResponseBody()));
+
+        // Fetch the script, which should not come from the cache
+        $script = $this->analyticsClient->getTrueStatsScript();
+        $this->assertEquals($this->getTestHttpResponseBody(), $script);
+
+        // The script should now be cached in a (different) temporary file
+        $this->assertTrue(file_exists($this->getCacheFile($storeId)));
+        unlink($this->getCacheFile($storeId));
+    }
+
+    /**
      * Assert that the script doesn't get cached in case of a Protect error
      *
      * @return void
@@ -311,11 +430,13 @@ class ClientTest extends TestCase
     /**
      * Returns the file name used for caching the TrueStats script
      *
+     * @param int $storeId The store ID for a multi-store configuration (optional)
+     *
      * @return string The file name
      */
-    protected function getCacheFile() : string
+    protected function getCacheFile(int $storeId = 1) : string
     {
-        return sys_get_temp_dir() . '/ns8-truestats.json';
+        return sys_get_temp_dir() . sprintf('/ns8-truestats-%u.js', $storeId);
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Analytics;
 
+use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Http\Client as HttpClient;
 use function file_exists;
 use function file_get_contents;
@@ -27,8 +28,10 @@ class Client extends BaseClient
 
     /**
      * The temporary file used for caching the TrueStats script.
+     *
+     * "%u" gets replaced with the individual store ID.
      */
-    protected const TRUE_STATS_CACHE_FILE = 'ns8-truestats.json';
+    protected const TRUE_STATS_CACHE_FILE = 'ns8-truestats-%u.js';
 
     /**
      * The TrueStats script gets cached for 1 day
@@ -107,7 +110,9 @@ class Client extends BaseClient
      */
     protected static function getFullPathToScriptCacheFile() : string
     {
-        return sprintf('%s/%s', sys_get_temp_dir(), self::TRUE_STATS_CACHE_FILE);
+        $cacheFile = sprintf(self::TRUE_STATS_CACHE_FILE, ConfigManager::getValue('store_id') ?? 1);
+
+        return sprintf('%s/%s', sys_get_temp_dir(), $cacheFile);
     }
 
     /**
