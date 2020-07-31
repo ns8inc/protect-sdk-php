@@ -151,6 +151,7 @@ abstract class ManagerStructure
         self::$configData                     = array_replace_recursive(self::$configData, $baseData, $customData);
         self::$configData['platform_version'] = $platformVersion;
         self::$configData['php_version']      = $phpVersion ?? phpversion();
+        self::$configData['store_id']         = 1; // This is the default, use setValue() to override.
         self::$environment                    = $environment ?? self::$configData['default_environment'];
         self::validateConfigEnvRequirements();
         self::validateInitialConfigData();
