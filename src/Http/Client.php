@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Http;
 
-use Laminas\Http\Client as LaminasClient;
-use Laminas\Http\PhpEnvironment\RemoteAddress as LaminasRemoteAddress;
-use Laminas\Json\Decoder as LaminasJsonDecoder;
 use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Http\Exceptions\Http as HttpException;
 use NS8\ProtectSDK\Logging\Client as LoggingClient;
@@ -14,6 +11,9 @@ use NS8\ProtectSDK\Logging\Handlers\Api as ApiHandler;
 use NS8\ProtectSDK\Security\Client as SecurityClient;
 use stdClass;
 use Throwable;
+use Zend\Http\Client as ZendClient;
+use Zend\Http\PhpEnvironment\RemoteAddress as ZendRemoteAddress;
+use Zend\Json\Decoder as ZendJsonDecoder;
 use function array_merge;
 use function in_array;
 use function sprintf;
@@ -54,7 +54,7 @@ class Client implements IProtectClient
     /**
      * HTTP Library Client attribute
      *
-     * @var Laminas\Http\Client
+     * @var Zend\Http\Client
      */
     protected $client;
 
@@ -107,7 +107,7 @@ class Client implements IProtectClient
      * @param ?string        $authUsername   Authentication username for NS8 requests
      * @param ?string        $accessToken    Access Token for NS8 requests
      * @param bool           $setSessionData Determines if the class instance should set session data to pass to NS8
-     * @param ?LaminasClient $client         HTTP client to use when making requests
+     * @param ?ZendClient    $client         HTTP client to use when making requests
      * @param ?ConfigManager $configManager  Configuration Manager used by the client for fetching request info
      * @param ?LoggingClient $loggingClient  Logging client used for recording request data
      */
@@ -115,11 +115,11 @@ class Client implements IProtectClient
         ?string $authUsername = null,
         ?string $accessToken = null,
         bool $setSessionData = true,
-        ?LaminasClient $client = null,
+        ?ZendClient $client = null,
         ?ConfigManager $configManager = null,
         ?LoggingClient $loggingClient = null
     ) {
-        $this->client        = $client ?? new LaminasClient();
+        $this->client        = $client ?? new ZendClient();
         $this->configManager = $configManager ?? new ConfigManager();
         $this->loggingClient = $loggingClient ?? new LoggingClient();
 
@@ -143,7 +143,7 @@ class Client implements IProtectClient
         }
 
         $this->setSessionData([
-            'ip' => (new LaminasRemoteAddress())->getIpAddress(),
+            'ip' => (new ZendRemoteAddress())->getIpAddress(),
             'acceptLanguage' => $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? null,
             'userAgent' => $_SERVER['HTTP_USER_AGENT'] ?? null,
         ]);
@@ -311,7 +311,7 @@ class Client implements IProtectClient
     ) : stdClass {
         $body = $this->executeRequest($route, $data, $method, $parameters, $headers, $timeout);
 
-        return LaminasJsonDecoder::decode($body);
+        return ZendJsonDecoder::decode($body);
     }
 
     /**
