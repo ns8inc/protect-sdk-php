@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Tests\Http;
 
-use Laminas\Http\Client as LaminasClient;
-use Laminas\Http\Client\Adapter\Exception\RuntimeException as LaminasRuntimeException;
-use Laminas\Http\Client\Adapter\Test as LaminasTestAdapter;
 use NS8\ProtectSDK\Config\Manager as ConfigManager;
 use NS8\ProtectSDK\Http\Client;
 use NS8\ProtectSDK\Http\Exceptions\Http as HttpException;
 use PHPUnit\Framework\TestCase;
+use Zend\Http\Client as ZendClient;
+use Zend\Http\Client\Adapter\Exception\RuntimeException as ZendRuntimeException;
+use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
 use function sprintf;
 
 /**
@@ -242,7 +242,7 @@ class ClientTest extends TestCase
             $testHttpClient,
             self::$configManager
         );
-        $this->expectException(LaminasRuntimeException::class);
+        $this->expectException(ZendRuntimeException::class);
         $response = $client->sendNonObjectRequest(self::TEST_URI);
     }
 
@@ -898,16 +898,16 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Returns a test Laminas HTTP client to utilize when invoking the NS8 Core HTTP Client
+     * Returns a test Zend HTTP client to utilize when invoking the NS8 Core HTTP Client
      *
      * @param string $requestType Request type being sent
      *
-     * @return LaminasClient
+     * @return ZendClient
      */
-    protected function buildTestHttpClient(string $requestType) : LaminasClient
+    protected function buildTestHttpClient(string $requestType) : ZendClient
     {
-        $adapter        = new LaminasTestAdapter();
-        $testHttpClient = new LaminasClient(self::TEST_URI, ['adapter' => $adapter]);
+        $adapter        = new ZendTestAdapter();
+        $testHttpClient = new ZendClient(self::TEST_URI, ['adapter' => $adapter]);
 
         $response =  'HTTP/1.1 200 OK' . "\n" .
         'Content-type: application/json' . "\n\n" .
@@ -922,18 +922,18 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Returns a test Laminas HTTP client to utilize when invoking the NS8 Core HTTP Client
+     * Returns a test Zend HTTP client to utilize when invoking the NS8 Core HTTP Client
      * for Non-JSON requests
      *
      * @param bool $triggerFailure Sets if the HTTP client should fail in the request
      *
-     * @return LaminasClient
+     * @return ZendClient
      */
-    protected function buildTestNonJsonHttpClient(bool $triggerFailure = false) : LaminasClient
+    protected function buildTestNonJsonHttpClient(bool $triggerFailure = false) : ZendClient
     {
-        $adapter = new LaminasTestAdapter();
+        $adapter = new ZendTestAdapter();
         $adapter->setNextRequestWillFail($triggerFailure);
-        $testHttpClient = new LaminasClient(self::TEST_URI, ['adapter' => $adapter]);
+        $testHttpClient = new ZendClient(self::TEST_URI, ['adapter' => $adapter]);
 
         $response =  'HTTP/1.1 200 OK' . "\n" .
         'Content-type: text/html' . "\n\n" .

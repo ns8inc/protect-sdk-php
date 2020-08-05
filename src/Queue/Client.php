@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Queue;
 
-use Laminas\Http\Client as LaminasClient;
 use NS8\ProtectSDK\Http\Client as NS8HttpClient;
 use NS8\ProtectSDK\Queue\Exceptions\Decoding as DecodingException;
 use NS8\ProtectSDK\Queue\Exceptions\Response as ResponseException;
+use Zend\Http\Client as ZendClient;
 use function array_key_exists;
 use function http_build_query;
 use function json_decode;
@@ -29,7 +29,7 @@ class Client extends BaseClient
     /**
      * Attribute to track HTTTP Client used for sending requests
      *
-     * @var LaminasClient $httpClient
+     * @var ZendClient $httpClient
      */
     protected static $httpClient;
 
@@ -80,15 +80,15 @@ class Client extends BaseClient
     /**
      * Initializes the class to ensure attributes are set up correctly.
      *
-     * @param LaminasClient $httpClient The HTTP client used to make requests
-     * @param string        $queueUrl   URL used to access queue
+     * @param ZendClient $httpClient The HTTP client used to make requests
+     * @param string     $queueUrl   URL used to access queue
      *
      * @return void
      */
-    public static function initialize(?LaminasClient $httpClient = null, ?string $queueUrl = null) : void
+    public static function initialize(?ZendClient $httpClient = null, ?string $queueUrl = null) : void
     {
         self::$url        = $queueUrl;
-        self::$httpClient = $httpClient ?? new LaminasClient();
+        self::$httpClient = $httpClient ?? new ZendClient();
     }
 
     /**
