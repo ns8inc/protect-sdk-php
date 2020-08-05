@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Tests\Queue;
 
-use Laminas\Http\Client as LaminasClient;
-use Laminas\Http\Client\Adapter\Test as LaminasTestAdapter;
 use NS8\ProtectSDK\Http\Client as HttpClient;
 use NS8\ProtectSDK\Queue\Client as QueueClient;
 use NS8\ProtectSDK\Queue\Exceptions\Decoding as DecodingException;
 use NS8\ProtectSDK\Queue\Exceptions\Response as ResponseException;
 use PHPUnit\Framework\TestCase;
+use Zend\Http\Client as ZendClient;
+use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
 use function json_decode;
 use function json_encode;
 
@@ -465,16 +465,16 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Returns a test Laminas HTTP client to utilize when testing successful outputs
+     * Returns a test Zend HTTP client to utilize when testing successful outputs
      *
      * @param mixed[] $data Array of data that should be present in JSON
      *
-     * @return LaminasClient
+     * @return ZendClient
      */
-    protected function buildTestSuccessHttpClient(array $data) : LaminasClient
+    protected function buildTestSuccessHttpClient(array $data) : ZendClient
     {
-        $adapter        = new LaminasTestAdapter();
-        $testHttpClient = new LaminasClient(self::TEST_URI, ['adapter' => $adapter]);
+        $adapter        = new ZendTestAdapter();
+        $testHttpClient = new ZendClient(self::TEST_URI, ['adapter' => $adapter]);
 
         $response =  'HTTP/1.1 200 OK' . "\n" .
         'Content-type: application/json' . "\n\n" .
@@ -487,14 +487,14 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Returns a test Laminas HTTP client when expecting an error message
+     * Returns a test Zend HTTP client when expecting an error message
      *
-     * @return LaminasClient
+     * @return ZendClient
      */
-    protected function buildTestExceptionHttpClient() : LaminasClient
+    protected function buildTestExceptionHttpClient() : ZendClient
     {
-        $adapter        = new LaminasTestAdapter();
-        $testHttpClient = new LaminasClient(self::TEST_URI, ['adapter' => $adapter]);
+        $adapter        = new ZendTestAdapter();
+        $testHttpClient = new ZendClient(self::TEST_URI, ['adapter' => $adapter]);
 
         $response =  'HTTP/1.1 200 OK' . "\n" .
         'Content-type: application/json' . "\n\n" .
@@ -514,14 +514,14 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Returns a test Laminas HTTP client to test invalid JSON responses
+     * Returns a test Zend HTTP client to test invalid JSON responses
      *
-     * @return LaminasClient
+     * @return ZendClient
      */
-    protected function buildInvalidJsonHttpClient() : LaminasClient
+    protected function buildInvalidJsonHttpClient() : ZendClient
     {
-        $adapter        = new LaminasTestAdapter();
-        $testHttpClient = new LaminasClient(self::TEST_URI, ['adapter' => $adapter]);
+        $adapter        = new ZendTestAdapter();
+        $testHttpClient = new ZendClient(self::TEST_URI, ['adapter' => $adapter]);
 
         $response =  'HTTP/1.1 200 OK' . "\n" .
         'Content-type: text/html' . "\n\n" .
@@ -541,8 +541,8 @@ class ClientTest extends TestCase
      */
     protected function buildNS8HttpClient(array $jsonData) : HttpClient
     {
-        $adapter        = new LaminasTestAdapter();
-        $testHttpClient = new LaminasClient('', ['adapter' => $adapter]);
+        $adapter        = new ZendTestAdapter();
+        $testHttpClient = new ZendClient('', ['adapter' => $adapter]);
 
         $response =  'HTTP/1.1 200 OK' . "\n" .
         'Content-type: application/json' . "\n\n" .

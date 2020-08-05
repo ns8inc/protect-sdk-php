@@ -2,10 +2,8 @@
 
 ## Table of Contents
 
-- [HTTP Documentation](#http-documentation)
-  - [Table of Contents](#table-of-contents)
-  - [Purpose of the HTTP Client](#purpose-of-the-http-client)
-  - [Example HTTP Client Implementations](#example-http-client-implementations)
+- [Purpose of the HTTP Client](#purpose-of-the-http-client)
+- [Example HTTP Client Implementations](#example-http-client-implementations)
 
 ## Purpose of the HTTP Client
 
@@ -70,17 +68,17 @@ $httpClient->put('endpoint/put', [
 $httpClient->delete('endpoint/delete', ['record_id' => 'sample_id_value']);
 ```
 
-The HTTP client also supports custom HTTP clients based off of the Laminas Client
+The HTTP client also supports custom HTTP clients based off of the Zend Client
 when initializing the client object such as this:
 
 ```php
 <?php
 declare(strict_types=1);
 use NS8\ProtectSDK\Http\Client as HttpClient;
-use Laminas\Http\Client as LaminasClient;
-use Laminas\Http\Client\Adapter\Test as LaminasTestAdapter;
-$adapter = new LaminasTestAdapter();
-$testHttpClient = new LaminasClient('ns8.com', ['adapter' => $adapter]);
+use Zend\Http\Client as ZendClient;
+use Zend\Http\Client\Adapter\Test as ZendTestAdapter;
+$adapter = new ZendTestAdapter();
+$testHttpClient = new ZendClient('ns8.com', ['adapter' => $adapter]);
 // The third argument "true" lets the NS8 HTTP client know to automatically set
 // session data for HTTP requests
 $httpClient = new Client('test', 'test', true, $testHttpClient);

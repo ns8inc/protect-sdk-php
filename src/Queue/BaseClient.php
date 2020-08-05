@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NS8\ProtectSDK\Queue;
 
-use Laminas\Http\Client as LaminasClient;
+use Zend\Http\Client as ZendClient;
 
 /**
  * Manage updates from Queue for order info
@@ -14,11 +14,11 @@ abstract class BaseClient
     /**
      * Initializes the class to ensure attributes are set up correctly.
      *
-     * @param LaminasClient $httpClient The HTTP client used to make requests
+     * @param ZendClient $httpClient The HTTP client used to make requests
      *
      * @return void
      */
-    abstract public static function initialize(?LaminasClient $httpClient = null) : void;
+    abstract public static function initialize(?ZendClient $httpClient = null) : void;
 
     /**
      * Returns the URL being used for queue iteration during runtime
