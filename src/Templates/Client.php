@@ -44,7 +44,7 @@ class Client extends BaseClient
         string $token,
         string $verificationId,
         string $returnUri,
-        ?array $postParams = null
+        $postParams = null
     ) : stdClass {
         if (! in_array($view, self::VALID_VIEWS)) {
             throw new RuntimeException(sprintf('Invalid view "%s" specified', $view));
@@ -84,7 +84,7 @@ class Client extends BaseClient
      *
      * @return void
      */
-    public static function setHttpClient(HttpClient $httpClient) : void
+    public static function setHttpClient(HttpClient $httpClient)
     {
         self::$httpClient = $httpClient;
     }

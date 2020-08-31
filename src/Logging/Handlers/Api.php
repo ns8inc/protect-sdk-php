@@ -20,7 +20,7 @@ class Api extends AbstractProcessingHandler
     /**
      * API route we are sending log data to
      */
-    public const LOGGING_PATH = '/util/log-platform-error';
+    const LOGGING_PATH = '/util/log-platform-error';
     /**
      * Sets if the handler instance has been initialized
      *
@@ -57,7 +57,7 @@ class Api extends AbstractProcessingHandler
      * @param bool          $bubble        Determines if messages should bubble up to the next handler
      */
     public function __construct(
-        ?ConfigManager $configManager = null,
+        $configManager = null,
         int $level = Logger::DEBUG,
         bool $bubble = true
     ) {
@@ -97,7 +97,7 @@ class Api extends AbstractProcessingHandler
      *
      * @return void
      */
-    protected function write(array $record) : void
+    protected function write(array $record)
     {
         $this->client = $this->getHttpClient();
         try {
@@ -144,7 +144,7 @@ class Api extends AbstractProcessingHandler
      *
      * @return void
      */
-    private function initialize() : void
+    private function initialize()
     {
         $this->initialized = true;
     }

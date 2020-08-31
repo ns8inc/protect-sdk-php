@@ -14,17 +14,17 @@ class Client extends BaseClient
     /**
      * Response code for successful action setting
      */
-    public const ACTION_SUCCESS_CODE = 200;
+    const ACTION_SUCCESS_CODE = 200;
 
     /**
      * API path for Switch Executor
      */
-    public const SWITCH_EXECUTOR_PATH = '/switch/executor';
+    const SWITCH_EXECUTOR_PATH = '/switch/executor';
 
     /**
      * Action key used for switch actions
      */
-    public const ACTION_KEY = 'action';
+    const ACTION_KEY = 'action';
 
     /**
      * HTTP Client used to make API requests
@@ -52,7 +52,7 @@ class Client extends BaseClient
       *
       * @return void
       */
-    public static function setHttpClient(HttpClient $httpClient) : void
+    public static function setHttpClient(HttpClient $httpClient)
     {
         self::$httpClient = $httpClient;
     }

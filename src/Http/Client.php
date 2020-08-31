@@ -26,30 +26,30 @@ class Client implements IProtectClient
     /**
      * Define request types the HTTP client utilizes
      */
-    public const GET_REQUEST_TYPE    = 'GET';
-    public const POST_REQUEST_TYPE   = 'POST';
-    public const PUT_REQUEST_TYPE    = 'PUT';
-    public const DELETE_REQUEST_TYPE = 'DELETE';
+    const GET_REQUEST_TYPE    = 'GET';
+    const POST_REQUEST_TYPE   = 'POST';
+    const PUT_REQUEST_TYPE    = 'PUT';
+    const DELETE_REQUEST_TYPE = 'DELETE';
 
     /**
      * API prefix for NS8 Client routes
      */
-    public const ROUTE_PREFIX = '/api';
+    const ROUTE_PREFIX = '/api';
 
     /**
      * Default HTTP Request Timeout Value
      */
-    public const DEFAULT_TIMEOUT_VALUE = 30;
+    const DEFAULT_TIMEOUT_VALUE = 30;
 
     /**
      * Format for Authorization header value
      */
-    public const AUTH_STRING_HEADER_FORMAT = 'Bearer %s';
+    const AUTH_STRING_HEADER_FORMAT = 'Bearer %s';
 
     /**
      * A list of paths we should not log HTTP requests for
      */
-    public const EXCLUDED_LOG_PATHS = [ApiHandler::LOGGING_PATH];
+    const EXCLUDED_LOG_PATHS = [ApiHandler::LOGGING_PATH];
 
     /**
      * HTTP Library Client attribute
@@ -112,12 +112,12 @@ class Client implements IProtectClient
      * @param ?LoggingClient $loggingClient  Logging client used for recording request data
      */
     public function __construct(
-        ?string $authUsername = null,
-        ?string $accessToken = null,
+        $authUsername = null,
+        $accessToken = null,
         bool $setSessionData = true,
-        ?ZendClient $client = null,
-        ?ConfigManager $configManager = null,
-        ?LoggingClient $loggingClient = null
+        $client = null,
+        $configManager = null,
+        $loggingClient = null
     ) {
         $this->client        = $client ?? new ZendClient();
         $this->configManager = $configManager ?? new ConfigManager();
@@ -444,7 +444,7 @@ class Client implements IProtectClient
      *
      * @return mixed[]|null
      */
-    public function getSessionData() : ?array
+    public function getSessionData()
     {
         return $this->sessionData;
     }
@@ -468,7 +468,7 @@ class Client implements IProtectClient
      *
      * @return mixed[]|null
      */
-    public function getPlatformIdentifier() : ?string
+    public function getPlatformIdentifier()
     {
         return $this->platformIdentifier;
     }
@@ -492,7 +492,7 @@ class Client implements IProtectClient
      *
      * @return string|null
      */
-    public function getAuthUsername() : ?string
+    public function getAuthUsername()
     {
         return $this->authUsername;
     }
@@ -516,7 +516,7 @@ class Client implements IProtectClient
      *
      * @return string|null
      */
-    public function getAccessToken() : ?string
+    public function getAccessToken()
     {
         return $this->accessToken;
     }

@@ -48,7 +48,7 @@ class Client extends BaseClient
      *
      * @return void
      */
-    public static function setHttpClient(HttpClient $httpClient) : void
+    public static function setHttpClient(HttpClient $httpClient)
     {
         self::$httpClient = $httpClient;
     }

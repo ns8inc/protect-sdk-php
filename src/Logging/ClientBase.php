@@ -20,7 +20,7 @@ abstract class ClientBase
      *
      * @return void
      */
-    abstract public function error(string $message, ?Throwable $event = null, ?array $data = null) : void;
+    abstract public function error(string $message, $event = null, $data = null);
 
     /**
      * Logs a message classified as a debugging line
@@ -30,7 +30,7 @@ abstract class ClientBase
      *
      * @return void
      */
-    abstract public function debug(string $message, ?array $data = null) : void;
+    abstract public function debug(string $message, $data = null);
 
     /**
      * Logs a message classified as a warning
@@ -40,7 +40,7 @@ abstract class ClientBase
      *
      * @return void
      */
-    abstract public function warn(string $message, ?array $data = null) : void;
+    abstract public function warn(string $message, $data = null);
 
     /**
      * Logs a message classified as information for developers/administrators
@@ -50,5 +50,5 @@ abstract class ClientBase
      *
      * @return void
      */
-    abstract public function info(string $message, ?array $data = null) : void;
+    abstract public function info(string $message, $data = null);
 }

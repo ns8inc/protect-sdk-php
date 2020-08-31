@@ -5,6 +5,9 @@
     <!-- We use (almost) all of the Doctrine rules. -->
     <rule ref="Doctrine">
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessReturnAnnotation"/>
+        <exclude name="SlevomatCodingStandard.Classes.ClassConstantVisibility.MissingConstantVisibility" />
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint" />
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint" />
     </rule>
 
     <!-- Doctrine doesn't care too much about docblocks, so we use (most of) PEAR's rules for that. -->
@@ -21,6 +24,6 @@
 
     <!-- Check for deprecated/removed PHP functions. -->
     <rule ref="PHPCompatibility">
-        <config name="testVersion" value="7.1-"/>
+        <config name="testVersion" value="7.0-"/>
     </rule>
 </ruleset>

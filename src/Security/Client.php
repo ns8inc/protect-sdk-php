@@ -41,7 +41,7 @@ class Client extends BaseClient
       *
       * @return void
       */
-    public static function setConfigManager(ConfigManager $configManager) : void
+    public static function setConfigManager(ConfigManager $configManager)
     {
         self::$configManager = $configManager;
     }
@@ -76,7 +76,7 @@ class Client extends BaseClient
      *
      * @return void
      */
-    public static function setNs8AccessToken(string $accessToken) : void
+    public static function setNs8AccessToken(string $accessToken)
     {
         $configKey = sprintf('%s.authorization.access_token', ConfigManager::getEnvironment());
         self::getConfigManager()->setValue($configKey, $accessToken);
@@ -89,7 +89,7 @@ class Client extends BaseClient
      *
      * @return bool Returns true if NS8 Auth User is valid, false otherwise
      */
-    public static function validateAuthUser(?string $authUser) : bool
+    public static function validateAuthUser($authUser) : bool
     {
         return ! self::getConfigManager()->getEnvValue('authorization.required') || ! empty($authUser);
     }
@@ -112,7 +112,7 @@ class Client extends BaseClient
      *
      * @return void
      */
-    public static function setAuthUser(string $authUser) : void
+    public static function setAuthUser(string $authUser)
     {
         $configKey = sprintf('%s.authorization.auth_user', ConfigManager::getEnvironment());
         self::getConfigManager()->setValue($configKey, $authUser);

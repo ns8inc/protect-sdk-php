@@ -21,7 +21,7 @@ class Manager extends ManagerStructure
     /**
      * Rules based on key pattern to prevent overriding specific environment values
      */
-    public const SET_VALUE_PREVENTION_RULES =
+    const SET_VALUE_PREVENTION_RULES =
         ['/^(production|testing)\\' . self::KEY_DELIMITER . 'urls\\' . self::KEY_DELIMITER . '.*/'];
 
     /**
@@ -177,7 +177,7 @@ class Manager extends ManagerStructure
      *
      * @return void
      */
-    protected static function setRuntimeConfigValues() : void
+    protected static function setRuntimeConfigValues()
     {
         foreach (self::STATIC_CONFIG_MAPPINGS as $key => $value) {
             self::setValueWithoutValidation($key, $value);

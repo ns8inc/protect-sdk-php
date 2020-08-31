@@ -99,7 +99,7 @@ interface IProtectClient
      *
      * @return mixed[]|null
      */
-    public function getSessionData() : ?array;
+    public function getSessionData();
 
     /**
      * Set authusername used in post requests
@@ -115,7 +115,7 @@ interface IProtectClient
      *
      * @return string|null
      */
-    public function getAuthUsername() : ?string;
+    public function getAuthUsername();
 
     /**
      * Set access token used in requests with authentication
@@ -131,5 +131,5 @@ interface IProtectClient
      *
      * @return string|null
      */
-    public function getAccessToken() : ?string;
+    public function getAccessToken();
 }

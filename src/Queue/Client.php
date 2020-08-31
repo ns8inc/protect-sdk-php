@@ -43,39 +43,39 @@ class Client extends BaseClient
     /**
      * SQS Request Constants
      */
-    public const DEFAULT_SQS_REQUEST_TYPE = 'GET';
+    const DEFAULT_SQS_REQUEST_TYPE = 'GET';
 
     /**
      * URLs to manage SQS information through Protect
      */
-    public const GET_QUEUE_URL            = '/polling/GetQueueUrl';
-    public const DELETE_QUEUE_MESSAGE_URL = '/polling/DeleteQueueMessage';
+    const GET_QUEUE_URL            = '/polling/GetQueueUrl';
+    const DELETE_QUEUE_MESSAGE_URL = '/polling/DeleteQueueMessage';
 
     /**
      * Error keys used when receiving errors from SQS
      */
-    public const ERROR_KEY         = 'Error';
-    public const ERROR_CODE_KEY    = 'Code';
-    public const ERROR_MESSAGE_KEY = 'Message';
+    const ERROR_KEY         = 'Error';
+    const ERROR_CODE_KEY    = 'Code';
+    const ERROR_MESSAGE_KEY = 'Message';
 
     /**
      * Message keys used when parsing messages from SQS
      */
-    public const RECEIVE_MESSAGE_RESPONSE_KEY = 'ReceiveMessageResponse';
-    public const RECEIVE_MESSAGE_RESULT_KEY   = 'ReceiveMessageResult';
-    public const RECEIVE_MESSAGE_SET_KEY      = 'messages';
+    const RECEIVE_MESSAGE_RESPONSE_KEY = 'ReceiveMessageResponse';
+    const RECEIVE_MESSAGE_RESULT_KEY   = 'ReceiveMessageResult';
+    const RECEIVE_MESSAGE_SET_KEY      = 'messages';
 
     /**
      * Available message actions that can be present in a message
      */
-    public const MESSAGE_ACTION_UPDATE_EQ8_SCORE          = 'UPDATE_EQ8_SCORE_EVENT';
-    public const MESSAGE_ACTION_UPDATE_ORDER_RISK_EVENT   = 'UPDATE_ORDER_RISK_EVENT';
-    public const MESSAGE_ACTION_UPDATE_ORDER_STATUS_EVENT = 'UPDATE_ORDER_STATUS_EVENT';
+    const MESSAGE_ACTION_UPDATE_EQ8_SCORE          = 'UPDATE_EQ8_SCORE_EVENT';
+    const MESSAGE_ACTION_UPDATE_ORDER_RISK_EVENT   = 'UPDATE_ORDER_RISK_EVENT';
+    const MESSAGE_ACTION_UPDATE_ORDER_STATUS_EVENT = 'UPDATE_ORDER_STATUS_EVENT';
 
     /**
      * Static headers that we are required to send in SQS requests
      */
-    public const REQUIRED_HEADERS = ['Accept' => 'application/json'];
+    const REQUIRED_HEADERS = ['Accept' => 'application/json'];
 
     /**
      * Initializes the class to ensure attributes are set up correctly.
@@ -85,7 +85,7 @@ class Client extends BaseClient
      *
      * @return void
      */
-    public static function initialize(?ZendClient $httpClient = null, ?string $queueUrl = null) : void
+    public static function initialize($httpClient = null, $queueUrl = null)
     {
         self::$url        = $queueUrl;
         self::$httpClient = $httpClient ?? new ZendClient();
@@ -114,7 +114,7 @@ class Client extends BaseClient
      *
      * @return mixed[]|null Message array for data
      */
-    public static function getMessages() : ?array
+    public static function getMessages()
     {
         self::$httpClient->resetParameters();
         self::$httpClient->setHeaders(self::REQUIRED_HEADERS);
@@ -162,7 +162,7 @@ class Client extends BaseClient
      *
      * @return void
      */
-    public static function setNs8HttpClient(NS8HttpClient $ns8HttpClient) : void
+    public static function setNs8HttpClient(NS8HttpClient $ns8HttpClient)
     {
         self::$ns8HttpClient = $ns8HttpClient;
     }
@@ -178,7 +178,7 @@ class Client extends BaseClient
      * @throws DecodingException
      * @throws ResponseException
      */
-    protected static function processResultErrors(array $response, string $responseString) : void
+    protected static function processResultErrors(array $response, string $responseString)
     {
         if (empty($response)) {
             throw new DecodingException(
@@ -201,7 +201,7 @@ class Client extends BaseClient
      *
      * @return mixed[]
      */
-    protected static function parseResponseMessages(array $response) : ?array
+    protected static function parseResponseMessages(array $response)
     {
         $messages =
         $response[self::RECEIVE_MESSAGE_RESPONSE_KEY][self::RECEIVE_MESSAGE_RESULT_KEY][self::RECEIVE_MESSAGE_SET_KEY];

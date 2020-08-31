@@ -12,29 +12,29 @@ abstract class BaseClient
     /**
      * Known events for the NS8 Platform
      */
-    public const DEFAULT_FLOW_COMPLETED_EVENT              = 'DEFAULT_FLOW_COMPLETED_EVENT';
-    public const ON_DISABLE_EXTENSION_EVENT                = 'ON_DISABLE_EXTENSION_EVENT';
-    public const ON_ENABLE_EXTENSION_EVENT                 = 'ON_ENABLE_EXTENSION_EVENT';
-    public const ON_INSTALL_PLATFORM_EVENT                 = 'ON_INSTALL_PLATFORM_EVENT';
-    public const ON_UPDATE_EXTENSION_EVENT                 = 'ON_UPDATE_EXTENSION_EVENT';
-    public const ORDER_READY_EVENT                         = 'ORDER_READY_EVENT';
-    public const PAYMENT_DECORATED_EVENT                   = 'PAYMENT_DECORATED_EVENT';
-    public const PAYMENT_SCORED_EVENT                      = 'PAYMENT_SCORED_EVENT';
-    public const SESSION_DECORATED_EVENT                   = 'SESSION_DECORATED_EVENT';
-    public const SESSION_SCORED_EVENT                      = 'SESSION_SCORED_EVENT';
-    public const UPDATE_CUSTOMER_VERIFICATION_STATUS_EVENT = 'UPDATE_CUSTOMER_VERIFICATION_STATUS_EVENT';
-    public const UPDATE_EQ8_SCORE_EVENT                    = 'UPDATE_EQ8_SCORE_EVENT';
-    public const UPDATE_ORDER_RISK_EVENT                   = 'UPDATE_ORDER_RISK_EVENT';
-    public const UPDATE_ORDER_STATUS_EVENT                 = 'UPDATE_ORDER_STATUS_EVENT';
+    const DEFAULT_FLOW_COMPLETED_EVENT              = 'DEFAULT_FLOW_COMPLETED_EVENT';
+    const ON_DISABLE_EXTENSION_EVENT                = 'ON_DISABLE_EXTENSION_EVENT';
+    const ON_ENABLE_EXTENSION_EVENT                 = 'ON_ENABLE_EXTENSION_EVENT';
+    const ON_INSTALL_PLATFORM_EVENT                 = 'ON_INSTALL_PLATFORM_EVENT';
+    const ON_UPDATE_EXTENSION_EVENT                 = 'ON_UPDATE_EXTENSION_EVENT';
+    const ORDER_READY_EVENT                         = 'ORDER_READY_EVENT';
+    const PAYMENT_DECORATED_EVENT                   = 'PAYMENT_DECORATED_EVENT';
+    const PAYMENT_SCORED_EVENT                      = 'PAYMENT_SCORED_EVENT';
+    const SESSION_DECORATED_EVENT                   = 'SESSION_DECORATED_EVENT';
+    const SESSION_SCORED_EVENT                      = 'SESSION_SCORED_EVENT';
+    const UPDATE_CUSTOMER_VERIFICATION_STATUS_EVENT = 'UPDATE_CUSTOMER_VERIFICATION_STATUS_EVENT';
+    const UPDATE_EQ8_SCORE_EVENT                    = 'UPDATE_EQ8_SCORE_EVENT';
+    const UPDATE_ORDER_RISK_EVENT                   = 'UPDATE_ORDER_RISK_EVENT';
+    const UPDATE_ORDER_STATUS_EVENT                 = 'UPDATE_ORDER_STATUS_EVENT';
 
     /**
      * Known actions for ther NS8 Platform
      */
-    public const CREATE_ORDER_ACTION        = 'CREATE_ORDER_ACTION';
-    public const UNINSTALL_ACTION           = 'UNINSTALL_ACTION';
-    public const UPDATE_MERCHANT_ACTION     = 'UPDATE_MERCHANT_ACTION';
-    public const UPDATE_ORDER_STATUS_ACTION = 'UPDATE_ORDER_STATUS_ACTION';
-    public const WEBHOOK_ACTION             = 'WEBHOOK_ACTION';
+    const CREATE_ORDER_ACTION        = 'CREATE_ORDER_ACTION';
+    const UNINSTALL_ACTION           = 'UNINSTALL_ACTION';
+    const UPDATE_MERCHANT_ACTION     = 'UPDATE_MERCHANT_ACTION';
+    const UPDATE_ORDER_STATUS_ACTION = 'UPDATE_ORDER_STATUS_ACTION';
+    const WEBHOOK_ACTION             = 'WEBHOOK_ACTION';
 
     /**
      * A list of predefined NS8 events to serve enumeration/validation purposes

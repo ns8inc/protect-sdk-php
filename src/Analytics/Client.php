@@ -24,19 +24,19 @@ class Client extends BaseClient
     /**
      * POST route for fetching TrueStats script from NS8
      */
-    public const TRUE_STATS_ROUTE = '/init/script';
+    const TRUE_STATS_ROUTE = '/init/script';
 
     /**
      * The temporary file used for caching the TrueStats script.
      *
      * "%u" gets replaced with the individual store ID.
      */
-    protected const TRUE_STATS_CACHE_FILE = 'ns8-truestats-%u.js';
+    const TRUE_STATS_CACHE_FILE = 'ns8-truestats-%u.js';
 
     /**
      * The TrueStats script gets cached for 1 day
      */
-    protected const TRUE_STATS_CACHE_TTL = 86400;
+    const TRUE_STATS_CACHE_TTL = 86400;
 
     /**
      * HTTP Client used to make API requests
@@ -98,7 +98,7 @@ class Client extends BaseClient
       *
       * @return void
       */
-    public static function setHttpClient(HttpClient $httpClient) : void
+    public static function setHttpClient(HttpClient $httpClient)
     {
         self::$httpClient = $httpClient;
     }
@@ -120,7 +120,7 @@ class Client extends BaseClient
      *
      * @return string|null The cached script
      */
-    protected static function getScriptFromCache() : ?string
+    protected static function getScriptFromCache()
     {
         $file = self::getFullPathToScriptCacheFile();
 
@@ -140,7 +140,7 @@ class Client extends BaseClient
      *
      * @return void
      */
-    protected static function saveScriptToCache(string $script) : void
+    protected static function saveScriptToCache(string $script)
     {
         file_put_contents(self::getFullPathToScriptCacheFile(), $script);
     }

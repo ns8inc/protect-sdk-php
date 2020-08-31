@@ -14,10 +14,10 @@ class Client extends BaseClient
     /**
      * Enum values that correspond to `ClientPage` in the Protect Client SDK
      */
-    public const CLIENT_PAGE_DASHBOARD         = 'DASHBOARD';
-    public const CLIENT_PAGE_ORDER_DETAILS     = 'ORDER_DETAILS';
-    public const CLIENT_PAGE_ORDER_RULES       = 'ORDER_RULES';
-    public const CLIENT_PAGE_SUSPICIOUS_ORDERS = 'SUSPICIOUS_ORDERS';
+    const CLIENT_PAGE_DASHBOARD         = 'DASHBOARD';
+    const CLIENT_PAGE_ORDER_DETAILS     = 'ORDER_DETAILS';
+    const CLIENT_PAGE_ORDER_RULES       = 'ORDER_RULES';
+    const CLIENT_PAGE_SUSPICIOUS_ORDERS = 'SUSPICIOUS_ORDERS';
 
     /**
      * Returns Client SDK URL

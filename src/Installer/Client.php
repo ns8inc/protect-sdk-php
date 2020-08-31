@@ -21,36 +21,36 @@ class Client extends BaseClient
     /**
      * Platform Installation endpoints
      */
-    public const INSTALL_ENDPOINT   = '/platform/install/%s';
-    public const REINSTALL_ENDPOINT = '/platform/reinstall/%s';
+    const INSTALL_ENDPOINT   = '/platform/install/%s';
+    const REINSTALL_ENDPOINT = '/platform/reinstall/%s';
 
     /**
      * Array keys required for NS8 Protect installation
      */
-    public const EMAIL_KEY        = 'email';
-    public const FIRST_NAME_KEY   = 'firstName';
-    public const LAST_NAME_KEY    = 'lastName';
-    public const PHONE_NUMBER_KEY = 'phone';
-    public const STORE_URL_KEY    = 'storeUrl';
+    const EMAIL_KEY        = 'email';
+    const FIRST_NAME_KEY   = 'firstName';
+    const LAST_NAME_KEY    = 'lastName';
+    const PHONE_NUMBER_KEY = 'phone';
+    const STORE_URL_KEY    = 'storeUrl';
 
     /**
      * Error messages to display for missing installation data
      */
-    public const EMAIL_MISSING_EXCEPTION_MESSAGE       =
+    const EMAIL_MISSING_EXCEPTION_MESSAGE       =
     'Array key "email" is missing: A valid email is required';
-    public const FIRST_NAME_MISSING_EXCEPTION_MESSAGE  =
+    const FIRST_NAME_MISSING_EXCEPTION_MESSAGE  =
     'Array key "firstName" is missing: A first name value is required';
-    public const LAST_NAME_MISSING_EXCEPTION_MESSAGE   =
+    const LAST_NAME_MISSING_EXCEPTION_MESSAGE   =
     'Array key "lastName" is missing: A last name value is required';
-    public const PHONE_NUMER_MISSING_EXCEPTION_MESSAGE =
+    const PHONE_NUMER_MISSING_EXCEPTION_MESSAGE =
     'Array key "phone" is missing: A phone number is required';
-    public const STORE_URL_MISSING_EXCEPTION_MESSAGE   =
+    const STORE_URL_MISSING_EXCEPTION_MESSAGE   =
     'Array key "storeUrl" is missing: A valid store URL (e.g. https://example.com) is required';
 
     /**
      * Mapping of required keys to their error message for missing installation information
      */
-    public const REQUIRED_ARRAY_KEY_VALIDATION_MAPPING = [
+    const REQUIRED_ARRAY_KEY_VALIDATION_MAPPING = [
         self::EMAIL_KEY => self::EMAIL_MISSING_EXCEPTION_MESSAGE,
         self::STORE_URL_KEY => self::STORE_URL_MISSING_EXCEPTION_MESSAGE,
     ];
@@ -110,7 +110,7 @@ class Client extends BaseClient
      *
      * @return void
      */
-    public static function setHttpClient(HttpClient $httpClient) : void
+    public static function setHttpClient(HttpClient $httpClient)
     {
         self::$httpClient = $httpClient;
     }
@@ -122,7 +122,7 @@ class Client extends BaseClient
      *
      * @return void
      */
-    protected static function validateInstallDataArray(array $installData) : void
+    protected static function validateInstallDataArray(array $installData)
     {
         foreach (self::REQUIRED_ARRAY_KEY_VALIDATION_MAPPING as $key => $message) {
             if (! array_key_exists($key, $installData)) {

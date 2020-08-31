@@ -18,7 +18,7 @@ abstract class BaseClient
      *
      * @return void
      */
-    abstract public static function initialize(?ZendClient $httpClient = null) : void;
+    abstract public static function initialize($httpClient = null);
 
     /**
      * Returns the URL being used for queue iteration during runtime
@@ -33,7 +33,7 @@ abstract class BaseClient
      *
      * @return mixed[]|null Message array for data
      */
-    abstract public static function getMessages() : ?array;
+    abstract public static function getMessages();
 
     /**
      * Process results to check if any errors exist
@@ -43,7 +43,7 @@ abstract class BaseClient
      *
      * @return void
      */
-    abstract protected static function processResultErrors(array $responseArray, string $responseString) : void;
+    abstract protected static function processResultErrors(array $responseArray, string $responseString);
 
     /**
      * Returns a formatted array of messages from the queue given the result output
@@ -52,5 +52,5 @@ abstract class BaseClient
      *
      * @return mixed[]|null
      */
-    abstract protected static function parseResponseMessages(array $responseArray) : ?array;
+    abstract protected static function parseResponseMessages(array $responseArray);
 }

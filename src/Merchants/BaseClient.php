@@ -14,7 +14,7 @@ abstract class BaseClient
     /**
      * The template endpoint.
      */
-    protected const CURRENT_MERCHANT_ENDPOINT = '/merchant/current';
+    const CURRENT_MERCHANT_ENDPOINT = '/merchant/current';
 
     /**
      * Get the current merchant.

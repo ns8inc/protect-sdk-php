@@ -22,60 +22,60 @@ class Client extends ClientBase
     /**
      * Logging Channel for Monolog Usage
      */
-    public const LOGGER_CHANNEL_NAME = 'ns8';
+    const LOGGER_CHANNEL_NAME = 'ns8';
 
     /**
      * Debug Level Info For Logging
      */
-    public const LOG_LEVEL_DEBUG_NAME          = 'DEBUG';
-    public const LOG_LEVEL_DEBUG_INTEGER_VALUE = 100;
+    const LOG_LEVEL_DEBUG_NAME          = 'DEBUG';
+    const LOG_LEVEL_DEBUG_INTEGER_VALUE = 100;
 
     /**
      * Info Level Info For Logging
      */
-    public const LOG_LEVEL_INFO_NAME          = 'INFO';
-    public const LOG_LEVEL_INFO_INTEGER_VALUE = 200;
+    const LOG_LEVEL_INFO_NAME          = 'INFO';
+    const LOG_LEVEL_INFO_INTEGER_VALUE = 200;
 
     /**
      * Notice Level Info For Logging
      */
-    public const LOG_LEVEL_NOTICE_NAME          = 'NOTICE';
-    public const LOG_LEVEL_NOTICE_INTEGER_VALUE = 250;
+    const LOG_LEVEL_NOTICE_NAME          = 'NOTICE';
+    const LOG_LEVEL_NOTICE_INTEGER_VALUE = 250;
 
     /**
      * Warning Level Info For Logging
      */
-    public const LOG_LEVEL_WARNING_NAME          = 'WARNING';
-    public const LOG_LEVEL_WARNING_INTEGER_VALUE = 300;
+    const LOG_LEVEL_WARNING_NAME          = 'WARNING';
+    const LOG_LEVEL_WARNING_INTEGER_VALUE = 300;
 
     /**
      * Error Level Info For Logging
      */
-    public const LOG_LEVEL_ERROR_NAME          = 'ERROR';
-    public const LOG_LEVEL_ERROR_INTEGER_VALUE = 400;
+    const LOG_LEVEL_ERROR_NAME          = 'ERROR';
+    const LOG_LEVEL_ERROR_INTEGER_VALUE = 400;
 
     /**
      * Critical Level Info For Logging
      */
-    public const LOG_LEVEL_CRITICAL_NAME    = 'CRITICAL';
-    public const LOG_LEVEL_CRITICAL_INTEGER = 500;
+    const LOG_LEVEL_CRITICAL_NAME    = 'CRITICAL';
+    const LOG_LEVEL_CRITICAL_INTEGER = 500;
 
     /**
      * Alert Level Info For Logging
      */
-    public const LOG_LEVEL_ALERT_NAME    = 'ALERT';
-    public const LOG_LEVEL_ALERT_INTEGER = 550;
+    const LOG_LEVEL_ALERT_NAME    = 'ALERT';
+    const LOG_LEVEL_ALERT_INTEGER = 550;
 
     /**
      * Emergency Level Info For Logging
      */
-    public const LOG_LEVEL_EMERGENCY_NAME    = 'EMERGENCY';
-    public const LOG_LEVEL_EMERGENCY_INTEGER = 600;
+    const LOG_LEVEL_EMERGENCY_NAME    = 'EMERGENCY';
+    const LOG_LEVEL_EMERGENCY_INTEGER = 600;
 
     /**
      * Map log levels to their integer values
      */
-    public const LOG_LEVEL_MAPPING = [
+    const LOG_LEVEL_MAPPING = [
         self::LOG_LEVEL_DEBUG_NAME => self::LOG_LEVEL_DEBUG_INTEGER_VALUE,
         self::LOG_LEVEL_INFO_NAME => self::LOG_LEVEL_INFO_INTEGER_VALUE,
         self::LOG_LEVEL_NOTICE_NAME => self::LOG_LEVEL_NOTICE_INTEGER_VALUE,
@@ -105,7 +105,7 @@ class Client extends ClientBase
      * @param ?Logger        $logger        Logging object to be used by the client
      * @param ?ConfigManager $configManager Config manager used to fetch settings
      */
-    public function __construct(?Logger $logger = null, ?ConfigManager $configManager = null)
+    public function __construct($logger = null, $configManager = null)
     {
         $this->logger        = $logger ?? new Logger(self::LOGGER_CHANNEL_NAME);
         $this->configManager = $configManager ?? new ConfigManager();
@@ -121,7 +121,7 @@ class Client extends ClientBase
      *
      * @return void
      */
-    public function addHandler(AbstractMonologHandler $handler) : void
+    public function addHandler(AbstractMonologHandler $handler)
     {
         $this->logger->pushHandler($handler);
     }
@@ -135,7 +135,7 @@ class Client extends ClientBase
      *
      * @return void
      */
-    public function error(string $message, ?Throwable $event = null, ?array $data = null) : void
+    public function error(string $message, $event = null, $data = null)
     {
         $data = (array) $data;
         if (isset($event)) {
@@ -153,7 +153,7 @@ class Client extends ClientBase
      *
      * @return void
      */
-    public function debug(string $message, ?array $data = null) : void
+    public function debug(string $message, $data = null)
     {
         $this->logger->debug($message, (array) $data);
     }
@@ -166,7 +166,7 @@ class Client extends ClientBase
      *
      * @return void
      */
-    public function warn(string $message, ?array $data = null) : void
+    public function warn(string $message, $data = null)
     {
         $this->logger->warning($message, (array) $data);
     }
@@ -179,7 +179,7 @@ class Client extends ClientBase
      *
      * @return void
      */
-    public function info(string $message, ?array $data = null) : void
+    public function info(string $message, $data = null)
     {
         $this->logger->info($message, (array) $data);
     }

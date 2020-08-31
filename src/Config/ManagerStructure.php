@@ -26,20 +26,20 @@ abstract class ManagerStructure
     /**
      * Delimiter used in key parsing (e.g. "production.urls.api_url")
      */
-    public const KEY_DELIMITER = '.';
+    const KEY_DELIMITER = '.';
 
     /**
      * Core configuration file name
      */
-    public const DEFAULT_CONFIG_FILE = 'core_configuration.json';
+    const DEFAULT_CONFIG_FILE = 'core_configuration.json';
 
     /**
      * Constants related to what defines an environment value as valid
      */
-    public const ENV_PRODUCTION               = 'production';
-    public const ENV_TESTING                  = 'testing';
-    public const ENV_DEVELOPMENT              = 'development';
-    public const ACCEPTED_CONFIG_ENVIRONMENTS = [
+    const ENV_PRODUCTION               = 'production';
+    const ENV_TESTING                  = 'testing';
+    const ENV_DEVELOPMENT              = 'development';
+    const ACCEPTED_CONFIG_ENVIRONMENTS = [
         self::ENV_PRODUCTION,
         self::ENV_TESTING,
         self::ENV_DEVELOPMENT,
@@ -48,33 +48,33 @@ abstract class ManagerStructure
     /**
      * Production URLs that should remain static in configuration
      */
-    public const PRODUCTION_API_URL_KEY      = self::ENV_PRODUCTION . self::KEY_DELIMITER
+    const PRODUCTION_API_URL_KEY      = self::ENV_PRODUCTION . self::KEY_DELIMITER
         . 'urls' . self::KEY_DELIMITER . 'api_url';
-    public const PRODUCTION_API_URL_VALUE    = 'https://protect.ns8.com';
-    public const PRODUCTION_CLIENT_URL_KEY   = self::ENV_PRODUCTION . self::KEY_DELIMITER
+    const PRODUCTION_API_URL_VALUE    = 'https://protect.ns8.com';
+    const PRODUCTION_CLIENT_URL_KEY   = self::ENV_PRODUCTION . self::KEY_DELIMITER
         . 'urls' . self::KEY_DELIMITER . 'client_url';
-    public const PRODUCTION_CLIENT_URL_VALUE = 'https://protect-client.ns8.com';
-    public const PRODUCTION_CLIENT_SDK_KEY   = self::ENV_PRODUCTION . self::KEY_DELIMITER
+    const PRODUCTION_CLIENT_URL_VALUE = 'https://protect-client.ns8.com';
+    const PRODUCTION_CLIENT_SDK_KEY   = self::ENV_PRODUCTION . self::KEY_DELIMITER
         . 'urls' . self::KEY_DELIMITER . 'js_sdk';
-    public const PRODUCTION_CLIENT_SDK_VALUE = 'https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect.min.js';
+    const PRODUCTION_CLIENT_SDK_VALUE = 'https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect.min.js';
 
     /**
      * Testing URLs that should remain static in configuration
      */
-    public const TESTING_API_URL_KEY      = self::ENV_TESTING . self::KEY_DELIMITER
+    const TESTING_API_URL_KEY      = self::ENV_TESTING . self::KEY_DELIMITER
         . 'urls' . self::KEY_DELIMITER . 'api_url';
-    public const TESTING_API_URL_VALUE    = 'https://test-protect.ns8.com';
-    public const TESTING_CLIENT_URL_KEY   = self::ENV_TESTING . self::KEY_DELIMITER
+    const TESTING_API_URL_VALUE    = 'https://test-protect.ns8.com';
+    const TESTING_CLIENT_URL_KEY   = self::ENV_TESTING . self::KEY_DELIMITER
         . 'urls' . self::KEY_DELIMITER . 'client_url';
-    public const TESTING_CLIENT_URL_VALUE = 'https://test-protect-client.ns8.com';
-    public const TESTING_JS_SDK_KEY       = self::ENV_TESTING . self::KEY_DELIMITER
+    const TESTING_CLIENT_URL_VALUE = 'https://test-protect-client.ns8.com';
+    const TESTING_JS_SDK_KEY       = self::ENV_TESTING . self::KEY_DELIMITER
         . 'urls' . self::KEY_DELIMITER . 'js_sdk';
-    public const TESTING_JS_SDK_VALUE     = 'https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect-dev.min.js';
+    const TESTING_JS_SDK_VALUE     = 'https://d3hfiwqcryy9cp.cloudfront.net/assets/js/protect-dev.min.js';
 
     /**
      * Fields that must be set for requests
      */
-    public const ENV_REQUIRED_FIELDS = [
+    const ENV_REQUIRED_FIELDS = [
         'urls' . self::KEY_DELIMITER . 'api_url',
         'urls' . self::KEY_DELIMITER . 'client_url',
     ];
@@ -82,7 +82,7 @@ abstract class ManagerStructure
     /**
      * Mapping of keys/values that should remain static in configuration
      */
-    public const STATIC_CONFIG_MAPPINGS = [
+    const STATIC_CONFIG_MAPPINGS = [
         self::PRODUCTION_API_URL_KEY => self::PRODUCTION_API_URL_VALUE,
         self::PRODUCTION_CLIENT_URL_KEY => self::PRODUCTION_CLIENT_URL_VALUE,
         self::PRODUCTION_CLIENT_SDK_KEY => self::PRODUCTION_CLIENT_SDK_VALUE,
@@ -125,12 +125,12 @@ abstract class ManagerStructure
      * @throws EnvironmentConfigException if the environment type initialized is not valid.
      */
     public static function initConfiguration(
-        ?string $environment = null,
-        ?string $customConfigJsonFile = null,
-        ?string $baseConfigJsonFile = null,
-        ?string $platformVersion = null,
-        ?string $phpVersion = null
-    ) : void {
+        $environment = null,
+        $customConfigJsonFile = null,
+        $baseConfigJsonFile = null,
+        $platformVersion = null,
+        $phpVersion = null
+    ) {
         if (self::$configInitialized) {
             return;
         }
@@ -173,7 +173,7 @@ abstract class ManagerStructure
      *
      * @return void
      */
-    public static function resetConfig() : void
+    public static function resetConfig()
     {
         self::$configInitialized = false;
         self::$configData        = [];
@@ -223,7 +223,7 @@ abstract class ManagerStructure
      *
      * @return void
      */
-    abstract protected static function setRuntimeConfigValues() : void;
+    abstract protected static function setRuntimeConfigValues();
 
     /**
      * Set the environment without object instantiatin for simpler static usage
@@ -232,7 +232,7 @@ abstract class ManagerStructure
      *
      * @return void
      */
-    public static function setEnvironment(string $environment) : void
+    public static function setEnvironment(string $environment)
     {
         self::$environment = $environment;
     }
@@ -292,7 +292,7 @@ abstract class ManagerStructure
      *
      * @throws InvalidValueException if a value for a static key is not populated.
      */
-    protected static function validateConfigEnvRequirements() : void
+    protected static function validateConfigEnvRequirements()
     {
         foreach (self::ENV_REQUIRED_FIELDS as $fieldName) {
             $key = sprintf('%s.%s', self::getEnvironment(), $fieldName);
@@ -311,7 +311,7 @@ abstract class ManagerStructure
      *
      * @throws InvalidValueException if a value for a static key is not compatible with the SDK.
      */
-    protected static function validateInitialConfigData() : void
+    protected static function validateInitialConfigData()
     {
         foreach (self::STATIC_CONFIG_MAPPINGS as $key => $value) {
             if (static::doesValueExist($key) && static::getValue($key) !== $value) {

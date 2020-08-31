@@ -33,7 +33,7 @@ abstract class BaseClient
      *
      * @return void
      */
-    abstract public static function setNs8AccessToken(string $accessToken) : void;
+    abstract public static function setNs8AccessToken(string $accessToken);
 
     /**
      * Validate NS8 Auth User
@@ -42,7 +42,7 @@ abstract class BaseClient
      *
      * @return bool Returns true if NS8 Auth User is valid, false otherwise
      */
-    abstract public static function validateAuthUser(?string $authUser) : bool;
+    abstract public static function validateAuthUser($authUser) : bool;
 
     /**
      * Returns the NS8 Auth User to be used when sending requests to NS8.
@@ -59,5 +59,5 @@ abstract class BaseClient
      *
      * @return void
      */
-    abstract public static function setAuthUser(string $authUser) : void;
+    abstract public static function setAuthUser(string $authUser);
 }

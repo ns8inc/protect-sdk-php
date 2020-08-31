@@ -14,12 +14,12 @@ abstract class BaseClient
     /**
      * The template endpoint.
      */
-    protected const TEMPLATE_ENDPOINT = '/merchant/template';
+    const TEMPLATE_ENDPOINT = '/merchant/template';
 
     /**
      * The list of valid views that can be provided by the Template Service.
      */
-    protected const VALID_VIEWS = [
+    const VALID_VIEWS = [
         'orders-reject',
         'orders-reject-confirm',
         'orders-validate',
@@ -46,6 +46,6 @@ abstract class BaseClient
         string $token,
         string $verificationId,
         string $returnUri,
-        ?array $postParams = null
+        $postParams = null
     ) : stdClass;
 }
