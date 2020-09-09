@@ -39,7 +39,7 @@ class Client implements IProtectClient
     /**
      * Default HTTP Request Timeout Value
      */
-    const DEFAULT_TIMEOUT_VALUE = 30;
+    const DEFAULT_TIMEOUT_VALUE = 60;
 
     /**
      * Format for Authorization header value
