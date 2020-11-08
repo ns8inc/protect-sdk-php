@@ -18,7 +18,7 @@
     "require-dev": {
         "phpcompatibility/php-compatibility": "^9.3",
         "phpunit/phpunit": "^7.5.20",
-        "doctrine/coding-standard": "^6.0",
+        "doctrine/coding-standard": "^6.0 || ^8.0",
         "rregeer/phpunit-coverage-check": "^0.3.1",
         "ccinn/composer-husky-plugin": "^0.1.0",
         "ccinn/husky-php": "^0.1.0",
